@@ -34,6 +34,12 @@
                                 ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
+                    <div class="form-group row">
+                        <label class="col-md-2 form-control-label" for="middle_name">Middle Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" name="middle_name" id="middle_name" placeholder="Middle Name" maxlength="191">
+                        </div>
+                    </div><!--form-group-->
 
                     <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.access.users.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
@@ -43,7 +49,8 @@
                                 ->class('form-control')
                                 ->placeholder(__('validation.attributes.backend.access.users.last_name'))
                                 ->attribute('maxlength', 191)
-                                ->required() }}
+                                ->required()
+                                }}
                         </div><!--col-->
                     </div><!--form-group-->
 
@@ -55,7 +62,7 @@
                                 ->class('form-control')
                                 ->placeholder(__('validation.attributes.backend.access.users.email'))
                                 ->attribute('maxlength', 191)
-                                ->required() }}
+                                ->required()->readOnly()  }}
                         </div><!--col-->
                     </div><!--form-group-->
 
@@ -85,7 +92,7 @@
                                                                         . '<span class="switch-slider" data-checked="on" data-unchecked="off"></span>')
                                                                     ->class('switch switch-label switch-pill switch-primary mr-2')
                                                                     ->for('role-'.$role->id) }}
-                                                                {{ html()->label(ucwords($role->name))->for('role-'.$role->id) }}
+                                                                {{ html()->label(ucwords(checkRoleName($role->name)))->for('role-'.$role->id) }}
                                                             </div>
                                                         </div>
                                                         <div class="card-body">

@@ -73,7 +73,10 @@ trait UserMethod
      */
     public function isAdmin()
     {
-        return $this->hasRole(config('access.users.admin_role'));
+        $role = ($this->hasRole(config('access.users.admin_role')) || 
+                    $this->hasRole(config('access.users.super_admin_role'))
+                    ? true : false);
+        return $role;
     }
 
     /**

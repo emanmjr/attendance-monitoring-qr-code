@@ -21,10 +21,12 @@ return [
         'change_email' => env('CHANGE_EMAIL', false),
 
         // The name of the super administrator role
-        'admin_role' => 'administrator',
+        'super_admin_role' => 'super_administrator',
 
-        // The default role all new registered users get added to
-        'default_role' => 'user',
+        // The roles all new registered users get added to
+        'admin_role' => 'administrator',
+        'maker_role' => 'cs_maker',
+        'approver_role' => 'cs_approver',
 
         /*
          * Whether or not new users need to be approved by an administrator before logging in

@@ -23,17 +23,17 @@
                 @lang('labels.general.more')
             </button>
             <div class="dropdown-menu" aria-labelledby="userActions">
-                @if ($user->id !== auth()->id())
+                {{-- @if ($user->id !== auth()->id())
                     <a href="{{ route('admin.auth.user.clear-session', $user) }}"
                        data-trans-button-cancel="@lang('buttons.general.cancel')"
                        data-trans-button-confirm="@lang('buttons.general.continue')"
                        data-trans-title="@lang('strings.backend.general.are_you_sure')"
                        class="dropdown-item" name="confirm_item">@lang('buttons.backend.access.users.clear_session')</a>
-                @endif
+                @endif --}}
 
-                @canBeImpersonated($user)
+                {{-- @canBeImpersonated($user)
                     <a href="{{ route('impersonate', $user->id) }}" class="dropdown-item">@lang('buttons.backend.access.users.login_as', ['user' => $user->full_name])</a>
-                @endCanBeImpersonated
+                @endCanBeImpersonated --}}
 
                 <a href="{{ route('admin.auth.user.change-password', $user) }}" class="dropdown-item">@lang('buttons.backend.access.users.change_password')</a>
 

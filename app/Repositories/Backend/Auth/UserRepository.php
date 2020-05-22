@@ -55,6 +55,12 @@ class UserRepository extends BaseRepository
     {
         return $this->model
             ->with('roles', 'permissions', 'providers')
+            ->whereHas('roles', function ($query) {
+                $query->where('name', '!=', 'administrator');
+            })
+            ->whereHas('roles', function ($query) {
+                $query->where('name', '!=', 'super_administrator');
+            })
             ->active()
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
@@ -102,8 +108,10 @@ class UserRepository extends BaseRepository
     public function create(array $data): User
     {
         return DB::transaction(function () use ($data) {
+
             $user = $this->model::create([
                 'first_name' => $data['first_name'],
+                'middle_name' => $data['middle_name'],
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
@@ -162,6 +170,7 @@ class UserRepository extends BaseRepository
         return DB::transaction(function () use ($user, $data) {
             if ($user->update([
                 'first_name' => $data['first_name'],
+                'middle_name' => $data['middle_name'],
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
             ])) {

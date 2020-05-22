@@ -12,6 +12,15 @@
                     @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
+            <li class="nav-title">
+                Transactions
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    Bills Payment
+                </a>
+            </li>
 
             @if ($logged_in_user->isAdmin())
                 <li class="nav-title">

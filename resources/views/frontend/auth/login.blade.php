@@ -4,21 +4,26 @@
 
 @section('content')
     <div class="row justify-content-center align-items-center">
-        <div class="col col-sm-8 align-self-center">
-            <div class="card">
-                <div class="card-header">
+        <div class="col col-sm-5 align-self-center">
+            <div class="col-md-12 img-login mt-5">
+                <img class="mt-5"src="{{ asset('img/frontend/home/ipayhorizontal.png')}}" alt="">
+            </div>
+            <div class="card mt-5 card-holder">
+                {{-- <div class="card-header">
                     <strong>
                         @lang('labels.frontend.auth.login_box_title')
                     </strong>
-                </div><!--card-header-->
+                </div><!--card-header--> --}}
 
                 <div class="card-body">
+                    <div class="col-md-12 text-center">
+                        <h3 class="mt-4 mb-5">Login</h3>
+                    </div>
                     {{ html()->form('POST', route('frontend.auth.login.post'))->open() }}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     {{ html()->label(__('validation.attributes.frontend.email'))->for('email') }}
-
                                     {{ html()->email('email')
                                         ->class('form-control')
                                         ->placeholder(__('validation.attributes.frontend.email'))
@@ -41,7 +46,7 @@
                             </div><!--col-->
                         </div><!--row-->
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <div class="checkbox">
@@ -49,12 +54,12 @@
                                     </div>
                                 </div><!--form-group-->
                             </div><!--col-->
-                        </div><!--row-->
+                        </div><!--row--> --}}
 
                         <div class="row">
                             <div class="col">
-                                <div class="form-group clearfix">
-                                    {{ form_submit(__('labels.frontend.auth.login_button')) }}
+                                <div class="form-group clearfix btn-login">
+                                    <button type="submit" class="btn btn-success btn-sm pull-right">LOGIN</button>
                                 </div><!--form-group-->
                             </div><!--col-->
                         </div><!--row-->
@@ -70,7 +75,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <div class="form-group text-right">
+                                <div class="form-group text-center txt-forgot-pass">
                                     <a href="{{ route('frontend.auth.password.reset') }}">@lang('labels.frontend.passwords.forgot_password')</a>
                                 </div><!--form-group-->
                             </div><!--col-->

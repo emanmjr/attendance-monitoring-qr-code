@@ -12,6 +12,22 @@ if (! function_exists('app_name')) {
     }
 }
 
+if (! function_exists('checkRoleName')) {
+    /**
+     * Helper to grab the application name.
+     *
+     * @return mixed
+     */
+    function checkRoleName($role)
+    {
+        $role = lcfirst($role);
+        if ($role == 'cs_maker')  return 'Customer Service Maker';
+        if ($role == 'cs_approver')  return 'Customer Service Approver';
+        if ($role == 'super_administrator')  return 'Super Administrator';
+        if ($role == 'administrator')  return 'Administrator';
+    }
+}
+
 if (! function_exists('gravatar')) {
     /**
      * Access the gravatar helper.
@@ -30,6 +46,10 @@ if (! function_exists('home_route')) {
      */
     function home_route()
     {
+        // Redirected to dashboard
+        return 'admin.dashboard';
+
+
         if (auth()->check()) {
             if (auth()->user()->can('view backend')) {
                 return 'admin.dashboard';

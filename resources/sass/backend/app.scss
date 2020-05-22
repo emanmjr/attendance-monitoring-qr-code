@@ -3,6 +3,9 @@
 // If you want to override variables do it here
 @import "variables";
 
+// If you want to override style
+@import "global";
+
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
 
@@ -16,6 +19,7 @@
         max-width: 200px;
     }
 }
+
 
 // Fix mobile footer
 .app-footer {

@@ -14,6 +14,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Redirect to login page
+        return redirect()->route('frontend.auth.login');
+
         return view('frontend.index');
     }
 }

@@ -35,7 +35,12 @@
                                     ->autofocus() }}
                             </div><!--col-->
                         </div><!--form-group-->
-
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="middle_name">Middle Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="middle_name" id="middle_name" placeholder="Middle Name" maxlength="191">
+                            </div>
+                        </div><!--form-group-->
                         <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.access.users.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
 
@@ -93,24 +98,24 @@
                             </div><!--col-->
                         </div><!--form-group-->
 
-                        <div class="form-group row">
+                        <div class="form-group row invisible">
                             {{ html()->label(__('validation.attributes.backend.access.users.confirmed'))->class('col-md-2 form-control-label')->for('confirmed') }}
 
                             <div class="col-md-10">
                                 <label class="switch switch-label switch-pill switch-primary">
-                                    {{ html()->checkbox('confirmed', true)->class('switch-input') }}
+                                    {{ html()->checkbox('confirmed', false)->class('switch-input') }}
                                     <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
                                 </label>
                             </div><!--col-->
                         </div><!--form-group-->
 
                         @if(! config('access.users.requires_approval'))
-                            <div class="form-group row">
+                            <div class="form-group row invisible">
                                 {{ html()->label(__('validation.attributes.backend.access.users.send_confirmation_email') . '<br/>' . '<small>' .  __('strings.backend.access.users.if_confirmed_off') . '</small>')->class('col-md-2 form-control-label')->for('confirmation_email') }}
 
                                 <div class="col-md-10">
                                     <label class="switch switch-label switch-pill switch-primary">
-                                        {{ html()->checkbox('confirmation_email')->class('switch-input') }}
+                                        {{ html()->checkbox('confirmation_email', true)->class('switch-input') }}
                                         <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
                                     </label>
                                 </div><!--col-->
@@ -134,6 +139,7 @@
                                             <td>
                                                 @if($roles->count())
                                                     @foreach($roles as $role)
+                                                    @if($role->id > 1 ) 
                                                         <div class="card">
                                                             <div class="card-header">
                                                                 <div class="checkbox d-flex align-items-center">
@@ -144,7 +150,7 @@
                                                                             . '<span class="switch-slider" data-checked="on" data-unchecked="off"></span>')
                                                                         ->class('switch switch-label switch-pill switch-primary mr-2')
                                                                         ->for('role-'.$role->id) }}
-                                                                    {{ html()->label(ucwords($role->name))->for('role-'.$role->id) }}
+                                                                    {{ html()->label(ucwords(checkRoleName($role->name)))->for('role-'.$role->id) }}
                                                                 </div>
                                                             </div>
                                                             <div class="card-body">
@@ -161,6 +167,7 @@
                                                                 @endif
                                                             </div>
                                                         </div><!--card-->
+                                                    @endif
                                                     @endforeach
                                                 @endif
                                             </td>

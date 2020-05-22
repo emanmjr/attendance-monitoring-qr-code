@@ -1,0 +1,32 @@
+// Custom Style for Admin Dashboard
+
+.app-header .navbar-brand{
+    width: 210px !important;
+}
+
+.navbar-brand-full{
+    width: 175px;
+    height: 35px;
+}
+
+.navbar-brand-minimized{
+    width: 175px;
+    height: 35px;
+}
+
+.app-header .navbar-brand{
+    width: 190px !important;
+}
+
+.sidebar .nav-link.active{
+    background: #70C05A !important;
+}
+
+.sidebar .nav-link:hover{
+    background: #5fa24c !important;
+}
+
+.sidebar .nav-link.active .nav-icon{
+    color: #267542 !important;
+}
+

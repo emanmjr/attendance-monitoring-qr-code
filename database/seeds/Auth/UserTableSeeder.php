@@ -18,23 +18,46 @@ class UserTableSeeder extends Seeder
         $this->disableForeignKeys();
 
         // Add the master administrator, user id of 1
-        User::create([
+        $user1 =User::create([
             'first_name' => 'Super',
-            'last_name' => 'Admin',
-            'email' => 'admin@admin.com',
+            'middle_name' => 'Admin',
+            'last_name' => 'Istrator',
+            'email' => 'super@admin.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
 
-        User::create([
+        $user2 = User::create([
             'first_name' => 'Default',
-            'last_name' => 'User',
-            'email' => 'user@user.com',
+            'middle_name' => 'User',
+            'last_name' => 'Admin',
+            'email' => 'admin@user.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
+
+        $user3 = User::create([
+            'first_name' => 'Default',
+            'middle_name' => 'User',
+            'last_name' => 'Maker',
+            'email' => 'maker@user.com',
+            'password' => 'secret',
+            'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'confirmed' => true,
+        ]);
+
+        $user4 = User::create([
+            'first_name' => 'Default',
+            'middle_name' => 'User',
+            'last_name' => 'Approver',
+            'email' => 'approver@user.com',
+            'password' => 'secret',
+            'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'confirmed' => true,
+        ]);
+
 
         $this->enableForeignKeys();
     }

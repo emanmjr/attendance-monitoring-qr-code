@@ -34,6 +34,7 @@ abstract class BaseUser extends Authenticatable implements Recordable
      */
     protected $fillable = [
         'first_name',
+        'middle_name',
         'last_name',
         'email',
         'avatar_type',

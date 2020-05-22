@@ -32,7 +32,7 @@
                         <tbody>
                             @foreach($roles as $role)
                                 <tr>
-                                    <td>{{ ucwords($role->name) }}</td>
+                                    <td>{{ ucwords(checkRoleName($role->name)) }}</td>
                                     <td>
                                         @if($role->id === 1)
                                             @lang('labels.general.all')
