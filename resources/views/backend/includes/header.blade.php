@@ -48,13 +48,17 @@
         </li> --}}
         <li class="nav-item dropdown ">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">
-            <span class="d-md-down-none">{{ $logged_in_user->full_name }}</span>
+            {{--  <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">  --}}
+            <span class="d-md-down-none">Hi, {{ $logged_in_user->full_name }} !</span>
+            <i class="fas fa-caret-down ml-2"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header text-center">
               <strong>Account</strong>
             </div>
+            <a class="dropdown-item" href="{{ route('frontend.user.account.be.copy') }}">
+                <i class="fas fa-user-alt"></i>Profile
+            </a>
             <a class="dropdown-item" href="{{ route('frontend.auth.logout') }}">
                 <i class="fas fa-lock"></i> @lang('navs.general.logout')
             </a>

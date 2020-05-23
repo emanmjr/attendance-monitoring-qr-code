@@ -17,7 +17,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="nav-icon fas fa-money-check-alt"></i>
                     Bills Payment
                 </a>
             </li>

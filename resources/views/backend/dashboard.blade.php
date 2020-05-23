@@ -3,7 +3,7 @@
 @section('title', app_name() . ' | ' . __('strings.backend.dashboard.title'))
 
 @section('content')
-    <div class="row">
+    <div class="row mt-5">
         <div class="col">
             <div class="card">
                 <div class="card-header">

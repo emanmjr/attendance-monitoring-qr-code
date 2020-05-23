@@ -16,4 +16,9 @@ class AccountController extends Controller
     {
         return view('frontend.user.account');
     }
+
+    public function indexBECopy()
+    {
+        return view('backend.user.account');
+    }
 }
