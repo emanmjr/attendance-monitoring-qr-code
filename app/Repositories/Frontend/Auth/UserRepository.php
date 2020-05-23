@@ -127,7 +127,7 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param       $id
+ * @param       $id
      * @param array $input
      * @param bool|UploadedFile  $image
      *
