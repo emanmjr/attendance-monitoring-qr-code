@@ -27,6 +27,9 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         // User Account Specific
         Route::get('account', [AccountController::class, 'index'])->name('account');
 
+        // Backend Account Specific
+        Route::get('account', [AccountController::class, 'indexBECopy'])->name('account.be.copy');
+
         // User Profile Specific
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
     });

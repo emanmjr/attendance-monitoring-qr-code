@@ -138,6 +138,7 @@ class UserRepository extends BaseRepository
     {
         $user = $this->getById($id);
         $user->first_name = $input['first_name'];
+        $user->middle_name = $input['middle_name'];
         $user->last_name = $input['last_name'];
         $user->avatar_type = $input['avatar_type'];
 
@@ -273,7 +274,7 @@ class UserRepository extends BaseRepository
                 'active' => true,
                 'confirmed' => true,
                 'password' => null,
-                'avatar_type' => $provider,
+                // 'avatar_type' => $provider,
             ]);
 
             if ($user) {
@@ -291,7 +292,7 @@ class UserRepository extends BaseRepository
                 'provider' => $provider,
                 'provider_id' => $data->id,
                 'token' => $data->token,
-                'avatar' => $data->avatar,
+                // 'avatar' => $data->avatar,
             ]));
         } else {
             // Update the users information, token and avatar can be updated.
