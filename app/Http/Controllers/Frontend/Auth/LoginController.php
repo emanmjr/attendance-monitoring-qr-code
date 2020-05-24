@@ -9,13 +9,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
-
+use App\Http\Traits\MiddlewareApiTrait;
 /**
  * Class LoginController.
  */
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, MiddlewareApiTrait;
 
     /**
      * Where to redirect users after login.
@@ -101,6 +101,9 @@ class LoginController extends Controller
             auth()->logoutOtherDevices($request->password);
         }
 
+        // Get an access token for readily used
+        $this->setSessionApiAccessToken();
+
         return redirect()->intended($this->redirectPath());
     }
 
@@ -126,5 +129,10 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         return redirect()->route('frontend.index');
+    }
+
+    public function setSessionApiAccessToken()
+    {
+        if(!session()->get('access_token')) $this->getAccessToken();
     }
 }
