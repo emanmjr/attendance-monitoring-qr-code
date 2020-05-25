@@ -12,13 +12,15 @@
                     @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
-            <li class="nav-title">
+            {{--  <li class="nav-title">
                 Transactions
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="nav-icon fas fa-money-check-alt"></i>
-                    Bills Payment
+            </li>  --}}
+            <li class="nav-item {{
+                active_class(Route::is('admin/transaction'))
+            }}">
+                <a class="nav-link" href="{{ route('admin.transaction.index') }}">
+                    <i class="nav-icon fas fa-exchange-alt"></i>
+                    Transactions
                 </a>
             </li>
 

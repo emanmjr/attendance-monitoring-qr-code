@@ -58,7 +58,7 @@
             
             {!! Breadcrumbs::render() !!}
 
-            <div class="container-fluid">
+            <div class="container-fluid" id="app1">
                 <div class="animated fadeIn">
                     <div class="content-header">
                         @yield('page-header')
@@ -80,6 +80,7 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    {!! script(mix('js/backend-vue.js')) !!}
     @stack('after-scripts')
 </body>
 </html>
