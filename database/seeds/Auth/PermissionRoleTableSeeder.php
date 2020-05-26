@@ -27,10 +27,10 @@ class PermissionRoleTableSeeder extends Seeder
         $admin = Role::create(['name' => config('access.users.admin_role')]);
 
         // Maker Role
-        $maker = Role::create(['name' => config('access.users.maker_role')]);
+        $maker = Role::create(['name' => config('access.users.cs_role')]);
 
         // Approver Role
-        $approver = Role::create(['name' => config('access.users.approver_role')]);
+        $approver = Role::create(['name' => config('access.users.manager_role')]);
 
         // Create Permissions
         Permission::create(['name' => 'view backend']);

@@ -19,8 +19,8 @@ class UserRoleTableSeeder extends Seeder
 
         User::find(1)->assignRole(config('access.users.super_admin_role'));
         User::find(2)->assignRole(config('access.users.admin_role'));
-        User::find(3)->assignRole(config('access.users.maker_role'));
-        User::find(4)->assignRole(config('access.users.approver_role'));
+        User::find(3)->assignRole(config('access.users.cs_role'));
+        User::find(4)->assignRole(config('access.users.manager_role'));
 
         $this->enableForeignKeys();
     }

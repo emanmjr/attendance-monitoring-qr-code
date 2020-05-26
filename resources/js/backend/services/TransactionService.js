@@ -11,13 +11,21 @@ import axios from "axios"
 
 export default {
   getTransactions() {
-    return {
-        'mtcn' : 12312312312,
-        'sender_name': 'John Doe',
-        'receiver_name' : 'John Dei',
-        'transaction_reference_number': '123123123',
-        'date_money_sent': '2010-12-12',
-        'sub_agent' : 'Test Agent'
-    }
+    // return {
+    //     'mtcn' : 12312312312,
+    //     'sender_name': 'John Doe',
+    //     'receiver_name' : 'John Dei',
+    //     'transaction_reference_number': '123123123',
+    //     'date_money_sent': '2010-12-12',
+    //     'sub_agent' : 'Test Agent'
+    // }
+    let url = "/admin/api/get-transactions";
+      const options = {
+          method: 'GET',
+          url,
+      }
+
+      return axios(options);
+    
   },
 }

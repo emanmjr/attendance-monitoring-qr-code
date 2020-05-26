@@ -41,8 +41,8 @@ class UserTableSeeder extends Seeder
         $user3 = User::create([
             'first_name' => 'Default',
             'middle_name' => 'User',
-            'last_name' => 'Maker',
-            'email' => 'maker@user.com',
+            'last_name' => 'Customer Service',
+            'email' => 'customer-service@user.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
@@ -51,8 +51,8 @@ class UserTableSeeder extends Seeder
         $user4 = User::create([
             'first_name' => 'Default',
             'middle_name' => 'User',
-            'last_name' => 'Approver',
-            'email' => 'approver@user.com',
+            'last_name' => 'Manager',
+            'email' => 'manager@user.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
