@@ -98,7 +98,7 @@
                                     </tr>
                                     <tr>
                                         <td>Date of Birth</td>
-                                        <td>birthDate</td>
+                                        <td>{{ modalData.birthDate }}</td>
                                     </tr>
                                     <tr>
                                         <td>Address</td>
