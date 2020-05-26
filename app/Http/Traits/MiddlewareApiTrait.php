@@ -37,7 +37,7 @@ trait MiddlewareApiTrait {
         // Add to Session for Api Call purposes
         session()->put(
             'access_token', 
-            json_decode($res->getBody()->getContents(), true)['access_token']
+            'Bearer ' . json_decode($res->getBody()->getContents(), true)['access_token']
         );
 
         } catch (\Exception $ex) {
