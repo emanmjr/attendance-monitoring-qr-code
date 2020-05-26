@@ -1,5 +1,9 @@
 <template>
     <div class="card-body">
+        
+        <div id="loading">
+            <div class="spinner-border" id="loading-image"></div>
+        </div>
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
@@ -16,10 +20,10 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <select class="form-control" v-model="transaction_type" @change="setSearchFieldType">
+                            <select class="form-control" v-model="transaction_type">
                                 <option value="null" disabled selected hidden>Select Transaction</option>
-                                <option value="wu">Western Union</option>
-                                <option value="ipay">I-Pay Mobile</option>
+                                <option value="4">Western Union</option>
+                                <option value="7">I-Pay Mobile</option>
                             </select>
                         </div>
                     </div>
@@ -48,20 +52,18 @@
                             <th>MTCN</th>
                             <th>Sender Name</th>
                             <th>Receiver Name</th>
-                            <th>Transaction Reference Number</th>
                             <th>Date Money Sent</th>
-                            <th>Sub Agent</th>
+                            <th>Transaction Type </th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody >
-                            <tr v-for="transaction in transactions">
+                            <tr v-for="transaction in transactionsData">
                                 <td>{{ transaction.mtcn }}</td>
-                                <td>{{ transaction.sender_name }}</td>
-                                <td>{{ transaction.receiver_name }}</td>
-                                <td>{{ transaction.transaction_reference_number }}</td>
-                                <td>{{ transaction.date_money_sent }}</td>
-                                <td>{{ transaction.sub_agent }}</td>
+                                <td>{{ transaction.senderName }}</td>
+                                <td>{{ transaction.receiverName }}</td>
+                                <td>{{ transaction.client_id != '' ?  ((transaction.client_id == 4 ? 'Western Union' : 'N/A')) :  'IPAY Mobile' }}</span></td>
+                                <td>{{ transaction.created_at }}</td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" :data-mtcn="transaction.mtcn" @click="viewModalData">
                                         <i class="fas fa-eye" data-toggle="modal" data-target="#modal-information"></i>
@@ -84,23 +86,31 @@
                         </div> -->
                         <div class="modal-body">
                             <h6 class="ml-2 mb-1 mt-4">MTCN: {{ modalData.mtcn }}</h6> 
-                            <h6 class="ml-2 mb-1">Transaction Reference No.: {{ modalData.transaction_reference_number }}</h6> 
-                            <h6 class="ml-2 mb-1">Sub Agent: {{ modalData.sub_agent }}</h6> 
+                            <h6 class="ml-2 mb-1">Transaction Type: {{ this.setTransactionType(modalData.client_id) }} </h6> 
+                            <h6 class="ml-2 mb-1">Date Money Sent: {{ modalData.created_at }}</h6> 
                             <hr>
                             <h6 class="ml-2 mb-3">Receiver</h6>
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
+                                        <td>Name</td>
+                                        <td>{{ modalData.receiverName }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
+                                        <td>Date of Birth</td>
+                                        <td>birthDate</td>
                                     </tr>
                                     <tr>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
+                                        <td>Address</td>
+                                        <td>{{ modalData.address}} {{ modalData.city}} {{ modalData.province}} {{ modalData.postalCode }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile Number</td>
+                                        <td>{{ modalData.phoneNum }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td>{{ modalData.gender }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -109,16 +119,20 @@
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
+                                        <td>Name</td>
+                                        <td>{{ modalData.senderName }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
+                                        <td>Purpose of Transaction</td>
+                                        <td>{{ modalData.transactionReason }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
+                                        <td>Source of Funds</td>
+                                        <td>{{ modalData.fundSource }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Source of Funds</td>
+                                        <td>{{ modalData.fundSource }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -147,11 +161,11 @@
 </template>
 
 <script>
-
+    import { mapState } from 'vuex';
     export default {
         data() {
             return {
-                'transactions': '',
+                'transactionsData': '',
                 'modalData' : '',
                 'options_type' : null,
                 'filter_field' : '',
@@ -159,9 +173,27 @@
                 'search_string': '',
             }
         },
+        computed: mapState(['transactions']),
+        watch: {
+            transactions(data) {
+              this.transactionsData = data;
+              if(data){
+                  document.getElementById('loading').style.display = 'none';
+              }
+            },
+        },
         methods: {
+            setTransactionType(type) {
+                if (!type) return 'N/A';
+
+                if (type == 4) return 'Western Union';
+                
+                if (type == 7) return 'IPAY Mobile';
+            },
             setTransactions() {
-                this.transactions = this.$store.getters.getTransactionsFromGetters;
+                
+                this.transactionsData = this.$store.getters.getTransactionsFromGetters;
+                
             },
             viewModalData(event) {
 
@@ -173,26 +205,11 @@
                 this.modalData = transaction[0];
             },
             setSearchFieldType() {
-
-                if (this.transaction_type == 'wu') {
-                    this.options_type = [
-                        { 'name': 'MTCN', 'field': 'mtcn'},
-                        { 'name': 'Sender Name', 'field': 'sender_name'},
-                        { 'name': 'Receiver Name', 'field': 'receiver_name'},
-                        { 'name': 'Transaction Reference Number', 'field': 'transaction_reference_number' },
-                        { 'name': 'Date Money Sent', 'field': 'date_money_sent' },
-                        { 'name': 'Sub Agent', 'field': 'sub_agent' },
-                    ]
-                }
-
-                if (this.transaction_type == 'ipay') {
-                    this.options_type = [
-                        { 'name': 'Transaction Reference Number', 'field': 'transaction_reference_number' },
-                        { 'name': 'User Name', 'field': 'user_name' },
-                        { 'name': 'User Mobile', 'field': 'user_mobile' },
-                    ]
-                }
-
+                this.options_type = [
+                    { 'name': 'MTCN', 'field': 'mtcn'},
+                    { 'name': 'Sender Name', 'field': 'senderName'},
+                    { 'name': 'Receiver Name', 'field': 'receiverName'},
+                ]
             },
             filterTransaction() {
                
@@ -202,14 +219,16 @@
                 });
 
                 let fieldType = filterType[0].field;
+
                 let searchString = this.search_string;
+                let transactionType = this.transaction_type
 
                 this.setTransactions();
                 let transaction = this.transactions.filter(function(transaction) {
-                    return transaction[fieldType] == searchString;
+                    return transaction[fieldType] == searchString &&  transactionType == transaction.client_id;
                 });
 
-                this.transactions = transaction;
+                this.transactionsData = transaction;
 
                 if( searchString == '' ){
                     this.setTransactions();
@@ -219,7 +238,8 @@
         },
         mounted() {
             this.$store.dispatch("fetchTransactions")
-            this.setTransactions();
+            // this.setTransactions();
+            this.setSearchFieldType();
         },
     }
 </script>
@@ -235,4 +255,23 @@
         padding-bottom: 0px;
     }
 
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: block;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 54%;
+        z-index: 100;
+    }   
 </style>

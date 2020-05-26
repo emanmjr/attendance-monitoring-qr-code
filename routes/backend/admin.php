@@ -12,3 +12,6 @@ Route::group(['prefix' => 'transaction', 'as' =>'transaction.'], function(){
     Route::get('/', 'TransactionController@index')->name('index');
 
 });
+
+// Local API Endpoint
+Route::get('api/get-transactions', 'Api\TransactionController@getTransactions')->name('api.transactions');

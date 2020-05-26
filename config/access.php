@@ -25,8 +25,8 @@ return [
 
         // The roles all new registered users get added to
         'admin_role' => 'administrator',
-        'maker_role' => 'cs_maker',
-        'approver_role' => 'cs_approver',
+        'cs_role' => 'cs_maker',
+        'manager_role' => 'manager',
 
         /*
          * Whether or not new users need to be approved by an administrator before logging in

@@ -21,8 +21,8 @@ if (! function_exists('checkRoleName')) {
     function checkRoleName($role)
     {
         $role = lcfirst($role);
-        if ($role == 'cs_maker')  return 'Customer Service Maker';
-        if ($role == 'cs_approver')  return 'Customer Service Approver';
+        if ($role == 'cs_maker')  return 'Customer Service';
+        if ($role == 'manager')  return 'Manager';
         if ($role == 'super_administrator')  return 'Super Administrator';
         if ($role == 'administrator')  return 'Administrator';
     }
