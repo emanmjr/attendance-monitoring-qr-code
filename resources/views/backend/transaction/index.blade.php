@@ -8,6 +8,7 @@
 
 @section('content')
 <div class="card">
-    <transactions></transactions>
+    
+    <transactions current-page="{{ ucfirst(Request::segment(3)) }}"></transactions>
 </div><!--card-->
 @endsection
