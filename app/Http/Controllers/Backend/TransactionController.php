@@ -12,7 +12,12 @@ class TransactionController extends Controller
     /**
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function send()
+    {
+        return view('backend.transaction.index');
+    }
+
+    public function receive()
     {
         return view('backend.transaction.index');
     }

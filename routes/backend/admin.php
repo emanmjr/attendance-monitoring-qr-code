@@ -9,7 +9,8 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'
 // Transactions
 Route::group(['prefix' => 'transaction', 'as' =>'transaction.'], function(){
 
-    Route::get('/', 'TransactionController@index')->name('index');
+    Route::get('/send', 'TransactionController@send')->name('send');
+    Route::get('/receive', 'TransactionController@receive')->name('receive');
 
 });
 

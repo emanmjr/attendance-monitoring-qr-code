@@ -4,8 +4,12 @@ Breadcrumbs::for('admin.dashboard', function ($trail) {
     $trail->push(__('strings.backend.dashboard.title'), route('admin.dashboard'));
 });
 
-Breadcrumbs::for('admin.transaction.index', function ($trail) {
-    $trail->push('Transactions', route('admin.transaction.index'));
+Breadcrumbs::for('admin.transaction.send', function ($trail) {
+    $trail->push('Transactions / Send', route('admin.transaction.send'));
+});
+
+Breadcrumbs::for('admin.transaction.receive', function ($trail) {
+    $trail->push('Transactions / Receive', route('admin.transaction.receive'));
 });
 
 Breadcrumbs::for('frontend.user.account.be.copy', function ($trail) {

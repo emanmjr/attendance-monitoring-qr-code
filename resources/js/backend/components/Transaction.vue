@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Transactions
+                    Transactions <small class="text-muted">{{ currentPage }}</small>
                 </h4>
             </div><!--col-->
 
@@ -52,8 +52,8 @@
                             <th>MTCN</th>
                             <th>Sender Name</th>
                             <th>Receiver Name</th>
-                            <th>Date Money Sent</th>
                             <th>Transaction Type </th>
+                            <th>Date Money Sent</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -163,6 +163,7 @@
 <script>
     import { mapState } from 'vuex';
     export default {
+        props: ['currentPage'],
         data() {
             return {
                 'transactionsData': '',
@@ -237,7 +238,7 @@
             }
         },
         mounted() {
-            this.$store.dispatch("fetchTransactions")
+            this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
             // this.setTransactions();
             this.setSearchFieldType();
         },
