@@ -53,7 +53,6 @@
                             <th>Sender Name</th>
                             <th>Receiver Name</th>
                             <th>Transaction Type </th>
-                            <th>Date Money Sent</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -63,7 +62,6 @@
                                 <td>{{ transaction.senderName }}</td>
                                 <td>{{ transaction.receiverName }}</td>
                                 <td>{{ transaction.client_id != '' ?  ((transaction.client_id == 4 ? 'Western Union' : 'N/A')) :  'IPAY Mobile' }}</span></td>
-                                <td>{{ transaction.created_at }}</td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" :data-mtcn="transaction.mtcn" @click="viewModalData">
                                         <i class="fas fa-eye" data-toggle="modal" data-target="#modal-information"></i>
@@ -90,7 +88,6 @@
                             <h6 class="ml-2 mb-1">Transaction Type: {{ this.setTransactionType(modalData.client_id) }} </h6> 
                             <h6 class="ml-2 mb-1">Amount: {{ modalData.currencyCode }} {{ modalData.amount }} </h6> 
                             <h6 class="ml-2 mb-1">Country Destination: {{ modalData.destinationCountry }}</h6> 
-                            <h6 class="ml-2 mb-1">Date Money Sent: {{ modalData.created_at }}</h6> 
                             <hr>
                             <h6 class="ml-2 mb-3">Sender</h6>
                             <table class="table table-striped">
