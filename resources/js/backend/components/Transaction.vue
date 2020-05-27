@@ -92,12 +92,12 @@
                             <h6 class="ml-2 mb-1">Country Destination: {{ modalData.destinationCountry }}</h6> 
                             <h6 class="ml-2 mb-1">Date Money Sent: {{ modalData.created_at }}</h6> 
                             <hr>
-                            <h6 class="ml-2 mb-3">Receiver</h6>
+                            <h6 class="ml-2 mb-3">Sender</h6>
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
                                         <td>Name</td>
-                                        <td>{{ modalData.receiverName }}</td>
+                                        <td>{{ modalData.senderName }}</td>
                                     </tr>
                                     <tr>
                                         <td>Date of Birth</td>
@@ -116,22 +116,8 @@
                                         <td>{{ modalData.gender }}</td>
                                     </tr>
                                     <tr>
-                                        <td>ID Number:</td>
-                                        <td>{{ modalData.idNum }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Issue Date:</td>
-                                        <td>{{ modalData.issueDate }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <hr>
-                            <h6 class="ml-2 mb-3">Sender</h6>
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td>Name</td>
-                                        <td>{{ modalData.senderName }}</td>
+                                        <td>Occupation</td>
+                                        <td>{{ modalData.occupation }}</td>
                                     </tr>
                                     <tr>
                                         <td>Purpose of Transaction</td>
@@ -142,12 +128,26 @@
                                         <td>{{ modalData.fundSource }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Occupation</td>
-                                        <td>{{ modalData.occupation }}</td>
+                                        <td>ID Number:</td>
+                                        <td>{{ modalData.idNum }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Issue Date:</td>
+                                        <td>{{ modalData.issueDate }}</td>
                                     </tr>
                                     <tr>
                                         <td>Relation to Receiver</td>
                                         <td>{{ modalData.relationshiptoReceiver }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                            <h6 class="ml-2 mb-3">Receiver</h6>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>{{ modalData.receiverName }}</td>
                                     </tr>
                                 </tbody>
                             </table>
