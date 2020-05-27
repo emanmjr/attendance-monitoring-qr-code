@@ -86,7 +86,10 @@
                         </div> -->
                         <div class="modal-body">
                             <h6 class="ml-2 mb-1 mt-4">MTCN: {{ modalData.mtcn }}</h6> 
+                            <h6 class="ml-2 mb-1 mt-4">Account No.: {{ modalData.accountNumber }}</h6> 
                             <h6 class="ml-2 mb-1">Transaction Type: {{ this.setTransactionType(modalData.client_id) }} </h6> 
+                            <h6 class="ml-2 mb-1">Amount: {{ modalData.currencyCode }} {{ modalData.amount }} </h6> 
+                            <h6 class="ml-2 mb-1">Country Destination: {{ modalData.destinationCountry }}</h6> 
                             <h6 class="ml-2 mb-1">Date Money Sent: {{ modalData.created_at }}</h6> 
                             <hr>
                             <h6 class="ml-2 mb-3">Receiver</h6>
@@ -112,6 +115,14 @@
                                         <td>Gender</td>
                                         <td>{{ modalData.gender }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>ID Number:</td>
+                                        <td>{{ modalData.idNum }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Issue Date:</td>
+                                        <td>{{ modalData.issueDate }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <hr>
@@ -131,8 +142,12 @@
                                         <td>{{ modalData.fundSource }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Source of Funds</td>
-                                        <td>{{ modalData.fundSource }}</td>
+                                        <td>Occupation</td>
+                                        <td>{{ modalData.occupation }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Relation to Receiver</td>
+                                        <td>{{ modalData.relationshiptoReceiver }}</td>
                                     </tr>
                                 </tbody>
                             </table>
