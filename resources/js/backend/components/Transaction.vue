@@ -82,7 +82,6 @@
                     </table>
                 </div>
                 <div class="no-transact" v-if="transactionsData.length == 0">No Transactions </div>
-                <!-- <div><jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination></div> -->
                 <!-- Modal -->
                 <div class="modal fade" id="modal-information" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -185,8 +184,7 @@
 
 <script>
     import { mapState } from 'vuex';
-    import JwPagination from 'jw-vue-pagination';
-    Vue.component('jw-pagination', JwPagination);
+
     export default {
         props: ['currentPage', 'items'],
         data() {
@@ -198,8 +196,6 @@
                 'transaction_type' : null,
                 'search_string': '',
                 'dateTransaction': '',
-                'exampleItems' : '',
-                'pageOfItems': [],
             }
         },
         computed: mapState(['transactions']),
@@ -222,6 +218,11 @@
                 
                 this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
                 document.getElementById('loading').style.display = 'block';
+
+                this.transaction_type = '';
+                this.filter_field = '';
+                this.search_string = '';
+
             },
             setDateTransaction() {
                 var now = new Date();
@@ -285,10 +286,6 @@
                 }
 
             },
-            onChangePage(pageOfItems) {
-                // update page of items
-                this.pageOfItems = pageOfItems;
-            }
         },
         mounted() {
                 // document.getElementById('loading').style.display = 'none';
