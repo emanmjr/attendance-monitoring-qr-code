@@ -16,7 +16,9 @@ export default {
 
 	actions: {
         fetchTransactions({commit} , transactionType){
-              TransactionService.getTransactions()
+              let cookieDateTransaction = document.cookie.split(';')[0];
+              let dateTransaction = cookieDateTransaction.split('=')[1];
+              TransactionService.getTransactions(dateTransaction)
               .then(response => {
                      if(transactionType == 'send') {
                             commit("SET_TRANSACTIONS", JSON.parse(response.data.send_money_store_logs))

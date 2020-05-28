@@ -20,6 +20,16 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
+                            <input type="date" class="form-control" v-model="dateTransaction">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-primary" @click="refreshTransactions"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <select class="form-control" v-model="transaction_type">
                                 <option value="null" disabled selected hidden>Select Transaction</option>
                                 <option value="4">Western Union</option>
@@ -28,7 +38,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group">
+                    <div class="form-group">
                             <select class="form-control" v-model="filter_field">
                                 <option value="null" disabled selected hidden>Select Field</option>
                                 <option v-for="option in options_type">{{ option.name }}</option>
@@ -71,7 +81,8 @@
                         </tbody>
                     </table>
                 </div>
-
+                <div class="no-transact" v-if="transactionsData.length == 0">No Transactions </div>
+                <!-- <div><jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination></div> -->
                 <!-- Modal -->
                 <div class="modal fade" id="modal-information" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -174,8 +185,10 @@
 
 <script>
     import { mapState } from 'vuex';
+    import JwPagination from 'jw-vue-pagination';
+    Vue.component('jw-pagination', JwPagination);
     export default {
-        props: ['currentPage'],
+        props: ['currentPage', 'items'],
         data() {
             return {
                 'transactionsData': '',
@@ -184,28 +197,52 @@
                 'filter_field' : '',
                 'transaction_type' : null,
                 'search_string': '',
+                'dateTransaction': '',
+                'exampleItems' : '',
+                'pageOfItems': [],
             }
         },
         computed: mapState(['transactions']),
         watch: {
             transactions(data) {
               this.transactionsData = data;
+              this.$nextTick(()=>{
+                  this.exampleItems = this.transactionsData;
+              })
+
               if(data){
                   document.getElementById('loading').style.display = 'none';
               }
             },
         },
         methods: {
+            refreshTransactions() {
+
+                document.cookie = "date-tranasction=" + this.dateTransaction;
+                
+                this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
+                document.getElementById('loading').style.display = 'block';
+            },
+            setDateTransaction() {
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+                this.dateTransaction = today;
+
+                document.cookie = "date-tranasction=" + today;
+            },
             setTransactionType(type) {
+
                 if (!type) return 'N/A';
 
                 if (type == 4) return 'Western Union';
                 
                 if (type == 7) return 'IPAY Mobile';
+
             },
             setTransactions() {
-                
-                this.transactionsData = this.$store.getters.getTransactionsFromGetters;
+                this.transactionsData = this.$store.getters.getTransactionsFromGetters;   
                 
             },
             viewModalData(event) {
@@ -247,17 +284,29 @@
                     this.setTransactions();
                 }
 
+            },
+            onChangePage(pageOfItems) {
+                // update page of items
+                this.pageOfItems = pageOfItems;
             }
         },
         mounted() {
-            this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
-            // this.setTransactions();
-            this.setSearchFieldType();
+                // document.getElementById('loading').style.display = 'none';
+
+
+                this.setDateTransaction();
+                this.setSearchFieldType();
+
+                this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
+
         },
     }
 </script>
 
 <style lang="scss" scoped>
+    .no-transact {
+        text-align: center;
+    }
 
     .table-striped{
         font-size: 12px;

@@ -10,8 +10,8 @@ import axios from "axios"
 // })
 
 export default {
-  getTransactions() {
-    let url = "/admin/api/get-transactions";
+  getTransactions(dateTransaction) {
+    let url = "/admin/api/get-transactions?dateTransaction=" + dateTransaction;
       const options = {
           method: 'GET',
           url,

@@ -28,7 +28,7 @@ class TransactionController extends Controller
         try {
             $res = $client->request('POST', 'http://3.1.170.158/mw/public/db-syncing/get-logs', [
                 'form_params' => [
-                    'date' => \Carbon\Carbon::now()->format('Y-m-d')
+                    'date' => request()->dateTransaction
                 ]
             ]);
             $response = json_decode($res->getBody()->getContents(), true);
@@ -36,8 +36,6 @@ class TransactionController extends Controller
         } catch (ClientErrorResponseException $exception) {
             $res = $exception->getResponse()->getBody(true);
         }
-        
-
 
         return $response;
 
