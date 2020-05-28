@@ -5,25 +5,30 @@
             <div class="spinner-border" id="loading-image"></div>
         </div>
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-12">
                 <h4 class="card-title mb-0">
                     Transactions <small class="text-muted">{{ currentPage }}</small>
                 </h4>
+                <hr>
             </div><!--col-->
 
-            <div class="col-sm-7">
-            </div><!--col-->
+            
         </div><!--row-->
 
         <div class="row mt-4">
             <div class="col">
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <input type="date" class="form-control" v-model="dateTransaction">
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-md-7 col-form-label"><h5>Total Transactios: {{ totalTransactions }}</h5> </label>
                         </div>
                     </div>
-                    <div class="col-md-1">
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" v-model="dateTransaction">
+                    </div>
+                    <div class="col-md-2">
                         <button type="button" class="btn btn-primary" @click="refreshTransactions"><i class="fas fa-sync-alt"></i></button>
                     </div>
                 </div>
@@ -37,7 +42,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                     <div class="form-group">
                             <select class="form-control" v-model="filter_field">
                                 <option value="null" disabled selected hidden>Select Field</option>
@@ -45,7 +50,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="search_string">
                         </div>
@@ -53,6 +58,7 @@
                     <div class="col-md-1">
                         <button type="button" class="btn btn-light" @click="filterTransaction"><i class="fas fa-search"></i></button>
                     </div>
+                    <div class="col-md-2"></div>
                     
                 </div>
                 <div class="table-responsive">
@@ -186,7 +192,7 @@
     import { mapState } from 'vuex';
 
     export default {
-        props: ['currentPage', 'items'],
+        props: ['currentPage'],
         data() {
             return {
                 'transactionsData': '',
@@ -196,6 +202,7 @@
                 'transaction_type' : null,
                 'search_string': '',
                 'dateTransaction': '',
+                totalTransactions : 0
             }
         },
         computed: mapState(['transactions']),
@@ -208,6 +215,7 @@
 
               if(data){
                   document.getElementById('loading').style.display = 'none';
+                  this.totalTransactions = data.length;
               }
             },
         },
@@ -218,6 +226,8 @@
                 
                 this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
                 document.getElementById('loading').style.display = 'block';
+
+                this.totalTransactions = data.length;
 
                 this.transaction_type = '';
                 this.filter_field = '';
@@ -286,13 +296,13 @@
                 }
 
             },
+            
         },
         mounted() {
-                // document.getElementById('loading').style.display = 'none';
-
 
                 this.setDateTransaction();
                 this.setSearchFieldType();
+
 
                 this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
 
