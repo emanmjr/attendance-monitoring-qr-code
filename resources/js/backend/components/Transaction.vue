@@ -209,9 +209,6 @@
         watch: {
             transactions(data) {
               this.transactionsData = data;
-              this.$nextTick(()=>{
-                  this.exampleItems = this.transactionsData;
-              })
 
               if(data){
                   document.getElementById('loading').style.display = 'none';
@@ -226,8 +223,6 @@
                 
                 this.$store.dispatch("fetchTransactions", window.location.pathname.split("/").pop())
                 document.getElementById('loading').style.display = 'block';
-
-                this.totalTransactions = data.length;
 
                 this.transaction_type = '';
                 this.filter_field = '';
