@@ -116,4 +116,5 @@ class ResetPasswordController extends Controller
     {
         return redirect()->route(home_route())->withFlashSuccess(e(trans($response)));
     }
+
 }
