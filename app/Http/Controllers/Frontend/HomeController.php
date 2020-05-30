@@ -44,6 +44,7 @@ class HomeController extends Controller
         $user = auth()->user();
         $user->is_password_changed = 1;
         $user->is_logged_in = 1;
+        $user->password = bcrypt(request()->password);
         $user->save();
 
         return redirect()->route('admin.dashboard')->withFlashSuccess('Temporary password has been successfully changed.');
