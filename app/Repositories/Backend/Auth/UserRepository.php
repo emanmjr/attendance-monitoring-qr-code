@@ -55,9 +55,9 @@ class UserRepository extends BaseRepository
     {
         return $this->model
             ->with('roles', 'permissions', 'providers')
-            ->whereHas('roles', function ($query) {
-                $query->where('name', '!=', 'administrator');
-            })
+            // ->whereHas('roles', function ($query) {
+            //     $query->where('name', '!=', 'administrator');
+            // })
             ->whereHas('roles', function ($query) {
                 $query->where('name', '!=', 'super_administrator');
             })
@@ -107,6 +107,7 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data): User
     {
+        $data['password'] = substr(md5(mt_rand()), 0, 7);
         return DB::transaction(function () use ($data) {
 
             $user = $this->model::create([
@@ -135,9 +136,15 @@ class UserRepository extends BaseRepository
                 $user->syncRoles($data['roles']);
                 $user->syncPermissions($data['permissions']);
 
+
                 //Send confirmation email if requested and account approval is off
                 if ($user->confirmed === false && isset($data['confirmation_email']) && ! config('access.users.requires_approval')) {
-                    $user->notify(new UserNeedsConfirmation($user->confirmation_code));
+                    $user->notify(new UserNeedsConfirmation(
+                        url('/account/confirm/') . '/' . $user->confirmation_code,
+                        $user->first_name, 
+                        $data['password'],
+                        $user->email
+                    ));
                 }
 
                 event(new UserCreated($user));

@@ -25,6 +25,7 @@ class UserTableSeeder extends Seeder
             'email' => 'super@admin.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'is_password_changed' => 1,
             'confirmed' => true,
         ]);
 
@@ -35,6 +36,7 @@ class UserTableSeeder extends Seeder
             'email' => 'admin@user.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'is_password_changed' => 1,
             'confirmed' => true,
         ]);
 
@@ -45,6 +47,7 @@ class UserTableSeeder extends Seeder
             'email' => 'customer-service@user.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'is_password_changed' => 1,
             'confirmed' => true,
         ]);
 
@@ -55,6 +58,7 @@ class UserTableSeeder extends Seeder
             'email' => 'manager@user.com',
             'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'is_password_changed' => 1,
             'confirmed' => true,
         ]);
 

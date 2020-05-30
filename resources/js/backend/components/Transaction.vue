@@ -62,7 +62,7 @@
                     
                 </div>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table tbl-main">
                         <thead>
                         <tr class="text-center">
                             <th>MTCN</th>
@@ -72,7 +72,7 @@
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody >
+                        <tbody>
                             <tr v-for="transaction in transactionsData">
                                 <td>{{ transaction.mtcn }}</td>
                                 <td>{{ transaction.senderName }}</td>
@@ -337,5 +337,9 @@
         top: 50%;
         left: 54%;
         z-index: 100;
+    }
+
+    .tbl-main td {
+        text-align: center;
     }   
 </style>

@@ -1,6 +1,6 @@
 <?php
 use App\Http\Controllers\LanguageController;
-
+use App\Http\Controllers\Frontend\HomeController;
 /*
  * Global Routes
  * Routes that are used between both frontend and backend.
@@ -8,6 +8,11 @@ use App\Http\Controllers\LanguageController;
 
 // Switch between the included languages
 Route::get('lang/{lang}', [LanguageController::class, 'swap']);
+
+// Change Temp Pass
+Route::get('temporary/password/change', [HomeController::class, 'showChangeTempPass'])->name('temp.password.change');
+Route::post('password/reset/temporary', [HomeController::class, 'changeTempPass'])->name('temp.password.reset');
+
 
 /*
  * Frontend Routes
@@ -30,5 +35,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      * Note: Administrator has all permissions so you do not have to specify the administrator role everywhere.
      * These routes can not be hit if the password is expired
      */
+
     include_route_files(__DIR__.'/backend/');
+    
 });

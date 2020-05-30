@@ -65,7 +65,7 @@
                             </div><!--col-->
                         </div><!--form-group-->
 
-                        <div class="form-group row">
+                        {{--  <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.access.users.password'))->class('col-md-2 form-control-label')->for('password') }}
 
                             <div class="col-md-10">
@@ -85,7 +85,7 @@
                                     ->placeholder(__('validation.attributes.backend.access.users.password_confirmation'))
                                     ->required() }}
                             </div><!--col-->
-                        </div><!--form-group-->
+                        </div><!--form-group-->  --}}
 
                         <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('active') }}

@@ -18,14 +18,24 @@ class UserNeedsConfirmation extends Notification
      */
     protected $confirmation_code;
 
+    protected $first_name;
+
+    protected $tempPassword;
+
+    protected $email;
+
     /**
      * UserNeedsConfirmation constructor.
      *
      * @param $confirmation_code
+     * @param $user_name
      */
-    public function __construct($confirmation_code)
+    public function __construct($confirmation_code, $first_name, $tempPassword, $email)
     {
         $this->confirmation_code = $confirmation_code;
+        $this->first_name = $first_name;
+        $this->tempPassword = $tempPassword;
+        $this->email = $email;
     }
 
     /**
@@ -49,10 +59,21 @@ class UserNeedsConfirmation extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())
+        // return (new MailMessage())
+        //     ->subject(app_name().': '.__('exceptions.frontend.auth.confirmation.confirm'))
+        //     ->line(__('strings.emails.auth.click_to_confirm'))
+        //     ->action(__('buttons.emails.auth.confirm_account'), route('frontend.auth.account.confirm', $this->confirmation_code), $this->user_name)
+        //     ->line(__('strings.emails.auth.thank_you_for_using_app'));
+
+        return (new MailMessage)
             ->subject(app_name().': '.__('exceptions.frontend.auth.confirmation.confirm'))
-            ->line(__('strings.emails.auth.click_to_confirm'))
-            ->action(__('buttons.emails.auth.confirm_account'), route('frontend.auth.account.confirm', $this->confirmation_code))
-            ->line(__('strings.emails.auth.thank_you_for_using_app'));
+            ->view(
+                'emails.confirmation', [
+                    'confirmation_code' => $this->confirmation_code,
+                    'first_name'        => $this->first_name,
+                    'tempPassword'      => $this->tempPassword,
+                    'email'      => $this->email
+                ]
+        );
     }
 }
