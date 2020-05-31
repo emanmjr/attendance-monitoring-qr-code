@@ -108,28 +108,28 @@ class LoginController extends Controller
         $this->setSessionApiAccessToken();
 
         // Check if Account is someone currently using
-        if (!is_null($user->is_logged_in)){
+        // if (!is_null($user->is_logged_in)){
             
-            // Fire event, Log out user, Redirect
-            event(new UserLoggedOut($request->user()));
+        //     // Fire event, Log out user, Redirect
+        //     event(new UserLoggedOut($request->user()));
 
-            // Remove the socialite session variable if exists
-            if (app('session')->has(config('access.socialite_session_name'))) {
-                app('session')->forget(config('access.socialite_session_name'));
-            }
+        //     // Remove the socialite session variable if exists
+        //     if (app('session')->has(config('access.socialite_session_name'))) {
+        //         app('session')->forget(config('access.socialite_session_name'));
+        //     }
 
-            // Fire event, Log out user, Redirect
-            event(new UserLoggedOut($request->user()));
+        //     // Fire event, Log out user, Redirect
+        //     event(new UserLoggedOut($request->user()));
 
-            // Laravel specific logic
-            $this->guard()->logout();
-            $request->session()->invalidate();
+        //     // Laravel specific logic
+        //     $this->guard()->logout();
+        //     $request->session()->invalidate();
 
-            return redirect()->route('frontend.auth.login')->withFlashDanger('Someone is using this credetial that you are trying to logged in.');
-        }
+        //     return redirect()->route('frontend.auth.login')->withFlashDanger('Someone is using this credetial that you are trying to logged in.');
+        // }
         
-        $user->is_logged_in = 1;
-        $user->save();
+        // $user->is_logged_in = 1;
+        // $user->save();
 
         return redirect()->intended($this->redirectPath());
     }
@@ -144,12 +144,12 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // Tap Is Logged in user to null
-        if(auth()->user()->is_logged_in != null){
-            $user = auth()->user();
-            $user->is_logged_in = null;
-            $user->save();  
+        // if(auth()->user()->is_logged_in != null){
+        //     $user = auth()->user();
+        //     $user->is_logged_in = null;
+        //     $user->save();  
 
-        }
+        // }
 
         // Remove the socialite session variable if exists
         if (app('session')->has(config('access.socialite_session_name'))) {
