@@ -15,6 +15,14 @@ Route::group([ 'middleware' => 'checkTempPass' ], function (){
         Route::get('/receive', 'TransactionController@receive')->name('receive');
     
     });
+
+    // MyWU
+    Route::group(['prefix' => 'mywu', 'as' =>'mywu.'], function(){
+
+        Route::get('/enrollment', 'MyWUController@enrollment')->name('enrollment');
+        Route::get('/customer', 'MyWUController@customer')->name('customer');
+    
+    });
     
 });
 

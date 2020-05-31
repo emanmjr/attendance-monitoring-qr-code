@@ -17,7 +17,7 @@
             </li>  --}}
 
             <li class="nav-item nav-dropdown {{
-                active_class(Route::is('admin/log-viewer*'), 'open')
+                active_class(Route::is('admin/transaction*'), 'open')
             }}">
                     <a class="nav-link nav-dropdown-toggle {{
                         active_class(Route::is('admin/transaction*'))
@@ -38,6 +38,33 @@
                         active_class(Route::is('admin/transaction/receive'))
                     }}" href="{{ route('admin.transaction.receive') }}">
                             Receive
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item nav-dropdown {{
+                active_class(Route::is('admin/mywu*'), 'open')
+            }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                        active_class(Route::is('admin/transaction*'))
+                    }}" href="#">
+                    <i class="nav-icon fas fa-hand-holding-usd"></i> My WU&#8480;
+                </a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                        active_class(Route::is('admin/mywu/customer'))
+                    }}" href="{{ route('admin.mywu.customer') }}">
+                            Customer
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                        active_class(Route::is('admin/mywu/enrollment'))
+                    }}" href="{{ route('admin.mywu.enrollment') }}">
+                            Enrollment
                         </a>
                     </li>
                 </ul>
