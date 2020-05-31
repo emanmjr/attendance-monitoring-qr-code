@@ -16,5 +16,13 @@ Breadcrumbs::for('frontend.user.account.be.copy', function ($trail) {
     $trail->push('My Account', route('admin.dashboard'));
 });
 
+Breadcrumbs::for('admin.mywu.enrollment', function ($trail) {
+    $trail->push('MyWU / Enrollment', route('admin.dashboard'));
+});
+
+Breadcrumbs::for('admin.mywu.customer', function ($trail) {
+    $trail->push('MyWU / Customer', route('admin.dashboard'));
+});
+
 require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';
