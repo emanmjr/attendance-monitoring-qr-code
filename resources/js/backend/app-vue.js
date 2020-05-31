@@ -36,6 +36,7 @@ const store = new Vuex.Store(
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('transactions', require('./components/Transaction.vue').default);
+Vue.component('my-wu-enrollment', require('./components/MyWUEnrollment.vue').default);
 
 
 /**
