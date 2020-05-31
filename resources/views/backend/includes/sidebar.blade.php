@@ -40,6 +40,14 @@
                             Receive
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                        active_class(Route::is('admin/transaction/kyc-lookup'))
+                    }}" href="{{ route('admin.transaction.kyc-lookup') }}">
+                            KYC Lookup
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -53,13 +61,13 @@
                 </a>
 
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/customer'))
                     }}" href="{{ route('admin.mywu.customer') }}">
                             Customer
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/enrollment'))

@@ -21,4 +21,9 @@ class TransactionController extends Controller
     {
         return view('backend.transaction.index');
     }
+
+    public function kycLookUp() 
+    {
+        return view('backend.transaction.kyc-lookup');
+    }
 }
