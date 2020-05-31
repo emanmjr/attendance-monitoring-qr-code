@@ -13,6 +13,7 @@ Route::group([ 'middleware' => 'checkTempPass' ], function (){
     
         Route::get('/send', 'TransactionController@send')->name('send');
         Route::get('/receive', 'TransactionController@receive')->name('receive');
+        Route::get('/kyc-lookup', 'TransactionController@kycLookUp')->name('kyc-lookup');
     
     });
 
@@ -29,3 +30,5 @@ Route::group([ 'middleware' => 'checkTempPass' ], function (){
 
 // Local API Endpoint
 Route::get('api/get-transactions', 'Api\TransactionController@getTransactions')->name('api.transactions');
+
+Route::post('api/enroll-customer', 'Api\MyWUController@enrollCustomer')->name('api.enroll.customer');

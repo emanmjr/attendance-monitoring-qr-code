@@ -37,6 +37,7 @@ const store = new Vuex.Store(
 
 Vue.component('transactions', require('./components/Transaction.vue').default);
 Vue.component('my-wu-enrollment', require('./components/MyWUEnrollment.vue').default);
+Vue.component('kyc-loopup', require('./components/KYC-LookUp.vue').default);
 
 
 /**
