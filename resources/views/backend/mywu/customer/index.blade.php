@@ -18,7 +18,7 @@
         <div class="row mt-3">
             <div class="col-md-2">
                 <div class="form-group">
-                    <select class="form-control" v-model="field_type">
+                    <select class="form-control">
                         <option value="null" disabled selected hidden>Select Field</option>
                         <option value="name">Name</option>
                         <option value="email">Email</option>
@@ -28,14 +28,14 @@
                         <option value="registered_date">Registered Date of User</option>
                     </select>
                 </div>
-            </div>
+        </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <input type="text" class="form-control" v-model="search_string">
+                    <input type="text" class="form-control">
                 </div>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-light" @click="filterTransaction"><i class="fas fa-search"></i></button>
+                <button type="button" class="btn btn-light"><i class="fas fa-search"></i></button>
             </div>
             <div class="col-md-2"></div>
             
