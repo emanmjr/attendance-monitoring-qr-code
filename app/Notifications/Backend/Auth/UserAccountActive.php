@@ -41,3 +41,4 @@ class UserAccountActive extends Notification
             ->line(__('strings.emails.auth.thank_you_for_using_app'));
     }
 }
+
