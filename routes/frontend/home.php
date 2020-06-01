@@ -34,11 +34,3 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
     });
 });
-
-
-
-// Change Temp Pass
-Route::get('password/reset/temporary', [HomeController::class, 'showChangeTempPass'])->name('temp.password.reset.form');
-
-
-

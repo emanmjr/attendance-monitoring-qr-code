@@ -289,11 +289,11 @@ export default {
           // handle success
           if(response.data.foreign_remote_system.reference_no) {
           document.getElementById('loading').style.display = 'none';
-
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'Customer has been successfully enrolled.',
+              title: '<h4>Customer has been successfully enrolled.</h4>',
+              text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
               showConfirmButton: true,
             })
 
