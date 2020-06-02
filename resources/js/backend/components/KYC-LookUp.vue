@@ -244,27 +244,26 @@ export default {
           }
         })
         .catch((error) => {
-          // if( error.response.status == 422 ){
-          //   Swal.fire({
-          //     icon: 'error',
-          //     title: 'Oops...',
-          //     text: 'Something went wrong!',
-          //     footer: 'All fields are required, kindly fill up all the fields.'
-          //   })
-          // } else {
-            
-          // }
-
-          Swal.fire({
+          if( error.response.status == 422 ){
+            Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
+              footer: 'All fields are required, kindly fill up all the fields.'
+            })
+            document.getElementById('loading').style.display = 'none';
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Can you please try again.',
               footer: '' + error
             })
+
+            document.getElementById('loading').style.display = 'none';
+          }
+
           
-
-
-          document.getElementById('loading').style.display = 'none';
         })
       }
     }

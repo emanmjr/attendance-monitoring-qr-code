@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Backend\Api;
 use GuzzleHttp\Client as GuzzleClient;
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\MiddlewareApiTrait;
 
 /**
  * Class DashboardController.
  */
 class TransactionController extends Controller
 {
+    use MiddlewareApiTrait;
     /**
      * @return \Illuminate\View\View
      */
@@ -110,6 +112,9 @@ class TransactionController extends Controller
             $response = json_encode($xml, true);
 
         } catch (ClientErrorResponseException $exception) {
+            if($exception) {
+                $this->getAccessToken();
+            }
             $response = $exception->getResponse()->getBody(true);
         }
 
