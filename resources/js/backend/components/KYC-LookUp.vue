@@ -218,7 +218,7 @@ export default {
         .then((response) => {
           console.log((response.data));
           // handle success
-          if(response.data.foreign_remote_system.reference_no) {
+          if(response.data) {
           document.getElementById('loading').style.display = 'none';
 
           //   Swal.fire({
