@@ -28,7 +28,13 @@ Route::group([ 'middleware' => 'checkTempPass' ], function (){
 });
 
 
-// Local API Endpoint
+// Transactions API 
 Route::get('api/get-transactions', 'Api\TransactionController@getTransactions')->name('api.transactions');
 
+// KYC LOOKUP Api
+Route::post('api/kyc-lookup', 'Api\TransactionController@kycLookUp')->name('api.kyc-lookup');
+
+// MYWU Enrollment Api
 Route::post('api/enroll-customer', 'Api\MyWUController@enrollCustomer')->name('api.enroll.customer');
+
+

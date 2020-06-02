@@ -6,23 +6,52 @@
           </div>
             <!-- <form> -->
                 <div class="form-row">
-                    <div class="col-md-1"><h4>Search Type:</h4></div>
+                    <div class="col-md-2"><h4>Search Type:</h4></div>
                     <div class="col-md-3">
-                      <select class="form-control" id="search_type" v-model="search_type_field">
+                      <select class="form-control" id="search_type" v-model="search.search_type_field">
                       <option value="null" disabled selected hidden>Select Search Type</option>
                       <option value="COMPLIANCE_ID">Compliance ID</option>
                       <option value="PHONE_NUMBER">Phone Number</option>
                       <option value="MYWU_Number">My WU Number</option>
                     </select>
                     </div>
-                    <div class="col-md-2">
-                      <input type="text" class="form-control" id="search_type" v-model="search_type" placeholder="">
+                    
+                </div>
+                <div class="form-row mt-4">
+                    <div v-if="showSearchFirstName" class="form-group col-md-2">
+                      <label for="search_first_name">First Name
+                      </label>
+                      <input type="text" class="form-control" id="search_first_name" v-model="search.first_name" placeholder="">
                     </div>
-                    <div class="col-md-2">
-                      <button type="button" class="btn btn-primary btn-dashboard" @click="refreshTransactions"><i class="fas fa-search"></i></button>
+                    <div v-if="showSearchLastName" class="form-group col-md-2">
+                      <label for="search_last_name">Last Name
+                      </label>
+                      <input type="text" class="form-control" id="search_last_name" v-model="search.last_name" placeholder="">
+                    </div>
+                    <div v-if="showSearchMyWUNo"  class="form-group col-md-2">
+                      <label for="search_my_wu_number">My WU No.
+                      </label>
+                      <input type="text" class="form-control" id="search_my_wu_number" v-model="search.my_wu_number" placeholder="">
+                    </div>
+                    <div v-if="showSearchIdType" class="form-group col-md-2">
+                      <label for="search_id_type">ID Type
+                      </label>
+                      <input type="text" class="form-control" id="search_id_type" v-model="search.id_type" placeholder="">
+                    </div>
+                    <div v-if="showSearchIdNum" class="form-group col-md-2">
+                      <label for="search_id_num">ID Number
+                      </label>
+                      <input type="text" class="form-control" id="search_id_num" v-model="search.id_num" placeholder="">
+                    </div>
+                    <div v-if="showSearchPhoneNum" class="form-group col-md-2">
+                      <label for="search_phone_num">Phone Number
+                      </label>
+                      <input type="text" class="form-control" id="search_phone_num" v-model="search.phone_num" placeholder="">
+                    </div>
+                    <div v-if="showSearchTypeButton" class="form-group col-md-2">
+                      <button type="button" style="margin-top: 28px;" class="btn btn-primary btn-dashboard" @click="searchKYC"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
-
                 <hr>
 
                 <h4 class="mt-3 mb-3">Basic Information</h4>
@@ -116,28 +145,62 @@ export default {
           phone_number: '',
           address_type: '',
           contact_country_code: ''
-        }
+        },
+        search: {
+          first_name: '',
+          last_name: '',
+          my_wu_number: '',
+          id_type: '',
+          id_num: '',
+          phone_num: '',
+          search_type_field: '',
+        },
+        
+        showSearchFirstName: false,
+        showSearchLastName: false,
+        showSearchMyWUNo: false,
+        showSearchIdType: false,
+        showSearchIdNum: false,
+        showSearchPhoneNum: false,
+        showSearchTypeButton: false,
       }
     },
     watch: {
-      checkEmployedBusiness (data) {
+        checkSearchParam(data){
+        this.showSearchTypeButton = true;
+        if(data == 'COMPLIANCE_ID') {
+          this.showSearchFirstName = true;
+          this.showSearchLastName = true;
+          this.showSearchMyWUNo = true;
+          this.showSearchIdType = true;
+          this.showSearchIdNum = true;
+          this.showSearchPhoneNum = false;
+        }
 
-        if(data == 1){
-          this.is_employed_wbusiness = true;
-        } else {
-          this.is_employed_wbusiness = false;
+        if(data == 'PHONE_NUMBER') {
+          this.showSearchFirstName = true;
+          this.showSearchLastName = true;
+          this.showSearchMyWUNo = true;
+          this.showSearchIdType = false;
+          this.showSearchIdNum = false;
+          this.showSearchPhoneNum = true;
         }
-      },
-      checkPermanentAdd (data) {
-        console.log(data)
-        if(data == 1){
-          this.is_permanent = true;
-        } else {
-          this.is_permanent = false;
+
+        if(data == 'MYWU_Number') {
+          this.showSearchFirstName = true;
+          this.showSearchLastName = true;
+          this.showSearchMyWUNo = true;
+          this.showSearchIdType = false;
+          this.showSearchIdNum = false;
+          this.showSearchPhoneNum = false;
         }
+
       }
     },
     computed: {
+      checkSearchParam() {
+        return this.search.search_type_field;
+      },
       checkEmployedBusiness() {
         return this.form.employed_wbusiness;
       },
@@ -149,32 +212,34 @@ export default {
       document.getElementById('loading').style.display = 'none';
     },
     methods: {
-      submitEnroll() {
+      searchKYC() {
         document.getElementById('loading').style.display = 'block';
-        axios.post('/admin/api/enroll-customer', this.form)
+        axios.post('/admin/api/kyc-lookup', this.search)
         .then((response) => {
+          console.log((response.data));
           // handle success
-          if(response.data.foreign_remote_system.reference_no) {
+          if(response.data) {
           document.getElementById('loading').style.display = 'none';
 
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Customer has been successfully enrolled.',
-              showConfirmButton: true,
-            })
+          //   Swal.fire({
+          //     position: 'top-end',
+          //     icon: 'success',
+          //     title: 'Customer has been successfully enrolled.',
+          //     showConfirmButton: true,
+          //   })
 
-            this.form.first_name = '';
-            this.form.last_name = '';
-            this.form.address = '';
-            this.form.city = '';
-            this.form.postal_code = '';
-            this.form.country_code = '';
-            this.form.currency_code = '';
-            this.form.destination_country_code = '';
-            this.form.destination_currency_code = '';
-            this.form.sender_currency_code = '';
-            this.form.phone_number = '';
+            this.form.reference_no = response.data.foreign_remote_system.reference_no ? response.data.foreign_remote_system.reference_no : '';
+            this.form.my_wu_no = response.data.customers.customer.mywu_details.mywu_number ? response.data.customers.customer.mywu_details.mywu_number : '';
+            this.form.first_name = response.data.customers.customer.name.first_name ? response.data.customers.customer.name.first_name : '';
+            this.form.last_name = response.data.customers.customer.name.last_name ? response.data.customers.customer.name.last_name : '';
+            this.form.address = response.data.customers.customer.address.addr_line1 ? response.data.customers.customer.address.addr_line1 : '';
+            this.form.city = response.data.customers.customer.address.city ? response.data.customers.customer.address.city : '';
+            this.form.postal_code = response.data.customers.customer.address.postal_code ? response.data.customers.customer.address.postal_code : '';
+            this.form.country_code = response.data.customers.customer.address.country_details.ctry_code ? response.data.customers.customer.address.country_details.ctry_code : '' ;
+            this.form.country_name = response.data.customers.customer.address.country_details.ctry_name ? response.data.customers.customer.address.country_details.ctry_name : '';
+            this.form.phone_number = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.National_number : '';
+            this.form.address_type = response.data.customers.customer.address.addr_type ? response.data.customers.customer.address.addr_type : '';
+            this.form.contact_country_code = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.ctry_code : ''
 
           }
         })
@@ -186,18 +251,19 @@ export default {
               text: 'Something went wrong!',
               footer: 'All fields are required, kindly fill up all the fields.'
             })
+            document.getElementById('loading').style.display = 'none';
           } else {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Something went wrong!',
+              text: 'Can you please try again.',
               footer: '' + error
             })
+
+            document.getElementById('loading').style.display = 'none';
           }
+
           
-
-
-          document.getElementById('loading').style.display = 'none';
         })
       }
     }
