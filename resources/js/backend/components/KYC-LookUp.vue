@@ -12,7 +12,7 @@
                       <option value="null" disabled selected hidden>Select Search Type</option>
                       <option value="COMPLIANCE_ID">Compliance ID</option>
                       <option value="PHONE_NUMBER">Phone Number</option>
-                      <option value="MYWU_Number">My WU Number</option>
+                      <option value="MYWU_NUMBER">My WU Number</option>
                     </select>
                     </div>
                     
