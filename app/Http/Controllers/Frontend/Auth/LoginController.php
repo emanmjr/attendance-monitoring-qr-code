@@ -168,6 +168,25 @@ class LoginController extends Controller
 
     public function setSessionApiAccessToken()
     {
-        if(!session()->get('access_token')) $this->getAccessToken();
+        if(!session()->get('access_token')){
+            $token = \App\Models\Auth\Token::where('name', 'middleware_api')->first();
+            if( !$token ) {
+                $newToken = new  \App\Models\Auth\Token();
+                $newToken->name = 'middleware_api';
+                $newToken->access_token = $this->getAccessToken();
+                $newToken->save();
+            } 
+
+            if(\Carbon\Carbon::parse($token->updated_at)->diffInDays(\Carbon\Carbon::now()) > 3) {
+                $token->access_token = $this->getAccessToken();
+                $token->save();
+            }
+
+            // Add to session access token for middleware api
+            session()->put(
+                'access_token', 
+                'Bearer ' . $token->access_token
+            );
+        } 
     }
 }
