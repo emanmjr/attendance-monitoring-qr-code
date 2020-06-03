@@ -44,6 +44,8 @@ class MyWUController extends Controller
             $res = $client->request('POST', 'http://3.1.170.158/mw/public/remittance/mywu', [
                 'json' => [
                     "Category" =>"Enroll",
+                    "channelType" => "H2H",
+                    "channelVersion" => "9500",
                     "countryCode" => request()->country_code,
                     "firstName" => request()->first_name,
                     "lastName" => request()->last_name,
@@ -51,6 +53,7 @@ class MyWUController extends Controller
                     "city" => request()->city,
                     "phoneNum" => request()->phone_number,
                     "postalCode" => request()->postal_code,
+                    "gender" => request()->gender,
                     "currencyCode" => request()->currency_code,
                     "destinationCountryCode" => request()->destination_country_code,
                     "destinationCurrencyCode" => request()->destination_currency_code,

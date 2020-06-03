@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-3">
+                    <div class="form-group col-md-3">
                         <label for="address_type">Address Type</label>
                         <input type="text" class="form-control" id="address_type" v-model="form.address_type" readonly>
                     </div>
