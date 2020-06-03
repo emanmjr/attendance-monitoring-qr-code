@@ -28,6 +28,14 @@
                         <label for="last_name">Last Name<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" id="last_name" v-model="form.last_name">
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="gender">Gender<span style="color:red;">*</span></label>
+                        <select class="form-control" id="gender" v-model="form.gender">
+                          <option value="null" disabled selected hidden></option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -240,6 +248,7 @@ export default {
           // country_2: '',
           // countopt_mobile_nory_2: '',
           // opt_email: '',
+          gender: '',
           address: '',
           city: '',
           postal_code: '',

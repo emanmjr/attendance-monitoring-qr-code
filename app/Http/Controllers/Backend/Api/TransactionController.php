@@ -86,6 +86,8 @@ class TransactionController extends Controller
 
             $json = [
                 "searchParameter" => request()->search_type_field,
+                "channelType" => "H2H",
+                "channelVersion" => "9500",
                 "pfcFilter" => "FSA",
                 "transactionType" => "SEND",
                 "searchType" => "M",
@@ -112,9 +114,6 @@ class TransactionController extends Controller
             $response = json_encode($xml, true);
 
         } catch (ClientErrorResponseException $exception) {
-            if($exception) {
-                $this->getAccessToken();
-            }
             $response = $exception->getResponse()->getBody(true);
         }
 
