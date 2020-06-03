@@ -36,7 +36,15 @@
                     <div v-if="showSearchIdType" class="form-group col-md-2">
                       <label for="search_id_type">ID Type
                       </label>
-                      <input type="text" class="form-control" id="search_id_type" v-model="search.id_type" placeholder="">
+                      <select class="form-control" id="id_type" v-model="search.id_type">
+                        <option value="null" disabled selected hidden>Select Search Type</option>
+                        <option value="A">Passport</option>
+                        <option value="B">National ID</option>
+                        <option value="C">Drive License</option>
+                        <option value="E">Work Permit</option>
+                        <option value="Q">Asylum Seeker Temp Residence Permit</option>
+                      </select>
+                      <!-- <input type="text" class="form-control" id="search_id_type" v-model="search.id_type" placeholder=""> -->
                     </div>
                     <div v-if="showSearchIdNum" class="form-group col-md-2">
                       <label for="search_id_num">ID Number
