@@ -186,7 +186,7 @@ export default {
           this.showSearchPhoneNum = true;
         }
 
-        if(data == 'MYWU_Number') {
+        if(data == 'MYWU_NUMBER') {
           this.showSearchFirstName = true;
           this.showSearchLastName = true;
           this.showSearchMyWUNo = true;
