@@ -26,10 +26,10 @@ trait MiddlewareApiTrait {
                 'http://3.1.170.158/mw/public/oauth/token', [
                 'json' => [
                     "grant_type" => "password",
-                    "username" => "AdminTool@test.com",
-                    "password" => "6Nf&8C9lIyaws",
-                    "client_id" => "6",
-                    "client_secret" => "14WfCIBJLEcTLyHe9eA8hQxFs8I2I5h6fBvf423U",
+                    "username" => env('MIDDLEWARE_API_USERNAME'),
+                    "password" => env('MIDDLEWARE_API_PASSWORD'),
+                    "client_id" => env("MIDDLEWARE_API_CLIENT_ID"),
+                    "client_secret" => env("MIDDLEWARE_API_CLIENT_SECRET"),
                     "scope" => "*"
                 ]
             ]);
