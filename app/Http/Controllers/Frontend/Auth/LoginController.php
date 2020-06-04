@@ -177,7 +177,7 @@ class LoginController extends Controller
                 $token->save();
             } else {
                 $updatedToken = optional($token)->updated_at;
-                if(\Carbon\Carbon::parse()->diffInDays(\Carbon\Carbon::now()) > 3) {
+                if(\Carbon\Carbon::parse($updatedToken)->diffInDays(\Carbon\Carbon::now()) > 3) {
                     $token->access_token = $this->getAccessToken();
                     $token->save();
                 }
