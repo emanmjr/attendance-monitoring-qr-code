@@ -209,7 +209,7 @@
         watch: {
             transactions(data) {
               this.transactionsData = data;
-
+              console.log(data);
               if(data){
                   document.getElementById('loading').style.display = 'none';
                   this.totalTransactions = data.length;
