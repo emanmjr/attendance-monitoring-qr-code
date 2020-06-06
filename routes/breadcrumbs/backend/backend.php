@@ -28,6 +28,9 @@ Breadcrumbs::for('admin.mywu.customer', function ($trail) {
     $trail->push('MyWU / Customer', route('admin.dashboard'));
 });
 
+Breadcrumbs::for('admin.mywu.das-request', function ($trail) {
+    $trail->push('MyWU / DAS Request', route('admin.dashboard'));
+});
 
 
 require __DIR__.'/auth.php';

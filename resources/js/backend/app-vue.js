@@ -37,8 +37,18 @@ const store = new Vuex.Store(
 
 Vue.component('transactions', require('./components/Transaction.vue').default);
 Vue.component('my-wu-enrollment', require('./components/MyWUEnrollment.vue').default);
-Vue.component('kyc-loopup', require('./components/KYC-LookUp.vue').default);
+Vue.component('kyc-loopup', require('./components/KYCLookUp.vue').default);
+Vue.component('das-request', require('./components/DasRequest.vue').default);
 
+Vue.config.errorHandler = function(err, vm, info) {
+  console.log(`Error: ${err.toString()}\nInfo: ${info}`);
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Can you please try again.',
+    footer: '' + err.toString()
+  })
+}
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

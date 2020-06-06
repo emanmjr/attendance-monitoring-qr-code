@@ -21,4 +21,9 @@ class MyWUController extends Controller
     {
         return view('backend.mywu.customer.index');
     }
+
+    public function dasRequest()
+    {
+        return view('backend.mywu.das-request.index');
+    }
 }
