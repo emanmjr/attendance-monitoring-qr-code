@@ -6,7 +6,7 @@
           </div>
             <!-- <form> -->
                 <div class="form-row">
-                    <div class="col-md-2"><h4>Search Type:</h4></div>
+                    <div class="col-md-2"><h3>Search Type:</h3></div>
                     <div class="col-md-3">
                       <select class="form-control" id="search_type" v-model="search.search_type_field">
                       <option value="null" disabled selected hidden>Select Search Type</option>

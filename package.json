@@ -64,6 +64,7 @@
         "node": ">=6.0.0"
     },
     "dependencies": {
+        "iso-country-currency": "^0.5.1",
         "jw-vue-pagination": "^1.0.3",
         "vuex": "^3.4.0"
     }

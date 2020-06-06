@@ -75,6 +75,13 @@
                             Enrollment
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                        active_class(Route::is('admin/mywu/das-request'))
+                    }}" href="{{ route('admin.mywu.das-request') }}">
+                            DAS Request
+                        </a>
+                    </li>
                 </ul>
             </li>
 
