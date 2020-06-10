@@ -255,7 +255,7 @@ export default {
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
-              footer: 'Please see fields that are required, kindly fill up all the fields.'
+              footer: 'Please see fields that are required.'
             })
 
             this.errorResponse = error.response.data.errors;
