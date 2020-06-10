@@ -6,6 +6,8 @@ use GuzzleHttp\Client as GuzzleClient;
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use App\Http\Controllers\Controller;
 
+use App\Models\DasRequestStorage;
+
 /**
  * Class DashboardController.
  */
@@ -41,7 +43,7 @@ class MyWUController extends Controller
         ]);
    
         try {
-            $res = $client->request('POST', 'http://3.1.170.158/mw/public/remittance/mywu', [
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/mywu', [
                 'json' => [
                     "Category" =>"Enroll",
                     "channelType" => "H2H",
@@ -81,11 +83,7 @@ class MyWUController extends Controller
     public function dasRequest()
     {
 
-        request()->validate([
-            'das_request_type' => 'required',
-        ]);
-
-    
+        // Setting Headers
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' =>  session()->get('access_token')
@@ -95,15 +93,71 @@ class MyWUController extends Controller
             'headers' => $headers
         ]);
 
+        // Validate Request
+        request()->validate([
+            'das_request_type' => 'required',
+        ]);
+
+
+        // Prepare need filter params for different kind of type request
         $queryFilters = [
             'queryFilter1' => $this->queryFilter1TypeRequest(request()),
             'queryFilter2' => $this->queryFilter2TypeRequest(request()),
         ];
 
+
+        // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
+
+
+
+        // Check type if type of request is already in DB
+        $response = $this->checkIfAlreadyStored($json);
         
+        if(!$response) {
+
+            // RESPONSE
+            $response = $this->requestToMiddleware($client, $json);
+
+            $dasRequest = new DasRequestStorage();
+            $dasRequest->type_of_request = $json['dasRequest'];
+            $dasRequest->filters = json_encode($json);
+            $dasRequest->data = json_encode($response);
+            $dasRequest->save();
+
+        }
+
+        if(!isset($dasRequest)){
+
+            // Check query filter if already exist
+            $response = $this->checkFilters($response, $json);
+    
+            if (!$response){
+
+                // RESPONSE
+                $response = $this->requestToMiddleware($client, $json);
+
+                $dasRequest = new DasRequestStorage();
+                $dasRequest->type_of_request = $json['dasRequest'];
+                $dasRequest->filters = json_encode($json);
+                $dasRequest->data = json_encode($response);
+                $dasRequest->save();
+
+            } else {
+                $response = $this->decodeStoredData($response);
+            }
+
+        }
+
+        return $response;
+        
+    }
+
+
+    public function requestToMiddleware($client, $json)
+    {
         try {
-            $res = $client->request('POST', 'http://3.1.170.158/mw/public/remittance/send', [
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/send', [
                 'json' => $json
             ]);
 
@@ -118,13 +172,12 @@ class MyWUController extends Controller
                     ->DATA_CONTEXT
                     ->RECORDSET;
 
-            $response = json_encode($xml, true);
+            return json_encode($xml, true);
 
         } catch (ClientErrorResponseException $exception) {
-            $response = $exception->getResponse()->getBody(true);
+            return $exception->getResponse()->getBody(true);
         }
 
-        return $response;
     }
 
     public function queryFilter1TypeRequest($request)
@@ -288,7 +341,39 @@ class MyWUController extends Controller
                 "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
             ];
         }
-
         
+    }
+
+    public function checkIfAlreadyStored($data)
+    {
+        $dasRequestStorages = DasRequestStorage::where('type_of_request', $data['dasRequest'])->get();
+        
+        if ( count($dasRequestStorages) == 0) return false;
+
+        return $dasRequestStorages->toArray();
+    }
+
+    public function checkFilters($data, $jsonData)
+    {
+        foreach($data as $key => $value){
+            // Check if filters same with jsonData
+            if (json_decode($value['filters'], true) == $jsonData){
+                if(!\Carbon\Carbon::parse($value['created_at'])->isToday()) {
+                    DasRequestStorage::find($value['id'])->delete();
+                    return false;
+                }
+
+                return $value;
+            }
+        }
+
+        // No Data Store found
+        return false;
+
+    }
+
+    public function decodeStoredData($response)
+    {
+        return json_decode($response['data'], true);
     }
 }

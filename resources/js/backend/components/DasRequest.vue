@@ -34,13 +34,13 @@
                     </div>
                     <div class="col-md-3" v-if="this.isViewIsoCode1">
                         <div class="form-group">
-                          <label for="search_first_name">Country Code <small>(2 Digit ISO)</small></label>
+                          <label for="search_first_name"><label v-if="this.isViewIsoCode2">Originating&nbsp;</label>Country Code <small>(2 Digit ISO)</small></label>
                             <input type="text" class="form-control" v-model="isoLanguageCode">
                         </div>
                     </div>
                     <div class="col-md-3" v-if="this.isViewIsoCode2">
                         <div class="form-group">
-                          <label for="search_first_name">Country Code <small>(2 Digit ISO)</small></label>
+                          <label for="search_first_name"><label v-if="this.isViewIsoCode2">Destination&nbsp;</label>Country Code <small>(2 Digit ISO)</small></label>
                             <input type="text" class="form-control" v-model="isoLanguageCode1">
                         </div>
                     </div>
