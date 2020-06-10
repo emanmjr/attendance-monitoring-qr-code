@@ -259,24 +259,14 @@ export default {
             })
 
             this.errorResponse = error.response.data.errors;
+          } else {
+             Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: '' + error
+            })
           }
-          // if( error.response.status == 422 ){
-          //   Swal.fire({
-          //     icon: 'error',
-          //     title: 'Oops...',
-          //     text: 'Something went wrong!',
-          //     footer: 'All fields are required, kindly fill up all the fields.'
-          //   })
-          // } else {
-          //   Swal.fire({
-          //     icon: 'error',
-          //     title: 'Oops...',
-          //     text: 'Something went wrong!',
-          //     footer: '' + error
-          //   })
-          // }
-          
-
 
           document.getElementById('loading').style.display = 'none';
         })
