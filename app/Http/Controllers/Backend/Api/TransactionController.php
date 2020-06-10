@@ -28,7 +28,7 @@ class TransactionController extends Controller
         ]);
    
         try {
-            $res = $client->request('POST', 'http://3.1.170.158/mw/public/db-syncing/get-logs', [
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/db-syncing/get-logs', [
                 'form_params' => [
                     'date' => request()->dateTransaction
                 ]
@@ -99,7 +99,7 @@ class TransactionController extends Controller
                 "phoneNum" => request()->phone_num ? request()->phone_num : ""
             ];
 
-            $res = $client->request('POST', 'http://3.1.170.158/mw/public/remittance/kyc', [
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
                 'json' => $json
             ]);
 

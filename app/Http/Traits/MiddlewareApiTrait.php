@@ -23,7 +23,7 @@ trait MiddlewareApiTrait {
         try {
             $res = $this->client->request(
                 'POST',
-                'http://3.1.170.158/mw/public/oauth/token', [
+                env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/oauth/token', [
                 'json' => [
                     "grant_type" => "password",
                     "username" => env('MIDDLEWARE_API_USERNAME'),
