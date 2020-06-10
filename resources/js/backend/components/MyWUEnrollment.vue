@@ -117,13 +117,13 @@
                       <input type="text" class="form-control" :class="errorResponse.transfer_reason_2 ? 'is-invalid' : ''" id="transfer_reason_2" v-model="form.transfer_reason_2">
                   </div>
                   <div class="form-group col-md-3">
-                      <label for="id_on_file">ID On File</label>
+                      <label for="id_on_file">ID On File (Y/N)</label>
                       <input type="text" class="form-control" :class="errorResponse.id_on_file ? 'is-invalid' : ''" id="id_on_file" v-model="form.id_on_file">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                      <label for="preferred_language">Preferred Language (Ex. "EN ES")</label>
+                      <label for="preferred_language">Preferred Language (Ex. "EN, "ES")</label>
                       <input type="text" class="form-control" :class="errorResponse.preferred_language ? 'is-invalid' : ''" id="preferred_language" v-model="form.preferred_language">
                   </div>
                   <div class="form-group col-md-3">
