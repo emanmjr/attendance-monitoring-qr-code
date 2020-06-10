@@ -18,7 +18,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="first_name">First Name<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="first_name" v-model="form.first_name" required>
+                        <input type="text" class="form-control" :class="errorResponse.first_name ? 'is-invalid' : ''" id="first_name" v-model="form.first_name" required>
                     </div>
                     <!-- <div class="form-group col-md-4">
                         <label for="middle_name">Middle Name</label>
@@ -26,11 +26,11 @@
                     </div> -->
                     <div class="form-group col-md-3">
                         <label for="last_name">Last Name<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="last_name" v-model="form.last_name">
+                        <input type="text" class="form-control" :class="errorResponse.last_name ? 'is-invalid' : ''"  id="last_name" v-model="form.last_name">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="gender">Gender<span style="color:red;">*</span></label>
-                        <select class="form-control" id="gender" v-model="form.gender">
+                        <select class="form-control" :class="errorResponse.gender ? 'is-invalid' : ''" id="gender" v-model="form.gender">
                           <option value="null" disabled selected hidden></option>
                           <option value="M">Male</option>
                           <option value="F">Female</option>
@@ -40,179 +40,101 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="address">Address<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="address" v-model="form.address" required>
+                        <input type="text" class="form-control" :class="errorResponse.address ? 'is-invalid' : ''" id="address" v-model="form.address" required>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="city">City<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="city" v-model="form.city">
+                        <input type="text" class="form-control" :class="errorResponse.city ? 'is-invalid' : ''" id="city" v-model="form.city">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="postal_code">Postal Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="postal_code" v-model="form.postal_code">
+                        <input type="text" class="form-control" :class="errorResponse.postal_code ? 'is-invalid' : ''" id="postal_code" v-model="form.postal_code">
                     </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                         <label for="phone_number">Phone Number<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="phone_number" v-model="form.phone_number" required>
+                        <input type="text" class="form-control" :class="errorResponse.phone_number ? 'is-invalid' : ''" id="phone_number" v-model="form.phone_number" required>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="country_code">Country Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="country_code" v-model="form.country_code" required>
+                        <input type="text" class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" id="country_code" v-model="form.country_code" required>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="currency_code">Currency Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="currency_code" v-model="form.currency_code">
+                        <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code">
                     </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                       <label for="destination_country_code">Destination Country Code<span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" id="destination_country_code" v-model="form.destination_country_code">
+                      <input type="text" class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" id="destination_country_code" v-model="form.destination_country_code">
                   </div>
                   <div class="form-group col-md-3">
                       <label for="destination_currency_code">Currency Code of Destination Country <span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" id="destination_currency_code" v-model="form.destination_currency_code">
+                      <input type="text" class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" id="destination_currency_code" v-model="form.destination_currency_code">
                   </div>
                   <div class="form-group col-md-3">
                       <label for="sender_currency_code">Currency Code of  Money  Being Sent<span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" id="sender_currency_code" v-model="form.sender_currency_code">
+                      <input type="text" class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" id="sender_currency_code" v-model="form.sender_currency_code">
                   </div>
                 </div>
-                <!-- <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="date_of_birth">Date of Birth<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="date_of_birth" v-model="form.date_of_birth">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="occupation_business">Occupation/Nature of Business<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="occupation_business" v-model="form.occupation_business">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="position">Position</label>
-                        <input type="text" class="form-control" id="position" v-model="form.position">
-                    </div>
-                </div> -->
                 <div class="form-row">
-                    <!-- <div class="form-group col-md-4">
-                        <label for="name_of_employer_business">Name of Employer/Name of Business<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="name_of_employer_business" v-model="form.name_of_employer_business">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="">Employed or With Business?</label>
-                        <div class="col-md-12 mt-1">
-                            <div class="form-check" style="display: inline;">
-                                <input class="form-check-input" type="radio" v-model="form.employed_wbusiness" id="employed_wbusiness1" value="1" >
-                                <label class="form-check-label" for="employed_wbusiness1">
-                                    Yes
-                                </label>
-                            </div>
-                            <div class="form-check ml-2" style="display: inline;">
-                                <input class="form-check-input" type="radio" v-model="form.employed_wbusiness" id="employed_wbusiness2" value="0">
-                                <label class="form-check-label" for="employed_wbusiness2">
-                                    No
-                                </label>
-                            </div>
-                        </div>
-                            
-                    </div>
-                    
-                    <div class="form-group col-md-3">
-                        <label for="tin">Tin<span v-if="is_employed_wbusiness" style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="tin" v-model="form.tin">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="sss_gsis">SSS OR GSIS<span v-if="is_employed_wbusiness" style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="sss_gsis" v-model="form.sss_gsis">
-                    </div> -->
+                  <div class="form-group col-md-3">
+                      <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
+                      <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="receiver_type">Receiver Type </label>
+                      <input type="text" class="form-control" :class="errorResponse.receiver_type ? 'is-invalid' : ''" id="receiver_type" v-model="form.receiver_type">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="transfer_frequency">Transfer Frequency</label>
+                      <input type="text" class="form-control" :class="errorResponse.transfer_frequency ? 'is-invalid' : ''" id="transfer_frequency" v-model="form.transfer_frequency">
+                  </div>
                 </div>
-                <!-- <h4 class="mt-3">Contact Information</h4>
-                <hr>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="country_code">Country Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="country_code" v-model="form.country_code">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="area_mobile">Area Code + Mobile Number<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="area_mobile" v-model="form.area_mobile">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" v-model="form.email">
-                    </div>
+                  <div class="form-group col-md-3">
+                      <label for="wu_transfer_frequency">WU Transfer Frequency</label>
+                      <input type="text" class="form-control" :class="errorResponse.wu_transfer_frequency ? 'is-invalid' : ''" id="wu_transfer_frequency" v-model="form.wu_transfer_frequency">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="interests">Interests </label>
+                      <input type="text" class="form-control" :class="errorResponse.interests ? 'is-invalid' : ''" id="interests" v-model="form.interests">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="mode_to_receive">Mode to Receive</label>
+                      <input type="text" class="form-control" :class="errorResponse.mode_to_receive ? 'is-invalid' : ''" id="mode_to_receive" v-model="form.mode_to_receive">
+                  </div>
                 </div>
-
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="present_add_1">Present Address (Line 1)<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="present_add_1" v-model="form.present_add_1">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="present_add_2">Present Address (Line 2)</label>
-                        <input type="text" class="form-control" id="present_add_2" v-model="form.present_add_2">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="country_1">Country</label>
-                        <input type="text" class="form-control" id="country_1" v-model="form.country_1">
-                    </div>
+                  <div class="form-group col-md-3">
+                      <label for="transfer_reason_1">Transfer Reason 1</label>
+                      <input type="text" class="form-control" :class="errorResponse.transfer_reason_1 ? 'is-invalid' : ''" id="transfer_reason_1" v-model="form.transfer_reason_1">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="transfer_reason_2">Transfer Reason 2</label>
+                      <input type="text" class="form-control" :class="errorResponse.transfer_reason_2 ? 'is-invalid' : ''" id="transfer_reason_2" v-model="form.transfer_reason_2">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="id_on_file">ID On File</label>
+                      <input type="text" class="form-control" :class="errorResponse.id_on_file ? 'is-invalid' : ''" id="id_on_file" v-model="form.id_on_file">
+                  </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="">Is Permanent Address is the same with Present Address?</label>
-                    <div class="col-md-12 mt-1">
-                        <div class="form-check" style="display: inline;">
-                            <input class="form-check-input" type="radio" v-model="form.permanent_add" id="permanent_add1" value="1">
-                            <label class="form-check-label" for="permanent_add1">
-                                Yes
-                            </label>
-                        </div>
-                        <div class="form-check ml-2" style="display: inline;">
-                            <input class="form-check-input" type="radio" v-model="form.permanent_add" id="permanent_add2" value="0">
-                            <label class="form-check-label" for="permanent_add2">
-                                No
-                            </label>
-                        </div>
-                    </div> 
-                </div>
-
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="permanent_1">Permanent Address (Line 1)<span v-if="is_permanent" style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="permanent_add1" v-model="form.permanent_add1">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="permanent_2">Permanent Address (Line 2)</label>
-                        <input type="text" class="form-control" id="permanent_add2" v-model="form.permanent_add2">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="country_1">Country</label>
-                        <input type="text" class="form-control" id="country_2" v-model="form.country_2">
-                    </div>
+                  <div class="form-group col-md-3">
+                      <label for="preferred_language">Preferred Language (Ex. "EN ES")</label>
+                      <input type="text" class="form-control" :class="errorResponse.preferred_language ? 'is-invalid' : ''" id="preferred_language" v-model="form.preferred_language">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="card_status">Card Status</label>
+                      <input type="text" class="form-control" :class="errorResponse.card_status ? 'is-invalid' : ''" id="card_status" v-model="form.card_status">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="enrollment_source">Enroll Source</label>
+                      <input type="text" class="form-control" :class="errorResponse.enrollment_source ? 'is-invalid' : ''" id="enrollment_source" v-model="form.enrollment_source">
+                  </div>
                 </div>
-
-                <h4 class="mt-3">Opt In / Opt Out</h4>
-                <hr>
-                <div class="form-group">
-                    <label for="">How do you want us to get in touch with you and receive news and updates about My WU&#8480;
-                    ?</label>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="opt_mobile_no" v-model="form.opt_mobile_no">
-                            <label class="form-check-label" for="opt_mobile_no">
-                            Mobile Number
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="opt_email" v-model="form.opt_email">
-                            <label class="form-check-label" for="opt_email">
-                            Email
-                            </label>
-                        </div>
-                    </div>
-                </div> -->
                 <hr>
 
                 <button type="button" class="btn btn-primary btn-dashboard" @click="submitEnroll()">Enroll Now</button>
@@ -228,26 +150,8 @@ export default {
         is_employed_wbusiness: false,
         is_permanent: false,
         form: {
-          // employed_wbusiness: '1',
-          // permanent_add: '0',
           first_name: '',
-          // middle_name: '',
           last_name: '',
-          // date_of_birth: '',
-          // occupation_business: '',
-          // position: '',
-          // name_of_employer_business: '',
-          // employed_wbusiness: '',
-          // country_code: '',
-          // area_mobile: '',
-          // email: '',
-          // present_add_1: '',
-          // present_add_2: '',
-          // country_1: '',
-          // permanent_add1: '',
-          // country_2: '',
-          // countopt_mobile_nory_2: '',
-          // opt_email: '',
           gender: '',
           address: '',
           city: '',
@@ -258,7 +162,20 @@ export default {
           destination_currency_code: '',
           sender_currency_code: '',
           phone_number: '',
-        }
+          originating_country_code: '',
+          receiver_type: '',
+          transfer_frequency: '',
+          wu_transfer_frequency: '',
+          interests: '',
+          mode_to_receive: '',
+          transfer_reason_1: '',
+          transfer_reason_2: '',
+          id_on_file: '',
+          preferred_language: '',
+          card_status: '',
+          enrollment_source: '',
+        },
+        errorResponse: '',
       }
     },
     watch: {
@@ -317,25 +234,47 @@ export default {
             this.form.destination_currency_code = '';
             this.form.sender_currency_code = '';
             this.form.phone_number = '';
-
+            this.form.originating_country_code = '',
+            this.form.receiver_type = '',
+            this.form.transfer_frequency = '',
+            this.form.wu_transfer_frequency = '',
+            this.form.interests = '',
+            this.form.mode_to_receive = '',
+            this.form.transfer_reason_1 = '',
+            this.form.transfer_reason_2 = '',
+            this.form.id_on_file = '',
+            this.form.preferred_language = '',
+            this.form.card_status = '',
+            this.form.enrollment_source = ''
           }
         })
         .catch((error) => {
           if( error.response.status == 422 ){
+
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
-              footer: 'All fields are required, kindly fill up all the fields.'
+              footer: 'Please see fields that are required, kindly fill up all the fields.'
             })
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: '' + error
-            })
+
+            this.errorResponse = error.response.data.errors;
           }
+          // if( error.response.status == 422 ){
+          //   Swal.fire({
+          //     icon: 'error',
+          //     title: 'Oops...',
+          //     text: 'Something went wrong!',
+          //     footer: 'All fields are required, kindly fill up all the fields.'
+          //   })
+          // } else {
+          //   Swal.fire({
+          //     icon: 'error',
+          //     title: 'Oops...',
+          //     text: 'Something went wrong!',
+          //     footer: '' + error
+          //   })
+          // }
           
 
 
