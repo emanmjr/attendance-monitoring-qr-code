@@ -5,62 +5,130 @@
             <div class="spinner-border" id="loading-image"></div>
           </div>
             <!-- <form> -->
-                <div class="form-row">
-                    <div class="col-md-2"><h3>Search Type:</h3></div>
-                    <div class="col-md-3">
-                      <select class="form-control" id="search_type" v-model="search.search_type_field">
-                      <option value="null" disabled selected hidden>Select Search Type</option>
-                      <option value="COMPLIANCE_ID">Compliance ID</option>
-                      <option value="PHONE_NUMBER">Phone Number</option>
-                      <option value="MYWU_NUMBER">My WU Number</option>
-                    </select>
-                    </div>
-                    
-                </div>
                 <div class="form-row mt-4">
-                    <div v-if="showSearchFirstName" class="form-group col-md-2">
-                      <label for="search_first_name">First Name
-                      </label>
-                      <input type="text" class="form-control" id="search_first_name" v-model="search.first_name" placeholder="">
-                    </div>
-                    <div v-if="showSearchLastName" class="form-group col-md-2">
-                      <label for="search_last_name">Last Name
-                      </label>
-                      <input type="text" class="form-control" id="search_last_name" v-model="search.last_name" placeholder="">
-                    </div>
-                    <div v-if="showSearchMyWUNo"  class="form-group col-md-2">
+                    <div class="form-group col-md-2">
                       <label for="search_my_wu_number">My WU No.
                       </label>
                       <input type="text" class="form-control" id="search_my_wu_number" v-model="search.my_wu_number" placeholder="">
                     </div>
-                    <div v-if="showSearchIdType" class="form-group col-md-2">
-                      <label for="search_id_type">ID Type
+                    <div class="form-group col-md-2">
+                      <label for="search_sender_country_cod">Sender Country Code<small>(2 Digit ISO)</small>
                       </label>
-                      <select class="form-control" id="id_type" v-model="search.id_type">
-                        <option value="null" disabled selected hidden>Select Search Type</option>
-                        <option value="A">Passport</option>
-                        <option value="B">National ID</option>
-                        <option value="C">Drive License</option>
-                        <option value="E">Work Permit</option>
-                        <option value="Q">Asylum Seeker Temp Residence Permit</option>
+                      <input type="text" class="form-control" id="search_sender_country_cod" v-model="search.sender_country_code" placeholder="">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="search_last_name">Update MyWU Card to Loyalty Card
+                      </label>
+                      <select class="form-control" id="mywucard_to_loyaltycard" v-model="search.mywucard_to_loyaltycard">
+                        <option value="null" disabled selected hidden></option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
                       </select>
-                      <!-- <input type="text" class="form-control" id="search_id_type" v-model="search.id_type" placeholder=""> -->
                     </div>
-                    <div v-if="showSearchIdNum" class="form-group col-md-2">
-                      <label for="search_id_num">ID Number
-                      </label>
-                      <input type="text" class="form-control" id="search_id_num" v-model="search.id_num" placeholder="">
-                    </div>
-                    <div v-if="showSearchPhoneNum" class="form-group col-md-2">
-                      <label for="search_phone_num">Phone Number
-                      </label>
-                      <input type="text" class="form-control" id="search_phone_num" v-model="search.phone_num" placeholder="">
-                    </div>
-                    <div v-if="showSearchTypeButton" class="form-group col-md-2">
-                      <button type="button" style="margin-top: 28px;" class="btn btn-primary btn-dashboard" @click="searchKYC"><i class="fas fa-search"></i></button>
+                    
+                    <div class="form-group col-md-2">
+                      <button type="button" style="margin-top: 28px;" class="btn btn-primary btn-dashboard" @click="searchMYWU"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
                 <hr>
+                <div v-if="showMYWUDetails">
+                  <h4>Receiver Information</h4>
+                  <div class="form-row mt-4">
+                      <div class="form-group col-md-2">
+                        <label>First Name
+                        </label>
+                        <input type="text" class="form-control" v-model="form.receiver.name.first_name" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Middle Name
+                        </label>
+                        <input type="text" class="form-control" v-model="form.receiver.name.middle_name" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Last Name
+                        </label>
+                        <input type="text" class="form-control" v-model="form.receiver.name.last_name" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Country Code
+                        </label>
+                        <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.country_code" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Currency Code
+                        </label>
+                        <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.currency_code" placeholder="" readonly>
+                      </div>
+
+                  </div>
+                  <hr>
+                  <h4>Sender Information</h4>
+                  <div class="form-row mt-4">
+                      <div class="form-group col-md-2">
+                        <label>MYWU Number
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.preferred_customer.account_nbr" placeholder="" readonly>
+                      </div>
+                  </div>
+                  <div class="form-row mt-4">
+                      <div class="form-group col-md-2">
+                        <label>First Name
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.name.first_name" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Middle Name
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.name.middle_name" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Last Name
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.name.last_name" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Mobile Number
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.contact_phone" placeholder="" readonly>
+                      </div>
+                  </div>
+                  <div class="form-row mt-4">
+                      <div class="form-group col-md-2">
+                        <label>Address 1
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.address.addr_line1" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Address 2
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.address.addr_line2" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Postal Code
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.address.postal_code" placeholder="" readonly>
+                      </div>
+                  </div>
+                  <div class="form-row mt-4">
+                      <div class="form-group col-md-2">
+                        <label>City
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.address.city" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>State
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.address.state" placeholder="" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Country
+                        </label>
+                        <input type="text" class="form-control" v-model="form.sender.address.country_code.country_name" placeholder="" readonly>
+                      </div>
+                      
+                  </div>
+                  <hr>
+                </div>
 
                
 
@@ -73,89 +141,55 @@
 export default {
     data() {
       return {
-        is_employed_wbusiness: false,
-        is_permanent: false,
-        form: {
-          reference_no: '',
-          my_wu_no: '',
-          first_name: '',
-          last_name: '',
-          address: '',
-          city: '',
-          postal_code: '',
-          country_code: '',
-          country_name: '',
-          phone_number: '',
-          address_type: '',
-          contact_country_code: ''
-        },
+        form: '',
         search: {
-          first_name: '',
-          last_name: '',
+          mywucard_to_loyaltycard: '',
+          sender_country_code: '',
           my_wu_number: '',
-          id_type: '',
-          id_num: '',
-          phone_num: '',
-          search_type_field: '',
         },
+        showMYWUDetails: false,
         
-        showSearchFirstName: false,
-        showSearchLastName: false,
-        showSearchMyWUNo: false,
-        showSearchIdType: false,
-        showSearchIdNum: false,
-        showSearchPhoneNum: false,
-        showSearchTypeButton: false,
       }
     },
     watch: {
-      //   checkSearchParam(data){
-      //   this.showSearchTypeButton = true;
-      //   if(data == 'COMPLIANCE_ID') {
-      //     this.showSearchFirstName = true;
-      //     this.showSearchLastName = true;
-      //     this.showSearchMyWUNo = true;
-      //     this.showSearchIdType = true;
-      //     this.showSearchIdNum = true;
-      //     this.showSearchPhoneNum = false;
-      //   }
-
-      //   if(data == 'PHONE_NUMBER') {
-      //     this.showSearchFirstName = true;
-      //     this.showSearchLastName = true;
-      //     this.showSearchMyWUNo = true;
-      //     this.showSearchIdType = false;
-      //     this.showSearchIdNum = false;
-      //     this.showSearchPhoneNum = true;
-      //   }
-
-      //   if(data == 'MYWU_NUMBER') {
-      //     this.showSearchFirstName = true;
-      //     this.showSearchLastName = true;
-      //     this.showSearchMyWUNo = true;
-      //     this.showSearchIdType = false;
-      //     this.showSearchIdNum = false;
-      //     this.showSearchPhoneNum = false;
-      //   }
-
-      // }
     },
     computed: {
-      // checkSearchParam() {
-      //   return this.search.search_type_field;
-      // },
-      // checkEmployedBusiness() {
-      //   return this.form.employed_wbusiness;
-      // },
-      // checkPermanentAdd() {
-      //   return this.form.permanent_add;
-      // }
     },
     mounted() {
       document.getElementById('loading').style.display = 'none';
     },
     methods: {
       searchMYWU() {
+        this.showMYWUDetails = false;
+        document.getElementById('loading').style.display = 'block';
+        axios.post('/admin/api/mywu-lookup', this.search)
+        .then((response) => {
+          this.showMYWUDetails = true;
+          document.getElementById('loading').style.display = 'none';console.log(response.data)
+          this.form = response.data;
+        })
+        .catch((error) => {
+          if( error.response.status == 422 ){
+          this.showMYWUDetails = false;
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: 'Please see fields that are required.'
+            })
+
+            this.errorResponse = error.response.data.errors;
+          } else {
+             Swal.fire({
+              icon: 'error',
+              title: 'Something went wrong!',
+              text: 'Please check field values if it is/are correct.',
+              footer: '' + error
+            })
+          }
+
+          document.getElementById('loading').style.display = 'none';
+        })
       }
     }
 }
