@@ -238,6 +238,7 @@ export default {
               icon: 'error',
               title: 'Oops...',
               text: '' + response.data.faultstring,
+              footer: 'No Record found'
             })
 
             this.form.reference_no = '';
