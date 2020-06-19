@@ -397,43 +397,21 @@ class MyWUController extends Controller
 
     public function mywuLookup()
     {
-        // dd('qwe');
-        // if(request()->search_type_field == 'COMPLIANCE_ID') {
-        //     request()->validate([
-        //         'first_name' => 'required',
-        //         'last_name' => 'required',
-        //         'my_wu_number' => 'required',
-        //         'id_type' => 'required',
-        //         'id_num' => 'required'
-        //     ]);
-
-        // }
-
-        // if(request()->search_type_field == 'PHONE_NUMBER') {
-        //     request()->validate([
-        //         'first_name' => 'required',
-        //         'last_name' => 'required',
-        //         'my_wu_number' => 'required',
-        //         'phone_num' => 'required'
-        //     ]);
-        // }
-
-        // if(request()->search_type_field == 'MYWU_Number') {
-        //     request()->validate([
-        //         'first_name' => 'required',
-        //         'last_name' => 'required',
-        //         'my_wu_number' => 'required',
-        //     ]);
-        // }
+        request()->validate([
+            'my_wu_number' => 'required',
+            'mywucard_to_loyaltycard' => 'required',
+            'sender_country_code' => 'required',
+        ]);
 
         $headers = [
             'Content-Type' => 'application/json',
-            'Authorization' =>  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI4ODgyMDYwNDc3NDFjZWZiYmNmMDhhMDkzMWE2ZjQ0NTE5N2VhOTlkMTZhN2E1Y2U1OGI5NzBlNzlhZWZmZmZlZTVlMTkyZjAwNDdlYzEyIn0.eyJhdWQiOiI2IiwianRpIjoiYjg4ODIwNjA0Nzc0MWNlZmJiY2YwOGEwOTMxYTZmNDQ1MTk3ZWE5OWQxNmE3YTVjZTU4Yjk3MGU3OWFlZmZmZmVlNWUxOTJmMDA0N2VjMTIiLCJpYXQiOjE1OTI0OTU2NzAsIm5iZiI6MTU5MjQ5NTY3MCwiZXhwIjoxNjI0MDMxNjcwLCJzdWIiOiI2Iiwic2NvcGVzIjpbIioiXX0.CvMipVz1gAQg3AmtTSWlE36x4uF-BrMKO-Q3eDLGVvM3zROpf6frHkPOerljkAJAbq5vouI_iZvTjODcI0Jwj1PpsaZaEndQGJFuO587cSgk05TO0RQzOQex6IkHTO9chrXT0nLbDdsyg1IIk_6GR52b752PeiDoZIOzy3LF_QOjmN14SzzNOfUvOSb_w57wgs8gv6mCMaTMsrslspugxDdCMJNeYVZLb3aP8f1I4NNS5-Oc4zXu9n27B8HBDNqOsVJ2TqI14JlGI6ma7C63xpUJ9xpLpQ_MjKn1p1RgKx-kN5M5Uw5pwqRfclcqZ-ttfpVk-Bb8_PFrV98uX3tloTbk1Rq5c2_zCbAO84WhLEKsyqWpsPO96LCGqbdh280dbF_yd5R_zPsQgx806b_ttNpWkW9vOiY73wKtEdFPz9qHkjHaSxF4cu_UQTWwx3CUcKFP3_pPcZ6tz2Y9D00X_LQbJnRArq8agc8G0EDzzHi3HgMjaSluYl_otgOC-fwhrTb38yULFW72_etdnNYjkEjcQrOLBL9_fHbmARZwNWXLn7oO0aen0Hxf1-QGFszby3dO227IvMeDtvYXkNsT3c6XDbQeS-3SCBdYsrcqHDRup46t-4kTMRA2-2P8tT6RhFx1XllkjZxZqbgQEs3i3mXvpMYJr7Dh27hMr2cCpO8'
+            'Authorization' =>  session()->get('access_token')
         ];
         
         $client = new GuzzleClient([
             'headers' => $headers
         ]);
+
         try {
 
             $json = [
@@ -441,9 +419,9 @@ class MyWUController extends Controller
                 "channelType" =>  "H2H",
                 "channelVersion" =>  "9500",
                 "permanentChange" =>  "LookUp",
-                "myWuNumber" =>  "151911976",
-                "loyaltyCardUpdateIndicator" =>  "0",
-                "senderCountryCode" => "PH"
+                "myWuNumber" =>  request()->my_wu_number,
+                "loyaltyCardUpdateIndicator" =>  request()->mywucard_to_loyaltycard,
+                "senderCountryCode" => request()->sender_country_code
             ];
             
             // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
@@ -453,26 +431,13 @@ class MyWUController extends Controller
 
    
             $xml = simplexml_load_string($res->getBody()->getContents());
-            
             $namespaces = $xml->getNamespaces(true);
-            $arrayXmlResponse = json_decode(json_encode($xml->children($namespaces['soapenv'])->Body), true);
-            if(array_key_exists("Fault", $arrayXmlResponse)){
-                $xml = $xml->children($namespaces['soapenv'])
-                ->Body
-                ->Fault
-                ->children();
-
-                $response = json_encode($xml, true);
-            } else {
-                $xml = $xml->children($namespaces['soapenv'])
+            $xml = $xml->children($namespaces['soapenv'])
                 ->Body
                 ->children($namespaces['xrsi'])
                 ->children();
 
                 $response = json_encode($xml, true);
-            }
-
-            
 
         } catch (ClientErrorResponseException $exception) {
             $response = $exception->getResponse()->getBody(true);
