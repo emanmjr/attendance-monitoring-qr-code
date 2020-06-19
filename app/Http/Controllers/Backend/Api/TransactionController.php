@@ -28,7 +28,8 @@ class TransactionController extends Controller
         ]);
    
         try {
-            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/db-syncing/get-logs', [
+            // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/db-syncing/get-logs', [
+            $res = $client->request('POST', 'http://3.1.170.158/mw_v1007/public/db-syncing/get-logs', [
                 'form_params' => [
                     'date' => request()->dateTransaction
                 ]
@@ -46,13 +47,13 @@ class TransactionController extends Controller
     public function kycLookUp()
     {
         if(request()->search_type_field == 'COMPLIANCE_ID') {
-        request()->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'my_wu_number' => 'required',
-            'id_type' => 'required',
-            'id_num' => 'required'
-        ]);
+            request()->validate([
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'my_wu_number' => 'required',
+                'id_type' => 'required',
+                'id_num' => 'required'
+            ]);
 
         }
 
@@ -90,7 +91,7 @@ class TransactionController extends Controller
                 "channelVersion" => "9500",
                 "pfcFilter" => "FSA",
                 "transactionType" => "SEND",
-                "searchType" => "M",
+                "searchType" => "S",
                 "firstName" => request()->first_name ? request()->first_name : "",
                 "lastName" => request()->last_name ? request()->last_name : "",
                 "myWuNumber" => request()->my_wu_number ? request()->my_wu_number : "",
@@ -98,20 +99,34 @@ class TransactionController extends Controller
                 "idNum" => request()->id_num ? request()->id_num : "",
                 "phoneNum" => request()->phone_num ? request()->phone_num : ""
             ];
-
-            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
+            
+            // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
+            $res = $client->request('POST', 'http://3.1.170.158/mw_v1007/public/remittance/kyc', [
                 'json' => $json
             ]);
 
    
             $xml = simplexml_load_string($res->getBody()->getContents());
+            
             $namespaces = $xml->getNamespaces(true);
-            $xml = $xml->children($namespaces['soapenv'])
+            $arrayXmlResponse = json_decode(json_encode($xml->children($namespaces['soapenv'])->Body), true);
+            if(array_key_exists("Fault", $arrayXmlResponse)){
+                $xml = $xml->children($namespaces['soapenv'])
+                ->Body
+                ->Fault
+                ->children();
+
+                $response = json_encode($xml, true);
+            } else {
+                $xml = $xml->children($namespaces['soapenv'])
                 ->Body
                 ->children($namespaces['NS1'])
                 ->children();
 
-            $response = json_encode($xml, true);
+                $response = json_encode($xml, true);
+            }
+
+            
 
         } catch (ClientErrorResponseException $exception) {
             $response = $exception->getResponse()->getBody(true);

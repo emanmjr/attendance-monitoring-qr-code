@@ -26,4 +26,9 @@ class MyWUController extends Controller
     {
         return view('backend.mywu.das-request.index');
     }
+
+    public function mywuLookup()
+    {
+        return view('backend.mywu.mywu-lookup.index');
+    }
 }

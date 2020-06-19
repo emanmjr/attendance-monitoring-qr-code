@@ -75,6 +75,13 @@
                             Enrollment
                         </a>
                     </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link {{
+                        active_class(Route::is('admin/mywu/mywu-lookup'))
+                    }}" href="{{ route('admin.mywu.mywu-lookup') }}">
+                            MYWU Lookup
+                        </a>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/das-request'))

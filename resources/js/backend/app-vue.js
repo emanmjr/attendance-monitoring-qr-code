@@ -37,8 +37,9 @@ const store = new Vuex.Store(
 
 Vue.component('transactions', require('./components/Transaction.vue').default);
 Vue.component('my-wu-enrollment', require('./components/MyWUEnrollment.vue').default);
-Vue.component('kyc-loopup', require('./components/KYCLookUp.vue').default);
+Vue.component('kyc-lookup', require('./components/KYCLookUp.vue').default);
 Vue.component('das-request', require('./components/DasRequest.vue').default);
+Vue.component('my-wu-lookup', require('./components/MYWULookup.vue').default);
 
 Vue.config.errorHandler = function(err, vm, info) {
   console.log(`Error: ${err.toString()}\nInfo: ${info}`);

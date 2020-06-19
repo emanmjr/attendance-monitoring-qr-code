@@ -23,6 +23,7 @@ Route::group([ 'middleware' => 'checkTempPass' ], function (){
         Route::get('/enrollment', 'MyWUController@enrollment')->name('enrollment');
         Route::get('/customer', 'MyWUController@customer')->name('customer');
         Route::get('/das-request', 'MyWUController@dasRequest')->name('das-request');
+        Route::get('/mywu-lookup', 'MyWUController@mywuLookup')->name('mywu-lookup');
     
     });
     
@@ -41,6 +42,7 @@ Route::post('api/enroll-customer', 'Api\MyWUController@enrollCustomer')->name('a
 // DAS Request Api
 Route::post('api/das-request', 'Api\MyWUController@dasRequest')->name('api.das.request');
 
-
+// MYWU LOOKUP Api
+Route::post('api/mywu-lookup', 'Api\MyWUController@mywuLookup')->name('api.mywu-lookup');
 
 
