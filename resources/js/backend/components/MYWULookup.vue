@@ -6,17 +6,17 @@
           </div>
             <!-- <form> -->
                 <div class="form-row mt-4">
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                       <label for="search_my_wu_number">My WU No.
                       </label>
                       <input type="text" class="form-control" id="search_my_wu_number" v-model="search.my_wu_number" placeholder="">
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                       <label for="search_sender_country_cod">Sender Country Code<small>(2 Digit ISO)</small>
                       </label>
                       <input type="text" class="form-control" id="search_sender_country_cod" v-model="search.sender_country_code" placeholder="">
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                       <label for="search_last_name">Update MyWU Card to Loyalty Card
                       </label>
                       <select class="form-control" id="mywucard_to_loyaltycard" v-model="search.mywucard_to_loyaltycard">
