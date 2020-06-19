@@ -192,6 +192,9 @@ export default {
           this.showSearchIdType = false;
           this.showSearchIdNum = false;
           this.showSearchPhoneNum = true;
+          this.search.id_type = '';
+          this.search.id_num = '';
+          this.search.phone_num ='';
         }
 
         if(data == 'MYWU_NUMBER') {
@@ -201,6 +204,9 @@ export default {
           this.showSearchIdType = false;
           this.showSearchIdNum = false;
           this.showSearchPhoneNum = false;
+          this.search.id_type = '';
+          this.search.id_num = '';
+          this.search.phone_num ='';
         }
 
       }
