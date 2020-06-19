@@ -181,7 +181,6 @@ class LoginController extends Controller
                     $token->name = 'middleware_api';
                     $token->access_token = $this->getAccessToken();
                     $token->save();
-                    dd($token);
                 } else {
                     $updatedToken = optional($token)->updated_at;
                     if(\Carbon\Carbon::parse($updatedToken)->diffInDays(\Carbon\Carbon::now()) > 3) {
