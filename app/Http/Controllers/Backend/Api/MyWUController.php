@@ -356,7 +356,8 @@ class MyWUController extends Controller
                 "channelVersion" => "9500",
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => request()->accout_number,
-                "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
+                // "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
+                "queryFilter1" => "US",
             ];
         }
         

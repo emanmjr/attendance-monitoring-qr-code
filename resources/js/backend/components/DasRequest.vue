@@ -331,7 +331,7 @@
               this.isViewIsoCode2 = false;
               this.isViewIsoCode1 = true;
 
-              if(data == 'GetCascadeList' || data == 'GetMexicoCityState'){
+              if(data == 'GetCascadeList' || data == 'GetMexicoCityState' || data == 'GetStateList'){
                 this.isViewIsoCode1 = false;
               }else{
                 this.isViewIsoCode1 = true;
