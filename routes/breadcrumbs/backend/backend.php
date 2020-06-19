@@ -33,5 +33,10 @@ Breadcrumbs::for('admin.mywu.das-request', function ($trail) {
 });
 
 
+Breadcrumbs::for('admin.mywu.mywu-lookup', function ($trail) {
+    $trail->push('MyWU / MYWU LOOKUP', route('admin.dashboard'));
+});
+
+
 require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';

@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-md-7 col-form-label"><h5>Total Transactios: {{ totalTransactions }}</h5> </label>
+                            <label for="staticEmail" class="col-md-7 col-form-label"><h5>Total Transactions: {{ totalTransactions }}</h5> </label>
                         </div>
                     </div>
                 </div>

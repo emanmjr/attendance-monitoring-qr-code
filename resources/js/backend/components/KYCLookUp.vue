@@ -224,10 +224,30 @@ export default {
         document.getElementById('loading').style.display = 'block';
         axios.post('/admin/api/kyc-lookup', this.search)
         .then((response) => {
-          console.log((response.data));
           // handle success
-          if(response.data) {
-          document.getElementById('loading').style.display = 'none';
+          
+          if(response.data.faultstring){
+            document.getElementById('loading').style.display = 'none';
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: '' + response.data.faultstring,
+            })
+
+            this.form.reference_no = '';
+            this.form.my_wu_no = '';
+            this.form.first_name = '';
+            this.form.last_name = '';
+            this.form.address = '';
+            this.form.city = '';
+            this.form.postal_code = '';
+            this.form.country_code = '' ;
+            this.form.country_name = '';
+            this.form.phone_number = '';
+            this.form.address_type = '';
+            this.form.contact_country_code = ''
+          }else {
+            document.getElementById('loading').style.display = 'none';
 
           //   Swal.fire({
           //     position: 'top-end',
@@ -237,42 +257,41 @@ export default {
           //   })
 
             this.form.reference_no = response.data.foreign_remote_system.reference_no ? response.data.foreign_remote_system.reference_no : '';
-            this.form.my_wu_no = response.data.customers.customer.mywu_details.mywu_number ? response.data.customers.customer.mywu_details.mywu_number : '';
-            this.form.first_name = response.data.customers.customer.name.first_name ? response.data.customers.customer.name.first_name : '';
-            this.form.last_name = response.data.customers.customer.name.last_name ? response.data.customers.customer.name.last_name : '';
-            this.form.address = response.data.customers.customer.address.addr_line1 ? response.data.customers.customer.address.addr_line1 : '';
-            this.form.city = response.data.customers.customer.address.city ? response.data.customers.customer.address.city : '';
-            this.form.postal_code = response.data.customers.customer.address.postal_code ? response.data.customers.customer.address.postal_code : '';
-            this.form.country_code = response.data.customers.customer.address.country_details.ctry_code ? response.data.customers.customer.address.country_details.ctry_code : '' ;
-            this.form.country_name = response.data.customers.customer.address.country_details.ctry_name ? response.data.customers.customer.address.country_details.ctry_name : '';
-            this.form.phone_number = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.National_number : '';
-            this.form.address_type = response.data.customers.customer.address.addr_type ? response.data.customers.customer.address.addr_type : '';
-            this.form.contact_country_code = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.ctry_code : ''
-
+            this.form.my_wu_no = response.data.customer.mywu_details.mywu_number ? response.data.customer.mywu_details.mywu_number : '';
+            this.form.first_name = response.data.customer.name.first_name ? response.data.customer.name.first_name : '';
+            this.form.last_name = response.data.customer.name.last_name ? response.data.customer.name.last_name : '';
+            this.form.address = response.data.customer.address.addr_line1 ? response.data.customer.address.addr_line1 : '';
+            this.form.city = response.data.customer.address.city ? response.data.customer.address.city : '';
+            this.form.postal_code = response.data.customer.address.postal_code ? response.data.customer.address.postal_code : '';
+            this.form.country_code = response.data.customer.address.country_details.ctry_code ? response.data.customer.address.country_details.ctry_code : '' ;
+            this.form.country_name = response.data.customer.address.country_details.ctry_name ? response.data.customer.address.country_details.ctry_name : '';
+            this.form.phone_number = response.data.customer.mobile_number ? response.data.customer.mobile_number.National_number : '';
+            this.form.address_type = response.data.customer.address.addr_type ? response.data.customer.address.addr_type : '';
+            this.form.contact_country_code = response.data.customer.mobile_number ? response.data.customer.mobile_number.ctry_code : ''
           }
         })
-        .catch((error) => {
-          if( error.response.status == 422 ){
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: 'All fields are required, kindly fill up all the fields.'
-            })
-            document.getElementById('loading').style.display = 'none';
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Can you please try again.',
-              footer: '' + error
-            })
+        // .catch((error) => {
+        //   if( error.response.status == 422 ){
+        //     Swal.fire({
+        //       icon: 'error',
+        //       title: 'Oops...',
+        //       text: 'Something went wrong!',
+        //       footer: 'All fields are required, kindly fill up all the fields.'
+        //     })
+        //     document.getElementById('loading').style.display = 'none';
+        //   } else {
+        //     Swal.fire({
+        //       icon: 'error',
+        //       title: 'Oops...',
+        //       text: 'Can you please try again.',
+        //       footer: '' + error
+        //     })
 
-            document.getElementById('loading').style.display = 'none';
-          }
+        //     document.getElementById('loading').style.display = 'none';
+        //   }
 
           
-        })
+        // })
       }
     }
 }

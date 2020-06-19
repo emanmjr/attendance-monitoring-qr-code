@@ -168,26 +168,34 @@ class LoginController extends Controller
 
     public function setSessionApiAccessToken()
     {
-        if(!session()->get('access_token')){
-            $token = \App\Models\Auth\Token::where('name', 'middleware_api')->first();
-            if( !$token ) {
-                $token = new  \App\Models\Auth\Token();
-                $token->name = 'middleware_api';
-                $token->access_token = $this->getAccessToken();
-                $token->save();
-            } else {
-                $updatedToken = optional($token)->updated_at;
-                if(\Carbon\Carbon::parse($updatedToken)->diffInDays(\Carbon\Carbon::now()) > 3) {
-                    $token->access_token = $this->getAccessToken();
-                    $token->save();
-                }
-            }
-
-            // Add to session access token for middleware api
+        if(env('APP_ENV') == 'local') {
             session()->put(
                 'access_token', 
-                'Bearer ' . $token->access_token
+                'Bearer ' . env('DEVELOPMENT_TOKEN')
             );
-        } 
+        } else {
+            if(!session()->get('access_token')){
+                $token = \App\Models\Auth\Token::where('name', 'middleware_api')->first();
+                if( !$token ) {
+                    $token = new  \App\Models\Auth\Token();
+                    $token->name = 'middleware_api';
+                    $token->access_token = $this->getAccessToken();
+                    $token->save();
+                    dd($token);
+                } else {
+                    $updatedToken = optional($token)->updated_at;
+                    if(\Carbon\Carbon::parse($updatedToken)->diffInDays(\Carbon\Carbon::now()) > 3) {
+                        $token->access_token = $this->getAccessToken();
+                        $token->save();
+                    }
+                }
+    
+                // Add to session access token for middleware api
+                session()->put(
+                    'access_token', 
+                    'Bearer ' . $token->access_token
+                );
+            }
+        }
     }
 }
