@@ -62,7 +62,7 @@
                 </div>
                 <hr>
 
-                <h4 class="mt-3 mb-3">Basic Information</h4>
+                <h4 class="mt-3 mb-3">Customer Information</h4>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="reference_no">Reference No.
@@ -128,6 +128,25 @@
                     </div>
                 </div>
                 <hr>
+                <div v-if="this.receiversCount()">
+                  <h4 class="mt-3 mb-3">Receivers Information</h4>
+                  <div class="form-row" v-for="receiver in receivers">
+                    <div class="form-group col-md-3">
+                        <label for="contact_country_code">First Name</label>
+                        <input type="text" class="form-control" id="contact_country_code" v-model="receiver.name.first_name" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="phone_number">Last Name</label>
+                        <input type="text" class="form-control" id="phone_number" v-model="receiver.name.last_name" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="country_code">Country Code</label>
+                        <input type="text" class="form-control" id="country_code" v-model="receiver.address.country_details.ctry_code" readonly>
+                    </div>
+                </div>
+                </div>
+                
+                
 
                 <!-- </form> -->
         </div><!--card-body-->
@@ -140,6 +159,7 @@ export default {
       return {
         is_employed_wbusiness: false,
         is_permanent: false,
+        receivers: {},
         form: {
           reference_no: '',
           my_wu_no: '',
@@ -224,6 +244,7 @@ export default {
     },
     mounted() {
       document.getElementById('loading').style.display = 'none';
+      this.receiversCount()
     },
     methods: {
       searchKYC() {
@@ -255,7 +276,7 @@ export default {
             this.form.contact_country_code = ''
           }else {
             document.getElementById('loading').style.display = 'none';
-
+            console.log(response.data);
           //   Swal.fire({
           //     position: 'top-end',
           //     icon: 'success',
@@ -275,6 +296,8 @@ export default {
             this.form.phone_number = response.data.customer.mobile_number ? response.data.customer.mobile_number.National_number : '';
             this.form.address_type = response.data.customer.address.addr_type ? response.data.customer.address.addr_type : '';
             this.form.contact_country_code = response.data.customer.mobile_number ? response.data.customer.mobile_number.ctry_code : ''
+
+            this.receivers = response.data.receivers ? response.data.receivers.receiver : {};
           }
         })
         // .catch((error) => {
@@ -299,6 +322,13 @@ export default {
 
           
         // })
+      },
+      receiversCount() {
+        if(this.receivers.length > 0){
+          return true;
+        } else {
+          return false;
+        }
       }
     }
 }
