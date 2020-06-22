@@ -285,8 +285,8 @@ export default {
                     '<td>Last Name: ' + this.form.last_name + '</td>' +
                     '</tr>' +
                     '<tr>' +
-                    '<td>Phone Number: ' + this.form.first_name + '</td>' +
-                    '<td>Gender: ' + this.form.last_name + '</td>' +
+                    '<td>Phone Number: ' + this.form.phone_number + '</td>' +
+                    '<td>Gender: ' + this.form.gender + '</td>' +
                     '</tr>' +
                     '<tr>' +
                     '<td>Address: ' + this.form.address + '</td>' +
