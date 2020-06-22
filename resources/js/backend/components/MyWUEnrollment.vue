@@ -58,13 +58,13 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="postal_code">Postal Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" :class="errorResponse.postal_code ? 'is-invalid' : ''" id="postal_code" v-model="form.postal_code" :readonly="this.isReadOnly">
+                        <input type="text" @keypress="onlyNumber" class="form-control" :class="errorResponse.postal_code ? 'is-invalid' : ''" id="postal_code" v-model="form.postal_code" :readonly="this.isReadOnly">
                     </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                         <label for="phone_number">Mobile Number(9XXXXXXXXX)<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" :class="errorResponse.phone_number ? 'is-invalid' : ''" id="phone_number" v-model="form.phone_number" :readonly="this.isReadOnly">
+                        <input type="text" class="form-control" @keypress="onlyNumber" :class="errorResponse.phone_number ? 'is-invalid' : ''" id="phone_number" v-model="form.phone_number" :readonly="this.isReadOnly">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="country_code">Country Code<span style="color:red;">*</span></label>
@@ -225,6 +225,13 @@ export default {
       this.isReadOnly = false;
     },
     methods: {
+      onlyNumber ($event) {
+        //console.log($event.keyCode); //keyCodes value
+        let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+        if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+            $event.preventDefault();
+        }
+      },
       enrollNewCustomer() {
             this.form.first_name = '';
             this.form.last_name = '';
@@ -267,8 +274,64 @@ export default {
               position: 'top-end',
               icon: 'success',
               title: '<h4>Customer has been successfully enrolled.</h4>',
+              html: '<table class="table table-striped">' +
+                    '<tbody style="text-align:left; font-size:12px;">' +
+                    '<tr>' +
+                    '<td>MYWU Number: ' + response.data.sender.preferred_customer.account_nbr + '</td>' +
+                    '<td></td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>First Name: ' + this.form.first_name + '</td>' +
+                    '<td>Last Name: ' + this.form.last_name + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Phone Number: ' + this.form.first_name + '</td>' +
+                    '<td>Gender: ' + this.form.last_name + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Address: ' + this.form.address + '</td>' +
+                    '<td>City: ' + this.form.city + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Postal Code: ' + this.form.postal_code + '</td>' +
+                    '<td>Country Code: ' + this.form.country_code + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Destination Country Code: ' + this.form.destination_country_code + '</td>' +
+                    '<td>Destination Currency Code: ' + this.form.destination_currency_code + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Sender Currency Code: ' + this.form.sender_currency_code + '</td>' +
+                    '<td>Origination Currency Code: ' + this.form.originating_country_code + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Receiver Type: ' + this.form.receiver_type + '</td>' +
+                    '<td>Transfer Frequency: ' + this.form.transfer_frequency + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>WU Transfer Frequency: ' + this.form.wu_transfer_frequency + '</td>' +
+                    '<td>Interests: ' + this.form.interests + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Mode to Receive: ' + this.form.mode_to_receive + '</td>' +
+                    '<td>ID On Field: ' + this.form.id_on_file + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Trasfer Reason 1: ' + this.form.transfer_reason_1 + '</td>' +
+                    '<td>Trasfer Reason 2: ' + this.form.transfer_reason_2 + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Preferred Language: ' + this.form.preferred_language + '</td>' +
+                    '<td>Card Status: ' + this.form.card_status + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Enrollment Source: ' + this.form.enrollment_source + '</td>' +
+                    '<td></td>' +
+                    '</tr>' +
+                    '</tbody>' +
+                    '</table> ',
               // text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
-              html: '<p>MyWU Number: ' + response.data.sender.preferred_customer.account_nbr + '</p><p>Mobile Number: ' + this.form.phone_number + '</p>', 
+              // html: '<span style="font-size: 12px;>MyWU Number: ' + response.data.sender.preferred_customer.account_nbr  + '</span><br><span style="font-size: 12px;>Mobile Number: ' + this.form.phone_number + '</span>', 
               showConfirmButton: true,
             })
             
@@ -307,6 +370,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    #swal2-content {
+      text-align: left;
+    }
     .no-transact {
         text-align: center;
     }
