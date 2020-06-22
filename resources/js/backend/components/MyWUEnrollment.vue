@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                        <label for="phone_number">Phone Number<span style="color:red;">*</span></label>
+                        <label for="phone_number">Mobile Number(9XXXXXXXXX)<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" :class="errorResponse.phone_number ? 'is-invalid' : ''" id="phone_number" v-model="form.phone_number" :readonly="this.isReadOnly">
                     </div>
                     <div class="form-group col-md-3">
@@ -267,7 +267,8 @@ export default {
               position: 'top-end',
               icon: 'success',
               title: '<h4>Customer has been successfully enrolled.</h4>',
-              text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
+              // text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
+              html: '<p>MyWU Number: ' + response.data.sender.preferred_customer.account_nbr + '</p><p>Mobile Number: ' + this.form.phone_number + '</p>', 
               showConfirmButton: true,
             })
             

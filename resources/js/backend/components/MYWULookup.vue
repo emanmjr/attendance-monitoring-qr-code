@@ -32,7 +32,7 @@
                 </div>
                 <hr>
                 <div v-if="showMYWUDetails">
-                  <h4>Receiver Information</h4>
+                  <!-- <h4>Receiver Information</h4>
                   <div class="form-row mt-4">
                       <div class="form-group col-md-2">
                         <label>First Name
@@ -60,7 +60,7 @@
                         <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.currency_code" placeholder="" readonly>
                       </div>
 
-                  </div>
+                  </div> -->
                   <hr>
                   <h4>Sender Information</h4>
                   <div class="form-row mt-4">
@@ -98,7 +98,7 @@
                         </label>
                         <input type="text" class="form-control" v-model="form.sender.address.addr_line1" placeholder="" readonly>
                       </div>
-                      <div class="form-group col-md-2">
+                      <div class="form-group col-md-2" v-if="form.sender.address.addr_line2 > 0">
                         <label>Address 2
                         </label>
                         <input type="text" class="form-control" v-model="form.sender.address.addr_line2" placeholder="" readonly>
@@ -115,19 +115,40 @@
                         </label>
                         <input type="text" class="form-control" v-model="form.sender.address.city" placeholder="" readonly>
                       </div>
-                      <div class="form-group col-md-2">
+                      <div class="form-group col-md-2" v-if="form.sender.address.addr_line2.length > 0">
                         <label>State
                         </label>
                         <input type="text" class="form-control" v-model="form.sender.address.state" placeholder="" readonly>
                       </div>
-                      <div class="form-group col-md-2">
+                      <!-- <div class="form-group col-md-2">
                         <label>Country
                         </label>
                         <input type="text" class="form-control" v-model="form.sender.address.country_code.country_name" placeholder="" readonly>
-                      </div>
+                      </div> -->
                       
                   </div>
                   <hr>
+                  <div v-if="this.receiversCount()">
+                  <h4 class="mt-3 mb-3">Receivers Information</h4>
+                  <div class="form-row" v-for="receiver in receivers">
+                    <div class="form-group col-md-3">
+                        <label for="contact_country_code">First Name</label>
+                        <input type="text" class="form-control" id="contact_country_code" v-model="receiver.name.first_name" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="phone_number">Middle Name</label>
+                        <input type="text" class="form-control" id="phone_number" v-model="receiver.name.middle_name" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="phone_number">Last Name</label>
+                        <input type="text" class="form-control" id="phone_number" v-model="receiver.name.last_name" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="country_code">Country Code</label>
+                        <input type="text" class="form-control" id="country_code" v-model="receiver.address.country_code.iso_code.country_code" readonly>
+                    </div>
+                </div>
+                </div>
                 </div>
 
                
@@ -142,6 +163,7 @@ export default {
     data() {
       return {
         form: '',
+        receivers: {},
         search: {
           mywucard_to_loyaltycard: '',
           sender_country_code: '',
@@ -157,16 +179,27 @@ export default {
     },
     mounted() {
       document.getElementById('loading').style.display = 'none';
+      this.receiversCount()
     },
     methods: {
+      receiversCount() {
+        if(this.receivers.length > 0){
+          return true;
+        } else {
+          return false;
+        }
+      },
       searchMYWU() {
-        this.showMYWUDetails = false;
+        // this.showMYWUDetails = false;
         document.getElementById('loading').style.display = 'block';
         axios.post('/admin/api/mywu-lookup', this.search)
         .then((response) => {
           this.showMYWUDetails = true;
-          document.getElementById('loading').style.display = 'none';console.log(response.data)
+          document.getElementById('loading').style.display = 'none';
+          console.log(response.data)
           this.form = response.data;
+
+          this.receivers = response.data.receiver ? response.data.receiver : {};
         })
         .catch((error) => {
           if( error.response.status == 422 ){
