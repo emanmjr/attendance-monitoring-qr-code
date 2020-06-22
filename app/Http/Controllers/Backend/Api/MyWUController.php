@@ -46,7 +46,7 @@ class MyWUController extends Controller
         
         try {
             // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/mywu', [
-            $res = $client->request('POST', 'http://3.1.170.158/mw_v1007/public/remittance/mywu', [
+            $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/mywu', [
                 'json' => [
                     "Category" =>"Enroll",
                     "channelType" => "H2H",
@@ -175,7 +175,7 @@ class MyWUController extends Controller
     {
         try {
             // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/send', [
-            $res = $client->request('POST', 'http://3.1.170.158/mw_v1007/public/remittance/send', [
+            $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/send', [
                 'json' => $json
             ]);
 
