@@ -64,18 +64,30 @@
 
                 <h4 class="mt-3 mb-3">Customer Information</h4>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="reference_no">Reference No.
                         </label>
                         <input type="text" class="form-control" id="reference_no" v-model="form.reference_no" placeholder="" readonly>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="my_wu_no">My WU No.
                         </label>
                         <input type="text" class="form-control" id="my_wu_no" v-model="form.my_wu_no" placeholder="" readonly>
                     </div>
+                </div>
+                <div class="form-row" v-if="form.total_earned_points">
+                    <div class="form-group col-md-3">
+                        <label for="my_wu_no">Total Earned Points
+                        </label>
+                        <input type="text" class="form-control" id="total_earned_points" v-model="form.total_earned_points" placeholder="" readonly>
+                    </div>
+                    <!-- <div class="form-group col-md-3">
+                        <label for="my_wu_no">Is KYCED?
+                        </label>
+                        <input type="text" class="form-control" id="is_kyced" v-model="form.is_kyced" placeholder="" readonly>
+                    </div> -->
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -172,7 +184,9 @@ export default {
           country_name: '',
           phone_number: '',
           address_type: '',
-          contact_country_code: ''
+          contact_country_code: '',
+          total_earned_points: '',
+          // is_kyced: ''
         },
         search: {
           first_name: '',
@@ -296,6 +310,8 @@ export default {
             this.form.phone_number = response.data.customer.mobile_number ? response.data.customer.mobile_number.National_number : '';
             this.form.address_type = response.data.customer.address.addr_type ? response.data.customer.address.addr_type : '';
             this.form.contact_country_code = response.data.customer.mobile_number ? response.data.customer.mobile_number.ctry_code : ''
+            this.form.total_earned_points = response.data.customer.mywu_details ? response.data.customer.mywu_details.current_yr_pts : ''
+            // this.form.iskyced = response.data.customer.kyc_details ? response.data.customer.kyc_details.is_kyced : ''
 
             this.receivers = response.data.receivers ? response.data.receivers.receiver : {};
           }
