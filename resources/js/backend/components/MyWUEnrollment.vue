@@ -46,6 +46,10 @@
                           <option value="F">Female</option>
                         </select>
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="email">Email<span style="color:red;">*</span></label>
+                        <input type="text" class="form-control" :class="errorResponse.email ? 'is-invalid' : ''"  id="email" v-model="form.email" :readonly="this.isReadOnly">
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -163,6 +167,7 @@ export default {
           first_name: '',
           last_name: '',
           gender: '',
+          email: '',
           address: '',
           city: '',
           postal_code: '',
@@ -236,6 +241,7 @@ export default {
             this.form.first_name = '';
             this.form.last_name = '';
             this.form.gender = '';
+            this.form.email = '';
             this.form.address = '';
             this.form.city = '';
             this.form.postal_code = '';
@@ -278,7 +284,7 @@ export default {
                     '<tbody style="text-align:left; font-size:12px;">' +
                     '<tr>' +
                     '<td>MYWU Number: ' + response.data.sender.preferred_customer.account_nbr + '</td>' +
-                    '<td></td>' +
+                    '<td>Email: ' + this.form.email + '</td>' +
                     '</tr>' +
                     '<tr>' +
                     '<td>First Name: ' + this.form.first_name + '</td>' +
