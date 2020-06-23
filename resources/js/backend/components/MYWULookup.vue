@@ -214,8 +214,8 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: 'Please see fields that are required.'
+              text: 'Validation Failed',
+              footer: 'All fields are mandatory.'
             })
 
             this.errorResponse = error.response.data.errors;
@@ -223,7 +223,7 @@ export default {
              Swal.fire({
               icon: 'error',
               title: 'Something went wrong!',
-              text: 'Please check field values if it is/are correct.',
+              text: 'No Transaction Found.',
               footer: '' + error
             })
           }
