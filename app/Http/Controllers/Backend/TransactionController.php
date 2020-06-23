@@ -26,4 +26,9 @@ class TransactionController extends Controller
     {
         return view('backend.transaction.kyc-lookup');
     }
+
+    public function payStatus()
+    {
+        return view('backend.transaction.pay-status.index');
+    }
 }

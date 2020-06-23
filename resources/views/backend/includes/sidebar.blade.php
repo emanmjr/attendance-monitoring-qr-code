@@ -48,6 +48,13 @@
                             KYC Lookup
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                        active_class(Route::is('admin/transaction/pay-status'))
+                    }}" href="{{ route('admin.transaction.pay-status') }}">
+                            Pay Status
+                        </a>
+                    </li>
                 </ul>
             </li>
 
