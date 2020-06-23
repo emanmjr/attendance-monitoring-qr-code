@@ -32,35 +32,7 @@
                 </div>
                 <hr>
                 <div v-if="showMYWUDetails">
-                  <!-- <h4>Receiver Information</h4>
-                  <div class="form-row mt-4">
-                      <div class="form-group col-md-2">
-                        <label>First Name
-                        </label>
-                        <input type="text" class="form-control" v-model="form.receiver.name.first_name" placeholder="" readonly>
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label>Middle Name
-                        </label>
-                        <input type="text" class="form-control" v-model="form.receiver.name.middle_name" placeholder="" readonly>
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label>Last Name
-                        </label>
-                        <input type="text" class="form-control" v-model="form.receiver.name.last_name" placeholder="" readonly>
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label>Country Code
-                        </label>
-                        <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.country_code" placeholder="" readonly>
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label>Currency Code
-                        </label>
-                        <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.currency_code" placeholder="" readonly>
-                      </div>
-
-                  </div> -->
+                  
                   <hr>
                   <h4>Sender Information</h4>
                   <div class="form-row mt-4">
@@ -134,26 +106,56 @@
                   </div>
                   <hr>
                   <div v-if="this.receiversCount()">
-                  <h4 class="mt-3 mb-3">Receivers Information</h4>
-                  <div class="form-row" v-for="receiver in receivers">
-                    <div class="form-group col-md-3">
-                        <label for="contact_country_code">First Name</label>
-                        <input type="text" class="form-control" id="contact_country_code" v-model="receiver.name.first_name" readonly>
+                    <h4 class="mt-3 mb-3">Receivers Information</h4>
+                      <div class="form-row" v-for="receiver in receivers">
+                        <div class="form-group col-md-3">
+                            <label for="contact_country_code">First Name</label>
+                            <input type="text" class="form-control" id="contact_country_code" v-model="receiver.name.first_name" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="phone_number">Middle Name</label>
+                            <input type="text" class="form-control" id="phone_number" v-model="receiver.name.middle_name" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="phone_number">Last Name</label>
+                            <input type="text" class="form-control" id="phone_number" v-model="receiver.name.last_name" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="country_code">Country Code</label>
+                            <input type="text" class="form-control" id="country_code" v-model="receiver.address.country_code.iso_code.country_code" readonly>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="phone_number">Middle Name</label>
-                        <input type="text" class="form-control" id="phone_number" v-model="receiver.name.middle_name" readonly>
+                  </div>
+                  <div v-if="!this.receiversCount()">
+                    <h4>Receiver Information</h4>
+                    <div class="form-row mt-4">
+                        <div class="form-group col-md-2">
+                          <label>First Name
+                          </label>
+                          <input type="text" class="form-control" v-model="form.receiver.name.first_name" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Middle Name
+                          </label>
+                          <input type="text" class="form-control" v-model="form.receiver.name.middle_name" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Last Name
+                          </label>
+                          <input type="text" class="form-control" v-model="form.receiver.name.last_name" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Country Code
+                          </label>
+                          <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.country_code" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Currency Code
+                          </label>
+                          <input type="text" class="form-control" v-model="form.receiver.address.country_code.iso_code.currency_code" placeholder="" readonly>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="phone_number">Last Name</label>
-                        <input type="text" class="form-control" id="phone_number" v-model="receiver.name.last_name" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="country_code">Country Code</label>
-                        <input type="text" class="form-control" id="country_code" v-model="receiver.address.country_code.iso_code.country_code" readonly>
-                    </div>
-                </div>
-                </div>
+                  </div>
                 </div>
 
                
