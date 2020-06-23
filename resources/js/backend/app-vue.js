@@ -40,6 +40,7 @@ Vue.component('my-wu-enrollment', require('./components/MyWUEnrollment.vue').def
 Vue.component('kyc-lookup', require('./components/KYCLookUp.vue').default);
 Vue.component('das-request', require('./components/DasRequest.vue').default);
 Vue.component('my-wu-lookup', require('./components/MYWULookup.vue').default);
+Vue.component('pay-status', require('./components/PayStatus.vue').default);
 
 Vue.config.errorHandler = function(err, vm, info) {
   console.log(`Error: ${err.toString()}\nInfo: ${info}`);

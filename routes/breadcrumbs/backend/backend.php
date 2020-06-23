@@ -37,6 +37,10 @@ Breadcrumbs::for('admin.mywu.mywu-lookup', function ($trail) {
     $trail->push('MyWU / MYWU LOOKUP', route('admin.dashboard'));
 });
 
+Breadcrumbs::for('admin.transaction.pay-status', function ($trail) {
+    $trail->push('Transactions / Pay Status', route('admin.transaction.receive'));
+});
+
 
 require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';

@@ -135,4 +135,56 @@ class TransactionController extends Controller
         return $response;
     }
 
+    public function payStatus()
+    {
+        request()->validate([
+            'mtcn' => 'required',
+            'recording_country_code' => 'required',
+            'recording_currency_country_code' => 'required',
+            'pay_wo_indicator' => 'required',
+        ]);
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' =>  session()->get('access_token')
+        ];
+        
+        $client = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        try {
+
+            $json = [
+                "channelType" =>  "H2H",
+                "channelVersion" =>  "9500",
+                "recordingCountryCode" =>  request()->recording_country_code,
+                "recordingCountryCurrencyCode" =>  request()->recording_currency_country_code,
+                "mtcn" => request()->mtcn,
+                "payWoIdIndicator" => request()->pay_wo_indicator
+            ];
+            
+            // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
+            $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/status', [
+                'json' => $json
+            ]);
+
+   
+            $xml = simplexml_load_string($res->getBody()->getContents());
+            $namespaces = $xml->getNamespaces(true);
+            $xml = $xml->children($namespaces['soapenv'])
+                ->Body
+                ->children($namespaces['xrsi'])
+                ->children();
+
+                $response = json_encode($xml, true);
+
+        } catch (ClientErrorResponseException $exception) {
+            $response = $exception->getResponse()->getBody(true);
+        }
+
+        return $response;
+
+    }
+
 }
