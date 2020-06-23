@@ -69,6 +69,11 @@
                         </label>
                         <input type="text" class="form-control" v-model="form.sender.preferred_customer.account_nbr" placeholder="" readonly>
                       </div>
+                      <div class="form-group col-md-2" v-if="form.wu_card.total_points_earned">
+                        <label>Total Earned Points
+                        </label>
+                        <input type="text" class="form-control" v-model="form.wu_card.total_points_earned" placeholder="" readonly>
+                      </div>
                   </div>
                   <div class="form-row mt-4">
                       <div class="form-group col-md-2">
