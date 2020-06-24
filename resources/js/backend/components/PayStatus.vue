@@ -98,6 +98,70 @@
                         <hr>
                     </div>
                   </div>
+
+
+
+                  <div v-if="!this.transactionsCount()">
+                    <h4 class="mt-3 mb-3">Pay Transactions</h4>
+                      <!-- <div  v-for="transaction in pay_transactions"> -->
+                        <div class="form-row">
+                          <div class="form-group col-md-2">
+                              <label for="contact_country_code">Filing Date</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.filing_date" readonly>
+                          </div>
+                          <div class="form-group col-md-2">
+                              <label for="phone_number">Filing Time</label>
+                              <input type="text" class="form-control" id="phone_number" v-model="pay_transactions.filing_time" readonly>
+                          </div>
+                          <div class="form-group col-md-2">
+                              <label for="phone_number">Originators Principal Amount</label>
+                              <input type="text" class="form-control" id="phone_number" v-model="pay_transactions.financials.originators_principal_amount" readonly>
+                          </div>
+                          <div class="form-group col-md-2">
+                              <label for="phone_number">Money Transfer Key</label>
+                              <input type="text" class="form-control" id="phone_number" v-model="pay_transactions.money_transfer_key" readonly>
+                          </div>
+                          <div class="form-group col-md-2">
+                              <label for="phone_number">Pay Status Description</label>
+                              <input type="text" class="form-control" id="phone_number" v-model="pay_transactions.pay_status_description" readonly>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-2">
+                              <label for="contact_country_code">Originating Country Code</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.payment_details.originating_country_currency.iso_code.country_code" readonly>
+                          </div>
+                          <div class="form-group col-md-2">
+                              <label for="phone_number">Originating Country Code</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.payment_details.originating_country_currency.iso_code.currency_code" readonly>
+                          </div>
+                        </div>
+                        <h6 class="mt-3 mb-3">Receiver</h6>
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                              <label for="contact_country_code">First Name</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.receiver.name.first_name" readonly>
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="contact_country_code">First Name</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.receiver.name.last_name" readonly>
+                          </div>
+                        </div>
+                        <h6 class="mt-3 mb-3">Sender</h6>
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                              <label for="contact_country_code">First Name</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.sender.name.first_name" readonly>
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="contact_country_code">First Name</label>
+                              <input type="text" class="form-control" id="contact_country_code" v-model="pay_transactions.sender.name.last_name" readonly>
+                          </div>
+                        </div>
+                        <br>
+                        <hr>
+                    <!-- </div> -->
+                  </div>
                 </div>
 
                
