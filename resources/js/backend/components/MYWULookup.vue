@@ -105,7 +105,8 @@
                       
                   </div>
                   <hr>
-                  <div v-if="this.receiversCount()">
+                  <div v-if="form.receiver">
+                    <div v-if="this.receiversCount()">
                     <h4 class="mt-3 mb-3">Receivers Information</h4>
                       <div class="form-row" v-for="receiver in receivers">
                         <div class="form-group col-md-3">
@@ -156,6 +157,8 @@
                         </div>
                     </div>
                   </div>
+                  </div>
+                  
                 </div>
 
                
