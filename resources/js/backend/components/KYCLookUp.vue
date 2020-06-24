@@ -316,28 +316,28 @@ export default {
             this.receivers = response.data.receivers ? response.data.receivers.receiver : {};
           }
         })
-        // .catch((error) => {
-        //   if( error.response.status == 422 ){
-        //     Swal.fire({
-        //       icon: 'error',
-        //       title: 'Oops...',
-        //       text: 'Something went wrong!',
-        //       footer: 'All fields are required, kindly fill up all the fields.'
-        //     })
-        //     document.getElementById('loading').style.display = 'none';
-        //   } else {
-        //     Swal.fire({
-        //       icon: 'error',
-        //       title: 'Oops...',
-        //       text: 'Can you please try again.',
-        //       footer: '' + error
-        //     })
+        .catch((error) => {
+          if( error.response.status == 422 ){
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: 'All fields are required, kindly fill up all the fields.'
+            })
+            document.getElementById('loading').style.display = 'none';
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Can you please try again.',
+              footer: '' + error
+            })
 
-        //     document.getElementById('loading').style.display = 'none';
-        //   }
+            document.getElementById('loading').style.display = 'none';
+          }
 
           
-        // })
+        })
       },
       receiversCount() {
         if(this.receivers.length > 0){
