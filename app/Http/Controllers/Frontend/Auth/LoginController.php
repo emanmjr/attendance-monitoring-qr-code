@@ -171,7 +171,7 @@ class LoginController extends Controller
         if(env('APP_ENV') == 'local') {
             session()->put(
                 'access_token', 
-                'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5ODFmYzhhMjU5MmMzNWFkMTA2ZTJlZTZkOGI5ZmI5YmFiOTM1YjgzNDk0MTM4NGQ5YWM5NDk2NTdjYWE1Y2UwYmU5ZWQ0OWNhNTE0YzZlIn0.eyJhdWQiOiI2IiwianRpIjoiNDk4MWZjOGEyNTkyYzM1YWQxMDZlMmVlNmQ4YjlmYjliYWI5MzViODM0OTQxMzg0ZDlhYzk0OTY1N2NhYTVjZTBiZTllZDQ5Y2E1MTRjNmUiLCJpYXQiOjE1OTI4MTg0NTIsIm5iZiI6MTU5MjgxODQ1MiwiZXhwIjoxNjI0MzU0NDUyLCJzdWIiOiI2Iiwic2NvcGVzIjpbIioiXX0.sgvN78eX99bq6yllo5r6Mt2ioPPVTSV5pm4dUlOS8PvAZ4x0cyMy9NVYHy7rt6pWlxyM5Ox7ZmVPNtn9KApsUYLTAByj-NuwkITUEjCvVQNOLueFhxb4oNnLS6sUhhtWZzWgHcqC4_Tzr0hwhqq_Saqo3tdkKU9tFNWmd9mVHd-3EORNdELUUf6yGQ980Kfx42KSdy_qnZlBJicYGcWkhfmgAUAThcrzvwXIt9fwUAzy8HmR6GEnTQeQ8x53VeNBxE3Ub24ntxP1PRSCm5VeX8nnemikHoFJF7N7TEBgP8OcifxoEQ97BvaHJ0-yf7M9Y8X3PfRhvQyKLfyO7s-iH4lTKv3--7gs6J7b9Y3b7pZtWjM1D_bWPy76srYN00g58gCxqZltmfs1d5mhWYvGw1P_amefwvOcdhYzkpEVQ9Bb17pZtb9ejBZVPvAwdQYlFLPryoZVbm-s7_IWwQjtWlPhG8ANy9O8qOnGehSqUzb81iG9YG2zqh8chM9BvNT_UiaaQGMAPgn3czHJXo0lnHHVorQ4h5F3YAYEl-11uxAr3VVLBfYYo10c3OYToXZNQPYvSy5a0P5Wdfv5I8LyrIONcQqvDC7Z9xSjfyg9P9KWxUNr8-Mr2nrsGavoIOgnKfsHkNl0XHDVckzC8BBokM5g7KYdBOVt7T5nKXZM6JQ'
+                'Bearer ' . env('DEVELOPMENT_TOKEN')
             );
         } else {
             if(!session()->get('access_token')){

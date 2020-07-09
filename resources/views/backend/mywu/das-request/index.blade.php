@@ -6,7 +6,7 @@
     <div class="row mt-5">
         <div class="col">
             <div class="card">
-                <das-request></das-request>
+                <das-request :country-codes="{{ json_encode(config('wu-country-codes')) }}" :currency-codes="{{ json_encode(config('wu-currency-codes')) }}"></das-request>
             </div><!--card-->
         </div><!--col-->
     </div><!--row-->

@@ -34,14 +34,31 @@
                     </div>
                     <div class="col-md-3" v-if="this.isViewIsoCode1">
                         <div class="form-group">
-                          <label for="search_first_name"><label v-if="this.isViewIsoCode2">Originating&nbsp;</label>Country Code <small>(2 Digit ISO)</small></label>
-                            <input type="text" class="form-control" v-model="isoLanguageCode">
+                          <label for="search_first_name"><span v-if="this.isViewIsoCode2">Originating&nbsp;</span>Country </label>
+                            <select class="form-control" v-model="isoLanguageCode">
+                                <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                            </select>
+
                         </div>
                     </div>
                     <div class="col-md-3" v-if="this.isViewIsoCode2">
                         <div class="form-group">
-                          <label for="search_first_name"><label v-if="this.isViewIsoCode2">Destination&nbsp;</label>Country Code <small>(2 Digit ISO)</small></label>
-                            <input type="text" class="form-control" v-model="isoLanguageCode1">
+                          <label for="search_first_name"><span v-if="this.isViewIsoCode2">Destination&nbsp;</span>Country </label>
+                            <select class="form-control" v-model="isoLanguageCode1">
+                                <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3" v-if="this.templateId">
+                        <div class="form-group">
+                          <label for="search_template_id">Template ID</label>
+                            <input type="text" class="form-control" v-model="search.template_id">
+                        </div>
+                    </div>
+                    <div class="col-md-3" v-if="this.listName">
+                        <div class="form-group">
+                          <label for="search_template_id">List Name</label>
+                            <input type="text" class="form-control" v-model="search.list_name">
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -97,7 +114,7 @@
                         
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.COUNTRY_LONG }}</td>
                                 <td>{{ infoDetail.CURRENCY_CD }}</td>
                                 <td>{{ infoDetail.CURRENCY_NAME }}</td>
@@ -123,7 +140,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.REC_NUMBER }}</td>
                                 <td>{{ infoDetail.INFO }}</td>
                             </tr>
@@ -152,7 +169,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.BANNER }}</td>
                                 <td>{{ infoDetail.CTRY_VIEW_FILTER }}</td>
                                 <td>{{ infoDetail.DESCRIPTION }}</td>
@@ -184,7 +201,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.CATEGORY }}</td>
                                 <td>{{ infoDetail.DESCRIPTION }}</td>
                                 <td>{{ infoDetail.PRODUCT }}</td>
@@ -208,7 +225,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.LIST_TEXT }}</td>
                                 <td>{{ infoDetail.LIST_VALUE }}</td>
                             </tr>
@@ -230,7 +247,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.CITY }}</td>
                                 <td>{{ infoDetail.STATE_CODE }}</td>
                                 <td>{{ infoDetail.STATE_NAME }}</td>
@@ -253,7 +270,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="infoDetail in responseInfoDetails">
+                            <tr v-for="infoDetail in paginatedData">
                                 <td>{{ infoDetail.STATE_CODE }}</td>
                                 <td>{{ infoDetail.STATE_NAME }}</td>
                             </tr>
@@ -262,6 +279,14 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div v-if="showPaginateBtns">
+                  <button class="btn btn-primary btn-sm btn-dashboard" @click="prevPage" :disabled="pageNumber==0">
+                    Previous
+                  </button>
+                  <button class="btn btn-primary btn-sm btn-dashboard" @click="nextPage" :disabled="pageNumber >= pageCount -1">
+                    Next
+                  </button>
                 </div>
 
                 
@@ -287,12 +312,15 @@
     import { mapState } from 'vuex';
     var isoCountryCurrency = require('iso-country-currency');
     export default {
+        props: ['CountryCodes', 'CurrencyCodes'],
         data() {
             return {
                 search: {
                   das_request_type: '',
                   queryFilter1: '',
                   queryFilter2: '',
+                  template_id: '',
+                  list_name: '',
                 },
                 isoLanguageCode: '',
                 isoLanguageCode1: '',
@@ -300,7 +328,7 @@
                 isViewSearchLoading: 'd-none',
                 viewCountry: '',
                 viewCurrency: '',
-                responseInfoDetails : '',
+                responseInfoDetails: {},
                 filterByVal: '',
                 filterValue: '',
                 filterType: '',
@@ -315,6 +343,13 @@
                 isViewIsoCode2: false,
                 isViewIsoCode1: true,
                 showNoDetails: false,
+                templateId: false,
+                listName: false,
+                pageNumber: 0,
+                size: {
+                  default: 10
+                },
+                showPaginateBtns: false
                 
             }
         },
@@ -322,33 +357,65 @@
           checkDasRequestTypeFields() {
             return this.search.das_request_type;
           },
+          pageCount(){
+            // console.log(this.responseInfoDetails);
+              if(this.responseInfoDetails != undefined){
+                let l = this.responseInfoDetails.length,
+                  s = this.size.default;
+              return Math.ceil(l/s);
+              }
+          },
+          paginatedData(){
+            const start = this.pageNumber * this.size.default,
+                  end = start + this.size.default;
+            
+            return this.responseInfoDetails == undefined ? {} : this.responseInfoDetails.slice(start, end);
+            
+          }
         },
         watch: {
           checkDasRequestTypeFields(data){
+
             if (data == 'GetDeliveryServices'){
               this.isViewIsoCode2 = true;
+              this.templateId =false
+              this.listName =false
             } else {
+              
               this.isViewIsoCode2 = false;
               this.isViewIsoCode1 = true;
+              this.templateId =false
+              this.listName =false
 
-              if(data == 'GetCascadeList' || data == 'GetMexicoCityState' || data == 'GetStateList'){
+              if(data == 'GetDeliveryOptionTemplate'){
+                this.templateId =true
+              }
+              
+
+              if(data == 'GetMexicoCityState'){
                 this.isViewIsoCode1 = false;
               }else{
                 this.isViewIsoCode1 = true;
               }
 
+              if(data == 'GetCascadeList'){
+                this.listName = true
+                this.isViewIsoCode1 = false;
+                this.isViewIsoCode2 = false;
+              }
+
             }
+            
 
             
           }
         },
         methods: {
-          checkDataResponse(data) {
-            if(Object.keys(data).length > 0){
-              this.showNoDetails = false;
-            } else {
-              this.showNoDetails = true;
-            }
+          nextPage(){
+            this.pageNumber++;
+          },
+          prevPage(){
+            this.pageNumber--;
           },
           filterDasRequest() {
             this.dasRequestCountriesCurrencies = false;
@@ -358,6 +425,13 @@
             this.dasRequestCascadeList = false;
             this.dasRequestMexicoCityState = false;
             this.dasRequestStateList = false;
+            this.search.queryFilter1 = '';
+            this.search.queryFilter2 = '';
+            
+            this.pageNumber = 0;
+            this.responseInfoDetails = '';
+            this.showPaginateBtns = false;
+            
 
             
             if(this.isViewIsoCode1 == true){
@@ -390,15 +464,17 @@
                     this.viewCountry = country;
                     this.viewCurrency = currency;
                   }
-
                   
-
                   // handle success
                   if(response.data) {
-
+                    if(Object.keys(response.data).length > 0){
+                      this.showNoDetails = false;
+                      this.showPaginateBtns = true;
+                    } else {
+                      this.showNoDetails = true;
+                      this.showPaginateBtns = false;
+                    }
                     this.checkDasRequestType(this.search.das_request_type, response.data);
-                    this.checkDataResponse(response.data);
-                    
                   }
                 })
                 .catch((error) => {
@@ -432,7 +508,8 @@
             
           },
           checkDasRequestType(dasRequestType, data) {
-            console.log(data)
+            this.search.template_id = '';
+
             if(dasRequestType == 'GetCountriesCurrencies') {
               this.dasRequestCountriesCurrencies = true;
               this.dasRequestCountryInfo = false;
@@ -532,7 +609,11 @@
               // set Data
               this.responseInfoDetails = data.GETSTATELIST;
             }
-            
+
+            this.paginatedData();
+            if (this.responseInfoDetails == undefined){
+              this.showNoDetails = true;
+            }
           },
         },
         mounted() {

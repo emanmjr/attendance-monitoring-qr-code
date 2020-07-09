@@ -127,9 +127,7 @@ class MyWUController extends Controller
 
         // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
-
-
-
+        
         // Check type if type of request is already in DB
         $response = $this->checkIfAlreadyStored($json);
         
@@ -219,7 +217,8 @@ class MyWUController extends Controller
         }
 
         if($request->das_request_type == 'GetCascadeList'){
-            return "CMBSRI";
+            // return "CMBSRI";
+            return $request->list_name;
         }
 
         if($request->das_request_type == 'GetMexicoCityState'){
@@ -245,9 +244,8 @@ class MyWUController extends Controller
         if($request->das_request_type == 'GetDeliveryServices'){
             return $request->queryFilter2;
         }
-
         if($request->das_request_type == 'GetDeliveryOptionTemplate'){
-            return "4200";
+            return $request->template_id;
         }
 
         if($request->das_request_type == 'GetCascadeList'){
@@ -321,7 +319,7 @@ class MyWUController extends Controller
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => request()->accout_number,
                 "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
-                "queryFilter2" => "4200",
+                "queryFilter2" => strtoupper($queryFilters['queryFilter2']),
             ];
         }
 
@@ -358,8 +356,8 @@ class MyWUController extends Controller
                 "channelVersion" => "9500",
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => request()->accout_number,
-                // "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
-                "queryFilter1" => "US",
+                "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
+                // "queryFilter1" => "US",
             ];
         }
         
