@@ -124,6 +124,7 @@ class MyWUController extends Controller
             'queryFilter2' => $this->queryFilter2TypeRequest(request()),
         ];
 
+        
 
         // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
@@ -170,7 +171,6 @@ class MyWUController extends Controller
         
     }
 
-
     public function requestToMiddleware($client, $json)
     {
         try {
@@ -178,7 +178,7 @@ class MyWUController extends Controller
             $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/send', [
                 'json' => $json
             ]);
-
+                
             $xml = simplexml_load_string($res->getBody()->getContents());
             $namespaces = $xml->getNamespaces(true);
             $xml = $xml->children($namespaces['soapenv'])
@@ -187,10 +187,26 @@ class MyWUController extends Controller
                     ->children()
                     ->MTML
                     ->REPLY
-                    ->DATA_CONTEXT
-                    ->RECORDSET;
+                    ->DATA_CONTEXT;
 
-            return json_encode($xml, true);
+            if(request()->das_request_type == "GetCountriesCurrencies"){
+                $newCollection = collect([
+                    'GETCOUNTRIESCURRENCIES' => current((array)$xml->RECORDSET),
+                    'DATA_MORE' => current((array)$xml->HEADER->DATA_MORE),
+                ]);
+                return json_encode($newCollection->toArray(), true);
+            }
+
+            if(request()->das_request_type == "GetDeliveryOptionTemplate"){
+                $newCollection = collect([
+                    'GETDELIVERYOPTIONTEMPLATE' => current((array)$xml->RECORDSET),
+                    'DATA_MORE' => current((array)$xml->HEADER->DATA_MORE),
+                ]);
+
+                return json_encode($newCollection->toArray(), true);
+            }
+            
+            return json_encode($xml->RECORDSET, true);
 
         } catch (ClientErrorResponseException $exception) {
             return $exception->getResponse()->getBody(true);
@@ -273,7 +289,7 @@ class MyWUController extends Controller
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => $request->accout_number,
                 "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
-                // "queryFilter2" => $request->queryFilter2,
+                "queryFilter2" => $queryFilters['queryFilter2'],
                 // "queryFilter3" => $request->queryFilter3,
                 // "queryFilter4" => $request->queryFilter4,
                 // "queryFilter5" => $request->queryFilter5,
@@ -311,7 +327,6 @@ class MyWUController extends Controller
         }
 
         if($request->das_request_type == 'GetDeliveryOptionTemplate'){
-
             return [
                 "Category" =>"Das",
                 "channelType" => "H2H",
@@ -320,6 +335,7 @@ class MyWUController extends Controller
                 "accountNum" => request()->accout_number,
                 "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
                 "queryFilter2" => strtoupper($queryFilters['queryFilter2']),
+                "queryFilter3" => request()->post('queryFilter3') ?? "",
             ];
         }
 

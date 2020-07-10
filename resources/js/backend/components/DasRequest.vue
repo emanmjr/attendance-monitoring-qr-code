@@ -287,6 +287,9 @@
                   <button class="btn btn-primary btn-sm btn-dashboard" @click="nextPage" :disabled="pageNumber >= pageCount -1">
                     Next
                   </button>
+                  <button v-if="showMoreDataBtn" class="btn btn-primary btn-sm btn-dashboard ml-4" @click="moreDataDasRequest">
+                    More Data
+                  </button>
                 </div>
 
                 
@@ -349,7 +352,9 @@
                 size: {
                   default: 10
                 },
-                showPaginateBtns: false
+                showPaginateBtns: false,
+                showMoreDataBtn: false,
+                moreDataFilterDas: "N"
                 
             }
         },
@@ -411,8 +416,74 @@
           }
         },
         methods: {
+          moreDataDasRequest(){
+
+            this.pageNumber = 0;
+            this.showPaginateBtns = false;
+            this.showMoreDataBtn = false;
+
+            let lastData = this.responseInfoDetails[this.responseInfoDetails.length-1];
+
+            if (this.search.das_request_type == "GetCountriesCurrencies"){
+              var data = {
+                'das_request_type': this.search.das_request_type,
+                'queryFilter1': this.search.queryFilter1,
+                'queryFilter2': lastData.COUNTRY_LONG,
+              };
+            }
+
+            if (this.search.das_request_type == "GetDeliveryOptionTemplate"){
+              var data = {
+                'das_request_type': this.search.das_request_type,
+                'queryFilter1': this.search.queryFilter1,
+                'queryFilter2': this.search.template_id,
+                'queryFilter3': "", // lastData.T_INDEX
+              };
+            }
+
+            this.isViewSearchLoading = 'd-block';
+            axios.post('/admin/api/das-request', data)
+                .then((response) => {
+
+                  this.isViewSearchLoading = 'd-none';
+                  this.isViewCountryCode = 'd-block';
+                  
+                  // handle success
+                  if(response.data) {
+                    if(Object.keys(response.data).length > 0){
+                      this.showNoDetails = false;
+                      this.showPaginateBtns = true;
+                    } else {
+                      this.showNoDetails = true;
+                      this.showPaginateBtns = false;
+                    }
+                    this.checkDasRequestType(this.search.das_request_type, response.data);
+                  }
+                })
+                .catch((error) => {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Can you please try again.',
+                      footer: '' + error
+                    });
+                  document.getElementById('loading').style.display = 'none';
+                })
+
+          },
           nextPage(){
             this.pageNumber++;
+
+          if (this.search.das_request_type == "GetCountriesCurrencies" && (this.pageNumber >= this.pageCount -1)){
+            this.showMoreDataBtn = true;
+
+            if(this.moreDataFilterDas == "N"){
+              this.showMoreDataBtn = false;
+            }
+          }
+
+          
+
           },
           prevPage(){
             this.pageNumber--;
@@ -501,14 +572,12 @@
                   
                 })
               })
-              
-            
 
             // document.getElementById('loading').style.display = 'block';
             
           },
           checkDasRequestType(dasRequestType, data) {
-            this.search.template_id = '';
+            // this.search.template_id = '';
 
             if(dasRequestType == 'GetCountriesCurrencies') {
               this.dasRequestCountriesCurrencies = true;
@@ -519,7 +588,7 @@
               this.dasRequestStateList = false;
 
 
-
+              this.moreDataFilterDas = data.DATA_MORE
               //set Data
               this.responseInfoDetails = data.GETCOUNTRIESCURRENCIES;
             }
@@ -533,10 +602,10 @@
               this.dasRequestMexicoCityState = false;
               this.dasRequestStateList = false;
 
-
+              this.moreDataFilterDas = "N";
 
               // set Data
-              this.responseInfoDetails = data.GETCOUNTRYINFO;
+              this.responseInfoDetails = "N";
             }
 
             if(dasRequestType == 'GetDeliveryServices') {
@@ -548,7 +617,7 @@
               this.dasRequestMexicoCityState = false;
               this.dasRequestStateList = false;
 
-
+              this.moreDataFilterDas = "N";
 
               // set Data
               this.responseInfoDetails = data.GETDELIVERYSERVICES;
@@ -563,7 +632,7 @@
               this.dasRequestMexicoCityState = false;
               this.dasRequestStateList = false;
 
-
+              this.moreDataFilterDas = data.DATA_MORE
 
               // set Data
               this.responseInfoDetails = data.GETDELIVERYOPTIONTEMPLATE;
@@ -578,7 +647,7 @@
               this.dasRequestMexicoCityState = false;
               this.dasRequestStateList = false;
 
-
+              this.moreDataFilterDas = "N";
               // set Data
               this.responseInfoDetails = data.GETCASCADELIST;
             }
@@ -592,7 +661,7 @@
               this.dasRequestMexicoCityState = true;
               this.dasRequestStateList = false;
 
-
+              this.moreDataFilterDas = "N";
               // set Data
               this.responseInfoDetails = data.GETMEXICOCITYSTATE;
             }
@@ -606,11 +675,11 @@
               this.dasRequestMexicoCityState = false;
               this.dasRequestStateList = true;
 
+              this.moreDataFilterDas = "N";
               // set Data
               this.responseInfoDetails = data.GETSTATELIST;
             }
 
-            this.paginatedData();
             if (this.responseInfoDetails == undefined){
               this.showNoDetails = true;
             }
