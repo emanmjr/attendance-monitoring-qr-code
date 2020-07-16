@@ -32,33 +32,61 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3" v-if="this.isViewIsoCode1">
+                    <div class="col-md-2" v-if="this.isViewIsoCode1">
                         <div class="form-group">
                           <label for="search_first_name"><span v-if="this.isViewIsoCode2">Originating&nbsp;</span>Country </label>
-                            <select class="form-control" v-model="isoLanguageCode">
+                            <select class="form-control" v-model="countryCode1">
                                 <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                             </select>
 
                         </div>
                     </div>
-                    <div class="col-md-3" v-if="this.isViewIsoCode2">
+                    <div class="col-md-2" v-if="this.countryCurrencies1">
+                        <div class="form-group">
+                          <label for="search_first_name">Currency</label>
+                            <select class="form-control" v-model="currencyCode1">
+                                <option v-for="(currency, index) in this.CurrencyCodes" :value="index">{{ currency }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" v-if="this.isViewIsoCode2">
                         <div class="form-group">
                           <label for="search_first_name"><span v-if="this.isViewIsoCode2">Destination&nbsp;</span>Country </label>
-                            <select class="form-control" v-model="isoLanguageCode1">
+                            <select class="form-control" v-model="countryCode2">
                                 <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3" v-if="this.templateId">
+                    <div class="col-md-2" v-if="this.countryCurrencies2">
+                        <div class="form-group">
+                          <label for="search_first_name">Currency</label>
+                            <select class="form-control" v-model="currencyCode2">
+                                <option v-for="(currency, index) in this.CurrencyCodes" :value="index">{{ currency }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" v-if="this.templateId">
                         <div class="form-group">
                           <label for="search_template_id">Template ID</label>
                             <input type="text" class="form-control" v-model="search.template_id">
                         </div>
                     </div>
-                    <div class="col-md-3" v-if="this.listName">
+                    <div class="col-md-2" v-if="this.listName1">
                         <div class="form-group">
-                          <label for="search_template_id">List Name</label>
-                            <input type="text" class="form-control" v-model="search.list_name">
+                          <label for="search_template_id">List Name 1</label>
+                            <input type="text" class="form-control" v-model="search.list_name1">
+                        </div>
+                    </div>
+                    <div class="col-md-2" v-if="this.listName2">
+                        <div class="form-group">
+                          <label for="search_template_id">List Name 2</label>
+                            <input type="text" class="form-control" v-model="search.list_name2">
+                        </div>
+                    </div>
+                    <div class="col-md-2" v-if="this.listName3">
+                        <div class="form-group">
+                          <label for="search_template_id">List Name 3</label>
+                            <input type="text" class="form-control" v-model="search.list_name3">
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -323,8 +351,14 @@
                   queryFilter1: '',
                   queryFilter2: '',
                   template_id: '',
-                  list_name: '',
+                  list_name1: '',
+                  list_name2: '',
+                  list_name3: '',
                 },
+                countryCode1: '',
+                countryCode2: '',
+                currencyCode1: '',
+                currencyCode2: '',
                 isoLanguageCode: '',
                 isoLanguageCode1: '',
                 isViewCountryCode: 'd-none',
@@ -347,14 +381,18 @@
                 isViewIsoCode1: true,
                 showNoDetails: false,
                 templateId: false,
-                listName: false,
+                listName1: false,
+                listName2: false,
+                listName3: false,
                 pageNumber: 0,
                 size: {
                   default: 10
                 },
                 showPaginateBtns: false,
                 showMoreDataBtn: false,
-                moreDataFilterDas: "N"
+                moreDataFilterDas: "N",
+                countryCurrencies1: false,
+                countryCurrencies2: false,
                 
             }
         },
@@ -384,30 +422,47 @@
             if (data == 'GetDeliveryServices'){
               this.isViewIsoCode2 = true;
               this.templateId =false
-              this.listName =false
+              this.listName1 =false
+              this.listName2 =false
+              this.listName3 =false
+              this.countryCurrencies1 = true;
+              this.countryCurrencies2 = true;
+
             } else {
               
               this.isViewIsoCode2 = false;
               this.isViewIsoCode1 = true;
               this.templateId =false
-              this.listName =false
+              this.listName1 =false
+              this.listName2 =false
+              this.listName3 =false
+              this.countryCurrencies2 = false;
 
               if(data == 'GetDeliveryOptionTemplate'){
-                this.templateId =true
+                this.templateId =true;
+                this.countryCurrencies2 = false;
               }
               
 
               if(data == 'GetMexicoCityState'){
                 this.isViewIsoCode1 = false;
+                this.countryCurrencies1 = false;
+                this.countryCurrencies2 = false;
               }else{
+                this.countryCurrencies1 = true;
                 this.isViewIsoCode1 = true;
               }
 
               if(data == 'GetCascadeList'){
-                this.listName = true
+                this.listName1 =true;
+                this.listName2 =true;
+                this.listName3 =true;
                 this.isViewIsoCode1 = false;
                 this.isViewIsoCode2 = false;
+                this.countryCurrencies1 = false;
               }
+
+
 
             }
             
@@ -474,15 +529,14 @@
           nextPage(){
             this.pageNumber++;
 
-          if (this.search.das_request_type == "GetCountriesCurrencies" && (this.pageNumber >= this.pageCount -1)){
-            this.showMoreDataBtn = true;
-
-            if(this.moreDataFilterDas == "N"){
-              this.showMoreDataBtn = false;
+            if ((this.search.das_request_type == "GetCountriesCurrencies" || this.search.das_request_type == "GetDeliveryOptionTemplate") && (this.pageNumber >= this.pageCount -1)){
+              this.showMoreDataBtn = true;
+              
+              if(this.moreDataFilterDas == "N"){
+                this.showMoreDataBtn = false;
+                
+              }
             }
-          }
-
-          
 
           },
           prevPage(){
@@ -503,25 +557,12 @@
             this.responseInfoDetails = '';
             this.showPaginateBtns = false;
             
-
-            
-            if(this.isViewIsoCode1 == true){
-              var  country = isoCountryCurrency.getParamByISO(this.isoLanguageCode, 'countryName');
-              var  currency = isoCountryCurrency.getParamByISO(this.isoLanguageCode, 'currency');
-            }
-
-
-            if(this.isViewIsoCode2 == true) {
-              var country1 = isoCountryCurrency.getParamByISO(this.isoLanguageCode1, 'countryName');
-              var currency1 = isoCountryCurrency.getParamByISO(this.isoLanguageCode1, 'currency');
-            }
-
               if(this.isViewIsoCode1 == true){
-                this.search.queryFilter1 = this.isoLanguageCode + ' ' + currency;
+                this.search.queryFilter1 = this.countryCode1 + ' ' + this.currencyCode1;
               }
               
               if(this.isViewIsoCode2 == true){
-                this.search.queryFilter2 = this.isoLanguageCode1 + ' ' + currency1;
+                this.search.queryFilter2 = this.countryCode2 + ' ' + this.currencyCode2;
               }
 
               this.isViewSearchLoading = 'd-block';
@@ -532,8 +573,8 @@
                   this.isViewSearchLoading = 'd-none';
                   this.isViewCountryCode = 'd-block';
                   if(this.isViewIsoCode1 == true){
-                    this.viewCountry = country;
-                    this.viewCurrency = currency;
+                    this.viewCountry = this.countryCode1;
+                    this.viewCurrency = this.currencyCode1;
                   }
                   
                   // handle success
@@ -545,6 +586,7 @@
                       this.showNoDetails = true;
                       this.showPaginateBtns = false;
                     }
+
                     this.checkDasRequestType(this.search.das_request_type, response.data);
                   }
                 })
@@ -605,7 +647,7 @@
               this.moreDataFilterDas = "N";
 
               // set Data
-              this.responseInfoDetails = "N";
+              this.responseInfoDetails = data.GETCOUNTRYINFO;
             }
 
             if(dasRequestType == 'GetDeliveryServices') {
@@ -683,6 +725,10 @@
             if (this.responseInfoDetails == undefined){
               this.showNoDetails = true;
             }
+
+            if(this.pageNumber >= this.pageCount -1){
+              this.showPaginateBtns = false;
+            }
           },
         },
         mounted() {
@@ -692,6 +738,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .table-responsive td:not(.btn-td) {
+      white-space: normal;
+      vertical-align: middle;
+    }
     .no-transact {
         text-align: center;
     }

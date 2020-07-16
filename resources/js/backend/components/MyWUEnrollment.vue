@@ -72,42 +72,64 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="country_code">Country Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" id="country_code" v-model="form.country_code" :readonly="this.isReadOnly">
+                        <!-- <input type="text" class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" id="country_code" v-model="form.country_code" :readonly="this.isReadOnly"> -->
+                        <select class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" v-model="form.country_code" :readonly="this.isReadOnly">
+                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                      </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="currency_code">Currency Code<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code" :readonly="this.isReadOnly">
+                        <!-- <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code" :readonly="this.isReadOnly"> -->
+                        <select class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" v-model="form.currency_code" :readonly="this.isReadOnly">
+                          <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
+                      </select>
                     </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                       <label for="destination_country_code">Destination Country Code<span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" id="destination_country_code" v-model="form.destination_country_code" :readonly="this.isReadOnly">
+                      <!-- <input type="text" class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" id="destination_country_code" v-model="form.destination_country_code" :readonly="this.isReadOnly"> -->
+                      <select class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" v-model="form.destination_country_code" :readonly="this.isReadOnly">
+                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                      </select>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="destination_currency_code">Currency Code of Destination Country <span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" id="destination_currency_code" v-model="form.destination_currency_code" :readonly="this.isReadOnly">
+                      <!-- <input type="text" class="form-control" :class="errorResponse.destination_currency_code ? 'is-invalid' : ''" id="destination_currency_code" v-model="form.destination_currency_code" :readonly="this.isReadOnly"> -->
+                      <select class="form-control" :class="errorResponse.destination_currency_code ? 'is-invalid' : ''" v-model="form.destination_currency_code" :readonly="this.isReadOnly">
+                          <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
+                      </select>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="sender_currency_code">Currency Code of  Money  Being Sent<span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" id="sender_currency_code" v-model="form.sender_currency_code" :readonly="this.isReadOnly">
+                      <!-- <input type="text" class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" id="sender_currency_code" v-model="form.sender_currency_code" :readonly="this.isReadOnly"> -->
+                      <select class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" v-model="form.sender_currency_code" :readonly="this.isReadOnly">
+                          <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
+                      </select>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                       <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
-                      <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code" :readonly="this.isReadOnly">
+                      <!-- <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code" :readonly="this.isReadOnly"> -->
+                      <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
+                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                      </select>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="receiver_type">Receiver Type </label>
                       <input type="text" class="form-control" :class="errorResponse.receiver_type ? 'is-invalid' : ''" id="receiver_type" v-model="form.receiver_type" :readonly="this.isReadOnly">
                   </div>
                   <div class="form-group col-md-3">
+                      <label for="id_on_file">ID On File (Y/N)</label>
+                      <input type="text" class="form-control" :class="errorResponse.id_on_file ? 'is-invalid' : ''" id="id_on_file" v-model="form.id_on_file" :readonly="this.isReadOnly">
+                  </div>
+                  <!-- <div class="form-group col-md-3">
                       <label for="transfer_frequency">Transfer Frequency</label>
                       <input type="text" class="form-control" :class="errorResponse.transfer_frequency ? 'is-invalid' : ''" id="transfer_frequency" v-model="form.transfer_frequency" :readonly="this.isReadOnly">
-                  </div>
+                  </div> -->
                 </div>
-                <div class="form-row">
+                <!-- <div class="form-row">
                   <div class="form-group col-md-3">
                       <label for="wu_transfer_frequency">WU Transfer Frequency</label>
                       <input type="text" class="form-control" :class="errorResponse.wu_transfer_frequency ? 'is-invalid' : ''" id="wu_transfer_frequency" v-model="form.wu_transfer_frequency" :readonly="this.isReadOnly">
@@ -120,20 +142,20 @@
                       <label for="mode_to_receive">Mode to Receive</label>
                       <input type="text" class="form-control" :class="errorResponse.mode_to_receive ? 'is-invalid' : ''" id="mode_to_receive" v-model="form.mode_to_receive" :readonly="this.isReadOnly">
                   </div>
-                </div>
+                </div> -->
                 <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <!-- <div class="form-group col-md-3">
                       <label for="transfer_reason_1">Transfer Reason 1</label>
                       <input type="text" class="form-control" :class="errorResponse.transfer_reason_1 ? 'is-invalid' : ''" id="transfer_reason_1" v-model="form.transfer_reason_1" :readonly="this.isReadOnly">
                   </div>
                   <div class="form-group col-md-3">
                       <label for="transfer_reason_2">Transfer Reason 2</label>
                       <input type="text" class="form-control" :class="errorResponse.transfer_reason_2 ? 'is-invalid' : ''" id="transfer_reason_2" v-model="form.transfer_reason_2" :readonly="this.isReadOnly">
-                  </div>
-                  <div class="form-group col-md-3">
+                  </div> -->
+                  <!-- <div class="form-group col-md-3">
                       <label for="id_on_file">ID On File (Y/N)</label>
                       <input type="text" class="form-control" :class="errorResponse.id_on_file ? 'is-invalid' : ''" id="id_on_file" v-model="form.id_on_file" :readonly="this.isReadOnly">
-                  </div>
+                  </div> -->
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
@@ -159,6 +181,7 @@
 
 <script>
 export default {
+    props: ['CountryCodes', 'CurrencyCodes'],
     data() {
       return {
         is_employed_wbusiness: false,
@@ -276,6 +299,7 @@ export default {
           // handle success
           if(response.data.foreign_remote_system.reference_no) {
             document.getElementById('loading').style.display = 'none';
+            this.errorResponse = '';
             Swal.fire({
               position: 'top-end',
               icon: 'success',
@@ -310,16 +334,16 @@ export default {
                     '<td>Sender Currency Code: ' + this.form.sender_currency_code + '</td>' +
                     '<td>Origination Currency Code: ' + this.form.originating_country_code + '</td>' +
                     '</tr>' +
+                    // '<tr>' +
+                    // '<td>Mode to Receive: ' + this.form.mode_to_receive + '</td>' +
+                    // '<td>Transfer Frequency: ' + this.form.transfer_frequency + '</td>' +
+                    // '</tr>' +
+                    // '<tr>' +
+                    // '<td>WU Transfer Frequency: ' + this.form.wu_transfer_frequency + '</td>' +
+                    // '<td>Interests: ' + this.form.interests + '</td>' +
+                    // '</tr>' +
                     '<tr>' +
                     '<td>Receiver Type: ' + this.form.receiver_type + '</td>' +
-                    '<td>Transfer Frequency: ' + this.form.transfer_frequency + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>WU Transfer Frequency: ' + this.form.wu_transfer_frequency + '</td>' +
-                    '<td>Interests: ' + this.form.interests + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Mode to Receive: ' + this.form.mode_to_receive + '</td>' +
                     '<td>ID On Field: ' + this.form.id_on_file + '</td>' +
                     '</tr>' +
                     '<tr>' +
@@ -350,14 +374,12 @@ export default {
         })
         .catch((error) => {
           if( error.response.status == 422 ){
-
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
               footer: 'Please see fields that are required.'
             })
-
             this.errorResponse = error.response.data.errors;
           } else {
              Swal.fire({

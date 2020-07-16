@@ -6,15 +6,22 @@
           </div>
             <!-- <form> -->
                 <div class="form-row">
-                    <div class="col-md-2"><h3>Search Type:</h3></div>
+                    <!-- <div class="col-md-2"><h3>Category Type:</h3></div> -->
                     <div class="col-md-3">
                       <select class="form-control" id="search_type" v-model="search.search_type_field">
-                      <option value="null" disabled selected hidden>Select Search Type</option>
+                      <option value="" disabled selected hidden>Select Category</option>
                       <option value="COMPLIANCE_ID">Compliance ID</option>
                       <option value="PHONE_NUMBER">Phone Number</option>
                       <option value="MYWU_NUMBER">My WU Number</option>
                     </select>
                     </div>
+                    <!-- <div class="col-md-3">
+                      <select class="form-control" id="single_multifind" v-model="search.single_multifind">
+                        <option value="" disabled selected hidden>Select Type</option>
+                        <option value="S">Single</option>
+                        <option value="M">Multiple Find</option>
+                      </select>
+                    </div> -->
                     
                 </div>
                 <div class="form-row mt-4">
@@ -196,6 +203,7 @@ export default {
           id_num: '',
           phone_num: '',
           search_type_field: '',
+          single_multifind: '',
         },
         
         showSearchFirstName: false,
@@ -213,7 +221,7 @@ export default {
         if(data == 'COMPLIANCE_ID') {
           this.showSearchFirstName = true;
           this.showSearchLastName = true;
-          this.showSearchMyWUNo = true;
+          this.showSearchMyWUNo = false;
           this.showSearchIdType = true;
           this.showSearchIdNum = true;
           this.showSearchPhoneNum = false;
@@ -222,7 +230,7 @@ export default {
         if(data == 'PHONE_NUMBER') {
           this.showSearchFirstName = true;
           this.showSearchLastName = true;
-          this.showSearchMyWUNo = true;
+          this.showSearchMyWUNo = false;
           this.showSearchIdType = false;
           this.showSearchIdNum = false;
           this.showSearchPhoneNum = true;
@@ -298,6 +306,7 @@ export default {
           //     showConfirmButton: true,
           //   })
 
+          if(this.search.search_type_field == "MYWU_NUMBER"){
             this.form.reference_no = response.data.foreign_remote_system.reference_no ? response.data.foreign_remote_system.reference_no : '';
             this.form.my_wu_no = response.data.customer.mywu_details.mywu_number ? response.data.customer.mywu_details.mywu_number : '';
             this.form.first_name = response.data.customer.name.first_name ? response.data.customer.name.first_name : '';
@@ -311,6 +320,21 @@ export default {
             this.form.address_type = response.data.customer.address.addr_type ? response.data.customer.address.addr_type : '';
             this.form.contact_country_code = response.data.customer.mobile_number ? response.data.customer.mobile_number.ctry_code : ''
             this.form.total_earned_points = response.data.customer.mywu_details ? response.data.customer.mywu_details.current_yr_pts : ''
+          } else {
+            this.form.reference_no = response.data.foreign_remote_system.reference_no ? response.data.foreign_remote_system.reference_no : '';
+            this.form.my_wu_no = response.data.customers.customer.mywu_details.mywu_number ? response.data.customers.customer.mywu_details.mywu_number : '';
+            this.form.first_name = response.data.customers.customer.name.first_name ? response.data.customers.customer.name.first_name : '';
+            this.form.last_name = response.data.customers.customer.name.last_name ? response.data.customers.customer.name.last_name : '';
+            this.form.address = response.data.customers.customer.address.addr_line1 ? response.data.customers.customer.address.addr_line1 : '';
+            this.form.city = response.data.customers.customer.address.city ? response.data.customers.customer.address.city : '';
+            this.form.postal_code = response.data.customers.customer.address.postal_code ? response.data.customers.customer.address.postal_code : '';
+            this.form.country_code = response.data.customers.customer.address.country_details.ctry_code ? response.data.customers.customer.address.country_details.ctry_code : '' ;
+            this.form.country_name = response.data.customers.customer.address.country_details.ctry_name ? response.data.customers.customer.address.country_details.ctry_name : '';
+            this.form.phone_number = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.National_number : '';
+            this.form.address_type = response.data.customers.customer.address.addr_type ? response.data.customers.customer.address.addr_type : '';
+            this.form.contact_country_code = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.ctry_code : ''
+            this.form.total_earned_points = response.data.customers.customer.mywu_details ? response.data.customers.customer.mywu_details.current_yr_pts : ''
+          }
             // this.form.iskyced = response.data.customer.kyc_details ? response.data.customer.kyc_details.is_kyced : ''
 
             this.receivers = response.data.receivers ? response.data.receivers.receiver : {};

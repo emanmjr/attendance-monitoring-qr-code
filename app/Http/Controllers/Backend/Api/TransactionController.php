@@ -50,7 +50,7 @@ class TransactionController extends Controller
             request()->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'my_wu_number' => 'required',
+                // 'my_wu_number' => 'required',
                 'id_type' => 'required',
                 'id_num' => 'required'
             ]);
@@ -61,7 +61,7 @@ class TransactionController extends Controller
             request()->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'my_wu_number' => 'required',
+                // 'my_wu_number' => 'required',
                 'phone_num' => 'required'
             ]);
         }
@@ -89,9 +89,9 @@ class TransactionController extends Controller
                 "searchParameter" => request()->search_type_field,
                 "channelType" => "H2H",
                 "channelVersion" => "9500",
-                "pfcFilter" => "FSA",
+                "pfcFilter" => request()->search_type_field == "MYWU_NUMBER" ? "FSA" : "WPM",
                 "transactionType" => "SEND",
-                "searchType" => "S",
+                "searchType" => request()->search_type_field == "MYWU_NUMBER" ? "S" : "M",
                 "firstName" => request()->first_name ? request()->first_name : "",
                 "lastName" => request()->last_name ? request()->last_name : "",
                 "myWuNumber" => request()->my_wu_number ? request()->my_wu_number : "",
@@ -99,6 +99,9 @@ class TransactionController extends Controller
                 "idNum" => request()->id_num ? request()->id_num : "",
                 "phoneNum" => request()->phone_num ? request()->phone_num : ""
             ];
+
+            // request()->single_multifind
+
             
             // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
             $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/kyc', [
