@@ -42,15 +42,15 @@ Vue.component('das-request', require('./components/DasRequest.vue').default);
 Vue.component('my-wu-lookup', require('./components/MYWULookup.vue').default);
 Vue.component('pay-status', require('./components/PayStatus.vue').default);
 
-Vue.config.errorHandler = function(err, vm, info) {
-  console.log(`Error: ${err.toString()}\nInfo: ${info}`);
-  Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Can you please try again.',
-    footer: '' + err.toString()
-  })
-}
+// Vue.config.errorHandler = function(err, vm, info) {
+//   console.log(`Error: ${err.toString()}\nInfo: ${info}`);
+//   Swal.fire({
+//     icon: 'error',
+//     title: 'Oops...',
+//     text: 'Can you please try again.',
+//     footer: '' + err.toString()
+//   })
+// }
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

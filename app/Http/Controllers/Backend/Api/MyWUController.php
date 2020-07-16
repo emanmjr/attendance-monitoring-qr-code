@@ -87,8 +87,6 @@ class MyWUController extends Controller
                 ->children($namespaces['xrsi'])
                 ->children();
 
-                    
-           
             $response = json_encode($xml, true);
 
         } catch (ClientErrorResponseException $exception) {
@@ -217,7 +215,7 @@ class MyWUController extends Controller
     public function queryFilter1TypeRequest($request)
     {
         if($request->das_request_type == 'GetCountriesCurrencies'){
-            return $request->queryFilter1;
+            return explode(" ",$request->queryFilter1)[0];
         }
 
         if($request->das_request_type == 'GetCountryInfo'){
@@ -234,7 +232,7 @@ class MyWUController extends Controller
 
         if($request->das_request_type == 'GetCascadeList'){
             // return "CMBSRI";
-            return $request->list_name;
+            return $request->list_name1;
         }
 
         if($request->das_request_type == 'GetMexicoCityState'){
@@ -288,7 +286,7 @@ class MyWUController extends Controller
                 "channelVersion" => "9500",
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => $request->accout_number,
-                "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
+                "queryFilter1" => strtoupper($queryFilters['queryFilter1']) . " " . request()->post('currency'),
                 "queryFilter2" => $queryFilters['queryFilter2'],
                 // "queryFilter3" => $request->queryFilter3,
                 // "queryFilter4" => $request->queryFilter4,
@@ -348,6 +346,8 @@ class MyWUController extends Controller
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => request()->accout_number,
                 "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
+                "queryFilter2" => strtoupper(request()->post('list_name2')),
+                "queryFilter3" => strtoupper(request()->post('list_name3')),
             ];
         }
 

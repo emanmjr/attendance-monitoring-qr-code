@@ -5,7 +5,7 @@
 @section('content')
     <div class="row mt-1">
         <div class="col">
-            <my-wu-enrollment></my-wu-enrollment>
+            <my-wu-enrollment :country-codes="{{ json_encode(config('wu-country-codes')) }}" :currency-codes="{{ json_encode(config('wu-currency-codes')) }}"></my-wu-enrollment>
         </div><!--col-->
     </div><!--row-->
 @endsection
