@@ -47,7 +47,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="email">Email<span style="color:red;">*</span></label>
+                        <label for="email">Email<span style="color:red;"></span></label>
                         <input type="text" class="form-control" :class="errorResponse.email ? 'is-invalid' : ''"  id="email" v-model="form.email" :readonly="this.isReadOnly">
                     </div>
                 </div>
@@ -295,6 +295,17 @@ export default {
         document.getElementById('loading').style.display = 'block';
         axios.post('/admin/api/enroll-customer', this.form)
         .then((response) => {
+          document.getElementById('loading').style.display = 'none';
+          if(response.data.error){
+              Swal.fire({
+              icon: 'error',
+              title: 'Something went wrong!',
+              text: '' + response.data.error,
+            })
+            
+          }
+
+
           this.enrolledMyWuNumber = response.data.sender.preferred_customer.account_nbr;
           // handle success
           if(response.data.foreign_remote_system.reference_no) {
@@ -373,7 +384,8 @@ export default {
 
         })
         .catch((error) => {
-          if( error.response.status == 422 ){
+          if(error){
+            if( error.response.status == 422 ){
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -388,6 +400,7 @@ export default {
               text: 'Please check field values if it is/are correct.',
               footer: '' + error
             })
+          }
           }
 
           document.getElementById('loading').style.display = 'none';

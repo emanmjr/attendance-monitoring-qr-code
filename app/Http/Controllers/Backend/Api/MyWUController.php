@@ -25,7 +25,7 @@ class MyWUController extends Controller
             'address' => 'required',
             'city' => 'required',
             'gender' => 'required',
-            'email' => 'required',
+            // 'email' => 'required',
             'phone_number' => 'required',
             'postal_code' => 'required',
             'currency_code' => 'required',
@@ -67,26 +67,40 @@ class MyWUController extends Controller
                     "senderCurrencyCode" => request()->sender_currency_code,
                     "originatingCountryCode" => request()->originating_country_code,
                     "receiverType" => request()->receiver_type,
-                    "transferFrequency" => request()->transfer_frequency,
-                    "wuTransferFrequency" => request()->wu_transfer_frequency,
-                    "interests" => request()->interests,
-                    "modeToReceive" => request()->mode_to_receive,
-                    "transferReason1" => request()->transfer_reason_1,
-                    "transferReason2" => request()->transfer_reason_2,
+                    // "transferFrequency" => request()->transfer_frequency,
+                    // "wuTransferFrequency" => request()->wu_transfer_frequency,
+                    // "interests" => request()->interests,
+                    // "modeToReceive" => request()->mode_to_receive,
+                    // "transferReason1" => request()->transfer_reason_1,
+                    // "transferReason2" => request()->transfer_reason_2,
                     "idOnFile" => request()->id_on_file,
                     "preferredLanguage" => request()->preferred_language,
                     "cardStatus" => request()->card_status,
                     "enrollmentSource" => request()->enrollment_source,
                 ]
             ]);
-
+            $xml = simplexml_load_string($res->getBody()->getContents());
+            $namespaces = $xml->getNamespaces(true);
+            $xml = $xml->children($namespaces['soapenv'])
+                ->Body
+                ->children($namespaces['soapenv'])
+                ->Fault
+                ->children()
+                ->detail
+                ->children($namespaces['xrsi'])
+                ->children();
+            if(array_key_exists('error',(array)$xml)){
+                return  json_encode($xml, true);
+            }
+              
+          
+                    
             $xml = simplexml_load_string($res->getBody()->getContents());
             $namespaces = $xml->getNamespaces(true);
             $xml = $xml->children($namespaces['soapenv'])
                 ->Body
                 ->children($namespaces['xrsi'])
                 ->children();
-
             $response = json_encode($xml, true);
 
         } catch (ClientErrorResponseException $exception) {
@@ -99,6 +113,12 @@ class MyWUController extends Controller
 
     public function dasRequest()
     {
+        if(request()->das_request_type == 'GetDeliveryOptionTemplate'){
+            request()->validate([
+                'queryFilter1' => 'required',
+                'template_id' => 'required',
+            ]);
+        }
 
         // Setting Headers
         $headers = [
@@ -126,7 +146,7 @@ class MyWUController extends Controller
 
         // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
-        
+
         // Check type if type of request is already in DB
         $response = $this->checkIfAlreadyStored($json);
         
@@ -191,6 +211,7 @@ class MyWUController extends Controller
                 $newCollection = collect([
                     'GETCOUNTRIESCURRENCIES' => current((array)$xml->RECORDSET),
                     'DATA_MORE' => current((array)$xml->HEADER->DATA_MORE),
+                    'ERROR_RESPONSE' => current((array)$xml->HEADER->ERROR_MSG),
                 ]);
                 return json_encode($newCollection->toArray(), true);
             }
@@ -199,6 +220,7 @@ class MyWUController extends Controller
                 $newCollection = collect([
                     'GETDELIVERYOPTIONTEMPLATE' => current((array)$xml->RECORDSET),
                     'DATA_MORE' => current((array)$xml->HEADER->DATA_MORE),
+                    'ERROR_RESPONSE' => current((array)$xml->HEADER->ERROR_MSG),
                 ]);
 
                 return json_encode($newCollection->toArray(), true);
@@ -288,7 +310,7 @@ class MyWUController extends Controller
                 "accountNum" => $request->accout_number,
                 "queryFilter1" => strtoupper($queryFilters['queryFilter1']) . " " . request()->post('currency'),
                 "queryFilter2" => $queryFilters['queryFilter2'],
-                // "queryFilter3" => $request->queryFilter3,
+                "queryFilter3" => $request->queryFilter3,
                 // "queryFilter4" => $request->queryFilter4,
                 // "queryFilter5" => $request->queryFilter5,
             ];
@@ -417,7 +439,7 @@ class MyWUController extends Controller
         request()->validate([
             'my_wu_number' => 'required',
             'mywucard_to_loyaltycard' => 'required',
-            'sender_country_code' => 'required',
+            // 'sender_country_code' => 'required',
         ]);
 
         $headers = [
@@ -438,7 +460,7 @@ class MyWUController extends Controller
                 "permanentChange" =>  "LookUp",
                 "myWuNumber" =>  request()->my_wu_number,
                 "loyaltyCardUpdateIndicator" =>  request()->mywucard_to_loyaltycard,
-                "senderCountryCode" => request()->sender_country_code
+                "senderCountryCode" => "PH", //request()->sender_country_code
             ];
             
             // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
@@ -455,7 +477,6 @@ class MyWUController extends Controller
                 ->children();
 
                 $response = json_encode($xml, true);
-
         } catch (ClientErrorResponseException $exception) {
             $response = $exception->getResponse()->getBody(true);
         }
