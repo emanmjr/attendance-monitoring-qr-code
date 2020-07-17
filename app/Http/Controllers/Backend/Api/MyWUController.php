@@ -145,7 +145,7 @@ class MyWUController extends Controller
 
         // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
-            dd($json, request()->all());
+        
         // Check type if type of request is already in DB
         $response = $this->checkIfAlreadyStored($json);
         
