@@ -145,7 +145,7 @@ class MyWUController extends Controller
 
         // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
-
+            dd($json, request()->all());
         // Check type if type of request is already in DB
         $response = $this->checkIfAlreadyStored($json);
         
@@ -236,7 +236,8 @@ class MyWUController extends Controller
     public function queryFilter1TypeRequest($request)
     {
         if($request->das_request_type == 'GetCountriesCurrencies'){
-            return explode(" ",$request->queryFilter1)[0];
+            // return explode(" ",$request->queryFilter1)[0];
+            return $request->queryFilter1;
         }
 
         if($request->das_request_type == 'GetCountryInfo'){
@@ -307,7 +308,8 @@ class MyWUController extends Controller
                 "channelVersion" => "9500",
                 "dasRequest" => $request->das_request_type,
                 "accountNum" => $request->accout_number,
-                "queryFilter1" => strtoupper($queryFilters['queryFilter1']) . " " . request()->post('currency'),
+                "queryFilter1" => strtoupper($queryFilters['queryFilter1']),
+                // "queryFilter1" => strtoupper($queryFilters['queryFilter1']) . " " . request()->post('currency'),
                 "queryFilter2" => $queryFilters['queryFilter2'],
                 "queryFilter3" => $request->queryFilter3,
                 // "queryFilter4" => $request->queryFilter4,
