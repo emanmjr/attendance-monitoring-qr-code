@@ -487,6 +487,16 @@
             }
             return currencyCode;
           },
+          checkCurrencyCode2(){
+            if(this.countryCode2 != ""){
+              if(this.countryCode2 in this.countryNotListed){
+                return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.countryCode2], 'currency');
+              }else{
+                var currencyCode = isoCountryCurrency.getParamByISO(this.countryCode2, 'currency');
+              }
+            }
+            return currencyCode;
+          },
           pageCount(){
             // console.log(this.responseInfoDetails);
               if(this.responseInfoDetails != undefined){
@@ -516,6 +526,9 @@
         watch: {
           checkCurrencyCode1(data){
             this.currencyCode1 = data;
+          },
+          checkCurrencyCode2(data){
+            this.currencyCode2 = data;
           },
           checkDasRequestTypeFields(data){
 
