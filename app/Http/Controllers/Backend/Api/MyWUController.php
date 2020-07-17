@@ -81,27 +81,26 @@ class MyWUController extends Controller
             ]);
             $xml = simplexml_load_string($res->getBody()->getContents());
             $namespaces = $xml->getNamespaces(true);
-            $xml = $xml->children($namespaces['soapenv'])
-                ->Body
+            $xml = $xml->children($namespaces['soapenv']);
+            if(array_key_exists('Fault', (array)$xml->Body)){
+                $xml = $xml->Body
                 ->children($namespaces['soapenv'])
                 ->Fault
                 ->children()
                 ->detail
                 ->children($namespaces['xrsi'])
                 ->children();
-            if(array_key_exists('error',(array)$xml)){
                 return  json_encode($xml, true);
+            }else{
+                   $xml = $xml->Body
+                    ->children($namespaces['xrsi'])
+                    ->children();
+                $response = json_encode($xml, true);
             }
               
           
                     
-            $xml = simplexml_load_string($res->getBody()->getContents());
-            $namespaces = $xml->getNamespaces(true);
-            $xml = $xml->children($namespaces['soapenv'])
-                ->Body
-                ->children($namespaces['xrsi'])
-                ->children();
-            $response = json_encode($xml, true);
+            
 
         } catch (ClientErrorResponseException $exception) {
             $response = $exception->getResponse()->getBody(true);
