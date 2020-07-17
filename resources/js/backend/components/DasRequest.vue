@@ -350,6 +350,7 @@
                   das_request_type: '',
                   queryFilter1: '',
                   queryFilter2: '',
+                  queryFilter3: '',
                   template_id: '',
                   list_name1: '',
                   list_name2: '',
@@ -393,12 +394,98 @@
                 moreDataFilterDas: "N",
                 countryCurrencies1: false,
                 countryCurrencies2: false,
+                countryNotListed: {
+                  'XP' : 'Afghanistan US Military Base',
+                  'XB' : 'Bahrain US Military Base',
+                  'QQ' : 'Belgium US Military Base',
+                  'QS' : 'Cuba US Military Base',
+                  'C2' : 'Cyprus (Northern)',
+                  'QV' : 'Djibouti US Military Base',
+                  'TP' : 'East Timor',
+                  'XQ' : 'England',
+                  'QO' : 'Germany US Military Base',
+                  'QZ' : 'Greece US Military Base',
+                  'XY' : 'Guam US Military Base',
+                  'QR' : 'Honduras US Military Base',
+                  'XM' : 'Iceland US Military Base',
+                  'X0' : 'International Test Country',
+                  'QX' : 'Iraq US Military Base',
+                  'QP' : 'Italy US Military Base',
+                  'QM' : 'Japan US Military Base',
+                  'QN' : 'Korea US Military Base',
+                  'XF' : 'Kosovo US Military Base',
+                  'QU' : 'Kuwait US Military Base',
+                  'AA' : 'Kyrghyz Republic US Military Base',
+                  'QT' : 'Netherlands US Military Base',
+                  'XZ' : 'North Ireland',
+                  'XT' : 'Portugal US Military Base',
+                  'QY' : 'Qatar US Military Base',
+                  'XW' : 'Rota CNMI',
+                  'XU' : 'Saipan CNMI',
+                  'XS' : 'Scotland',
+                  'AB' : 'Spain US Military Base',
+                  'S1' : 'St Maarten',
+                  'XD' : 'St Thomas',
+                  'XV' : 'Tinian CNMI',
+                  'XN' : 'Turkey US Military Base',
+                  'XE' : 'UAE US Military Base',
+                  'QW' : 'United Kingdom US Military Base',
+                  'XR' : 'Wales',
+                },
+                currencyOfNotListed: {
+                  'XP' : 'AF',
+                  'XB' : 'BH',
+                  'QQ' : 'BE',
+                  'QS' : 'CU',
+                  'C2' : 'CY',
+                  'QV' : 'DJ',
+                  'TP' : 'US',
+                  'XQ' : 'VG',
+                  'QO' : 'DE',
+                  'QZ' : 'GR',
+                  'XY' : 'GU',
+                  'QR' : 'HN',
+                  'XM' : 'IS',
+                  'X0' : 'US',
+                  'QX' : 'IQ',
+                  'QP' : 'IT',
+                  'QM' : 'JP',
+                  'QN' : 'KR',
+                  'XF' : 'XK',
+                  'QU' : 'KW',
+                  'AA' : 'KG',
+                  'QT' : 'NL',
+                  'XZ' : 'IE',
+                  'XT' : 'PT',
+                  'QY' : 'QA',
+                  'XW' : 'US',
+                  'XU' : 'US',
+                  'XS' : 'VG',
+                  'AB' : 'ES',
+                  'S1' : 'NL',
+                  'XD' : 'US',
+                  'XV' : 'US',
+                  'XN' : 'TR',
+                  'XE' : 'AE',
+                  'QW' : 'GB',
+                  'XR' : 'VG',
+                }
                 
             }
         },
         computed: {
           checkDasRequestTypeFields() {
             return this.search.das_request_type;
+          },
+          checkCurrencyCode1(){
+            if(this.countryCode1 != ""){
+              if(this.countryCode1 in this.countryNotListed){
+                return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.countryCode1], 'currency');
+              }else{
+                var currencyCode = isoCountryCurrency.getParamByISO(this.countryCode1, 'currency');
+              }
+            }
+            return currencyCode;
           },
           pageCount(){
             // console.log(this.responseInfoDetails);
@@ -411,12 +498,25 @@
           paginatedData(){
             const start = this.pageNumber * this.size.default,
                   end = start + this.size.default;
-            
-            return this.responseInfoDetails == undefined ? {} : this.responseInfoDetails.slice(start, end);
+            if (this.responseInfoDetails == undefined || this.responseInfoDetails == false){
+              return {};
+            }else {
+              if(this.responseInfoDetails.BANNER != undefined){
+                this.showPaginateBtns =false;
+                let response = [
+                  this.responseInfoDetails
+                ];
+                return response.slice(start, end);
+              }
+              return this.responseInfoDetails.slice(start, end);
+            }
             
           }
         },
         watch: {
+          checkCurrencyCode1(data){
+            this.currencyCode1 = data;
+          },
           checkDasRequestTypeFields(data){
 
             if (data == 'GetDeliveryServices'){
@@ -462,6 +562,11 @@
                 this.countryCurrencies1 = false;
               }
 
+              if(data == 'GetStateList'){
+                this.countryCurrencies1 = false;
+                this.countryCurrencies2 = false;
+              }
+
 
 
             }
@@ -484,6 +589,7 @@
                 'das_request_type': this.search.das_request_type,
                 'queryFilter1': this.search.queryFilter1,
                 'queryFilter2': lastData.COUNTRY_LONG,
+                'queryFilter3': lastData.CURRENCY_NAME,
               };
             }
 
@@ -500,18 +606,21 @@
             axios.post('/admin/api/das-request', data)
                 .then((response) => {
 
-                  this.isViewSearchLoading = 'd-none';
-                  this.isViewCountryCode = 'd-block';
                   
+                  this.isViewCountryCode = 'd-block';
+                  this.isViewSearchLoading = 'd-none';
                   // handle success
                   if(response.data) {
+                    
                     if(Object.keys(response.data).length > 0){
                       this.showNoDetails = false;
                       this.showPaginateBtns = true;
+                      
                     } else {
                       this.showNoDetails = true;
                       this.showPaginateBtns = false;
                     }
+                    
                     this.checkDasRequestType(this.search.das_request_type, response.data);
                   }
                 })
@@ -543,6 +652,7 @@
             this.pageNumber--;
           },
           filterDasRequest() {
+
             this.dasRequestCountriesCurrencies = false;
             this.dasRequestCountryInfo = false;
             this.dasRequestDeliveryService = false;
@@ -550,8 +660,8 @@
             this.dasRequestCascadeList = false;
             this.dasRequestMexicoCityState = false;
             this.dasRequestStateList = false;
-            this.search.queryFilter1 = '';
-            this.search.queryFilter2 = '';
+            // this.search.queryFilter1 = '';
+            // this.search.queryFilter2 = '';
             
             this.pageNumber = 0;
             this.responseInfoDetails = '';
@@ -569,8 +679,8 @@
               this.$nextTick(() => {
                 axios.post('/admin/api/das-request', this.search)
                 .then((response) => {
-
-                  this.isViewSearchLoading = 'd-none';
+                  console.log(response);
+                  
                   this.isViewCountryCode = 'd-block';
                   if(this.isViewIsoCode1 == true){
                     this.viewCountry = this.countryCode1;
@@ -586,7 +696,7 @@
                       this.showNoDetails = true;
                       this.showPaginateBtns = false;
                     }
-
+                    this.isViewSearchLoading = 'd-none';
                     this.checkDasRequestType(this.search.das_request_type, response.data);
                   }
                 })
@@ -595,8 +705,8 @@
                     Swal.fire({
                       icon: 'error',
                       title: 'Oops...',
-                      text: 'Something went wrong!',
-                      footer: 'Please choose category for this request.'
+                      text: 'Fields are all required.',
+                      // footer: ''
                     })
                     this.isViewCountryCode = 'd-none';
                     this.isViewSearchLoading = 'd-none';
@@ -619,9 +729,20 @@
             
           },
           checkDasRequestType(dasRequestType, data) {
+            
             // this.search.template_id = '';
 
             if(dasRequestType == 'GetCountriesCurrencies') {
+              if(data.ERROR_RESPONSE != false){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: '' + data.ERROR_RESPONSE,
+                })
+                this.showPaginateBtns = false;
+                this.showNoDetails = true;
+
+              }
               this.dasRequestCountriesCurrencies = true;
               this.dasRequestCountryInfo = false;
               this.dasRequestDeliveryService = false;
@@ -666,6 +787,16 @@
             }
 
             if(dasRequestType == 'GetDeliveryOptionTemplate') {
+              
+              if(data.ERROR_RESPONSE != false){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: '' + data.ERROR_RESPONSE,
+                })
+                this.showPaginateBtns = false;
+                this.showNoDetails = true;
+              }
               this.dasRequestCountriesCurrencies = false;
               this.dasRequestCountryInfo = false;
               this.dasRequestDeliveryService = false;
