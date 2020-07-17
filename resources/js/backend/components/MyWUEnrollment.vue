@@ -29,6 +29,7 @@
                     <div class="form-group col-md-3">
                         <label for="first_name">First Name<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" :class="errorResponse.first_name ? 'is-invalid' : ''" id="first_name" v-model="form.first_name" :readonly="this.isReadOnly" >
+                        <span v-if="errorResponse.first_name" style="color:red;">{{ errorResponse.first_name[0] }}</span>
                     </div>
                     <!-- <div class="form-group col-md-4">
                         <label for="middle_name">Middle Name</label>
@@ -37,6 +38,7 @@
                     <div class="form-group col-md-3">
                         <label for="last_name">Last Name<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" :class="errorResponse.last_name ? 'is-invalid' : ''"  id="last_name" v-model="form.last_name" :readonly="this.isReadOnly">
+                        <span v-if="errorResponse.last_name" style="color:red;">{{ errorResponse.last_name[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="gender">Gender<span style="color:red;">*</span></label>
@@ -45,30 +47,36 @@
                           <option value="M">Male</option>
                           <option value="F">Female</option>
                         </select>
+                        <span v-if="errorResponse.gender" style="color:red;">{{ errorResponse.gender[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="email">Email<span style="color:red;"></span></label>
                         <input type="text" class="form-control" :class="errorResponse.email ? 'is-invalid' : ''"  id="email" v-model="form.email" :readonly="this.isReadOnly">
+                        <span v-if="errorResponse.email" style="color:red;">{{ errorResponse.email[0] }}</span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="address">Address<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" :class="errorResponse.address ? 'is-invalid' : ''" id="address" v-model="form.address" :readonly="this.isReadOnly">
+                        <span v-if="errorResponse.address" style="color:red;">{{ errorResponse.address[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="city">City<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" :class="errorResponse.city ? 'is-invalid' : ''" id="city" v-model="form.city" :readonly="this.isReadOnly">
+                        <span v-if="errorResponse.city" style="color:red;">{{ errorResponse.city[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="postal_code">Postal Code<span style="color:red;">*</span></label>
                         <input type="text" @keypress="onlyNumber" class="form-control" :class="errorResponse.postal_code ? 'is-invalid' : ''" id="postal_code" v-model="form.postal_code" :readonly="this.isReadOnly">
+                        <span v-if="errorResponse.postal_code" style="color:red;">{{ errorResponse.postal_code[0] }}</span>
                     </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                         <label for="phone_number">Mobile Number(9XXXXXXXXX)<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" @keypress="onlyNumber" :class="errorResponse.phone_number ? 'is-invalid' : ''" id="phone_number" v-model="form.phone_number" :readonly="this.isReadOnly">
+                        <span v-if="errorResponse.phone_number" style="color:red;">The mobile number field is required</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="country_code">Country Code<span style="color:red;">*</span></label>
@@ -76,6 +84,7 @@
                         <select class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" v-model="form.country_code" :readonly="this.isReadOnly">
                           <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
+                      <span v-if="errorResponse.country_code" style="color:red;">{{ errorResponse.country_code[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="currency_code">Currency Code<span style="color:red;">*</span></label>
@@ -83,6 +92,7 @@
                         <select class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" v-model="form.currency_code" :readonly="this.isReadOnly">
                           <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
                       </select>
+                      <span v-if="errorResponse.currency_code" style="color:red;">{{ errorResponse.currency_code[0] }}</span>
                     </div>
                 </div>
                 <div class="form-row">
@@ -92,6 +102,7 @@
                       <select class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" v-model="form.destination_country_code" :readonly="this.isReadOnly">
                           <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
+                      <span v-if="errorResponse.destination_country_code" style="color:red;">{{ errorResponse.destination_country_code[0] }}</span>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="destination_currency_code">Currency Code of Destination Country <span style="color:red;">*</span></label>
@@ -99,6 +110,7 @@
                       <select class="form-control" :class="errorResponse.destination_currency_code ? 'is-invalid' : ''" v-model="form.destination_currency_code" :readonly="this.isReadOnly">
                           <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
                       </select>
+                      <span v-if="errorResponse.destination_currency_code" style="color:red;">The destination country currency field is required</span>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="sender_currency_code">Currency Code of  Money  Being Sent<span style="color:red;">*</span></label>
@@ -106,6 +118,7 @@
                       <select class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" v-model="form.sender_currency_code" :readonly="this.isReadOnly">
                           <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
                       </select>
+                      <span v-if="errorResponse.sender_currency_code" style="color:red;">The money being sent currency</span>
                   </div>
                 </div>
                 <div class="form-row">
@@ -115,6 +128,7 @@
                       <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
                           <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
+                      <span v-if="errorResponse.originating_country_code" style="color:red;">{{ errorResponse.originating_country_code[0] }}</span>
                   </div>
                   <div class="form-group col-md-3">
                       <label for="receiver_type">Receiver Type </label>
