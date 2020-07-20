@@ -596,14 +596,16 @@
             this.showMoreDataBtn = false;
 
             let lastData = this.responseInfoDetails[this.responseInfoDetails.length-1];
-
+            console.log(lastData)
             if (this.search.das_request_type == "GetCountriesCurrencies"){
               var data = {
                 'das_request_type': this.search.das_request_type,
-                'queryFilter1': this.search.queryFilter1,
+                'queryFilter1': lastData.ISO_COUNTRY_CD + " " + lastData.CURRENCY_CD,
                 'queryFilter2': lastData.COUNTRY_LONG,
                 'queryFilter3': lastData.CURRENCY_NAME,
               };
+
+              this.countryCode1 = lastData.ISO_COUNTRY_CD;
             }
 
             if (this.search.das_request_type == "GetDeliveryOptionTemplate"){

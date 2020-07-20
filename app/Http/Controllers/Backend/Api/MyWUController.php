@@ -31,7 +31,7 @@ class MyWUController extends Controller
             'currency_code' => 'required',
             'destination_country_code' => 'required',
             'destination_currency_code' => 'required',
-            'sender_currency_code' => 'required',
+            // 'sender_currency_code' => 'required',
             'originating_country_code' => 'required'
         ]);
 
@@ -64,19 +64,19 @@ class MyWUController extends Controller
                     "currencyCode" => request()->currency_code,
                     "destinationCountryCode" => request()->destination_country_code,
                     "destinationCurrencyCode" => request()->destination_currency_code,
-                    "senderCurrencyCode" => request()->sender_currency_code,
+                    "senderCurrencyCode" => "PHP",
                     "originatingCountryCode" => request()->originating_country_code,
-                    "receiverType" => request()->receiver_type,
+                    // "receiverType" => request()->receiver_type,
                     // "transferFrequency" => request()->transfer_frequency,
                     // "wuTransferFrequency" => request()->wu_transfer_frequency,
                     // "interests" => request()->interests,
                     // "modeToReceive" => request()->mode_to_receive,
                     // "transferReason1" => request()->transfer_reason_1,
                     // "transferReason2" => request()->transfer_reason_2,
-                    "idOnFile" => request()->id_on_file,
-                    "preferredLanguage" => request()->preferred_language,
-                    "cardStatus" => request()->card_status,
-                    "enrollmentSource" => request()->enrollment_source,
+                    // "idOnFile" => request()->id_on_file,
+                    // "preferredLanguage" => request()->preferred_language,
+                    // "cardStatus" => request()->card_status,
+                    // "enrollmentSource" => request()->enrollment_source,
                 ]
             ]);
             $xml = simplexml_load_string($res->getBody()->getContents());

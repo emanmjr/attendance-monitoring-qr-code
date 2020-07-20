@@ -144,7 +144,7 @@ class TransactionController extends Controller
             'mtcn' => 'required',
             'recording_country_code' => 'required',
             'recording_currency_country_code' => 'required',
-            'pay_wo_indicator' => 'required',
+            // 'pay_wo_indicator' => 'required',
         ]);
 
         $headers = [

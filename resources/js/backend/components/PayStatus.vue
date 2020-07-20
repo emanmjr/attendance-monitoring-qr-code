@@ -12,16 +12,23 @@
                       <input type="text" class="form-control" id="mtcn" v-model="search.mtcn" placeholder="">
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="search_sender_country_cod">Recording Country Code<small>(2 Digit ISO)</small>
+                      <label for="search_sender_country_cod">Originating Country Code
                       </label>
-                      <input type="text" class="form-control" id="recording_country_code" v-model="search.recording_country_code" placeholder="">
+                      <!-- <input type="text" class="form-control" id="recording_country_code" v-model="search.recording_country_code" placeholder=""> -->
+                      <select class="form-control" v-model="countryCode">
+                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                      </select>
                     </div>
+
                     <div class="form-group col-md-3">
-                      <label for="search_sender_country_cod">Recording Currency Country Code<small>(3 Digit ISO)</small>
+                      <label for="search_sender_country_cod">Originating Currency Country Code
                       </label>
-                      <input type="text" class="form-control" id="recording_currency_country_code" v-model="search.recording_currency_country_code" placeholder="">
+                      <!-- <input type="text" class="form-control" id="recording_currency_country_code" v-model="search.recording_currency_country_code" placeholder=""> -->
+                      <select class="form-control" v-model="currencyCode">
+                          <option v-for="(currency, index) in this.CurrencyCodes" :value="index">{{ currency }}</option>
+                      </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <!-- <div class="form-group col-md-3">
                       <label for="search_last_name">Pay Without ID Indicator
                       </label>
                       <select class="form-control" id="pay_wo_indicator" v-model="search.pay_wo_indicator">
@@ -29,7 +36,7 @@
                         <option value="Y">Yes</option>
                         <option value="N">No</option>
                       </select>
-                    </div>
+                    </div> -->
                     
                     <div class="form-group col-md-1">
                       <button type="button" style="margin-top: 28px;" class="btn btn-primary btn-dashboard" @click="searchPayStatus"><i class="fas fa-search"></i></button>
@@ -172,7 +179,9 @@
 </template>
 
 <script>
+var isoCountryCurrency = require('iso-country-currency');
 export default {
+    props: ['CountryCodes', 'CurrencyCodes'],
     data() {
       return {
         form: '',
@@ -181,15 +190,107 @@ export default {
           mtcn: '',
           recording_country_code: '',
           recording_currency_country_code: '',
-          pay_wo_indicator: '',
         },
+        countryCode: '',
+        currencyCode: '',
         showMYWUDetails: false,
+        countryNotListed: {
+            'XP' : 'Afghanistan US Military Base',
+            'XB' : 'Bahrain US Military Base',
+            'QQ' : 'Belgium US Military Base',
+            'QS' : 'Cuba US Military Base',
+            'C2' : 'Cyprus (Northern)',
+            'QV' : 'Djibouti US Military Base',
+            'TP' : 'East Timor',
+            'XQ' : 'England',
+            'QO' : 'Germany US Military Base',
+            'QZ' : 'Greece US Military Base',
+            'XY' : 'Guam US Military Base',
+            'QR' : 'Honduras US Military Base',
+            'XM' : 'Iceland US Military Base',
+            'X0' : 'International Test Country',
+            'QX' : 'Iraq US Military Base',
+            'QP' : 'Italy US Military Base',
+            'QM' : 'Japan US Military Base',
+            'QN' : 'Korea US Military Base',
+            'XF' : 'Kosovo US Military Base',
+            'QU' : 'Kuwait US Military Base',
+            'AA' : 'Kyrghyz Republic US Military Base',
+            'QT' : 'Netherlands US Military Base',
+            'XZ' : 'North Ireland',
+            'XT' : 'Portugal US Military Base',
+            'QY' : 'Qatar US Military Base',
+            'XW' : 'Rota CNMI',
+            'XU' : 'Saipan CNMI',
+            'XS' : 'Scotland',
+            'AB' : 'Spain US Military Base',
+            'S1' : 'St Maarten',
+            'XD' : 'St Thomas',
+            'XV' : 'Tinian CNMI',
+            'XN' : 'Turkey US Military Base',
+            'XE' : 'UAE US Military Base',
+            'QW' : 'United Kingdom US Military Base',
+            'XR' : 'Wales',
+          },
+          currencyOfNotListed: {
+            'XP' : 'AF',
+            'XB' : 'BH',
+            'QQ' : 'BE',
+            'QS' : 'CU',
+            'C2' : 'CY',
+            'QV' : 'DJ',
+            'TP' : 'US',
+            'XQ' : 'VG',
+            'QO' : 'DE',
+            'QZ' : 'GR',
+            'XY' : 'GU',
+            'QR' : 'HN',
+            'XM' : 'IS',
+            'X0' : 'US',
+            'QX' : 'IQ',
+            'QP' : 'IT',
+            'QM' : 'JP',
+            'QN' : 'KR',
+            'XF' : 'XK',
+            'QU' : 'KW',
+            'AA' : 'KG',
+            'QT' : 'NL',
+            'XZ' : 'IE',
+            'XT' : 'PT',
+            'QY' : 'QA',
+            'XW' : 'US',
+            'XU' : 'US',
+            'XS' : 'VG',
+            'AB' : 'ES',
+            'S1' : 'NL',
+            'XD' : 'US',
+            'XV' : 'US',
+            'XN' : 'TR',
+            'XE' : 'AE',
+            'QW' : 'GB',
+            'XR' : 'VG',
+          }
         
       }
     },
     watch: {
+      checkCurrencyCode(data){
+        this.search.recording_currency_country_code = data;
+        this.currencyCode = data;
+      },
     },
     computed: {
+      checkCurrencyCode(){
+        if(this.countryCode != ""){
+          this.search.recording_country_code = this.countryCode;
+          if(this.countryCode in this.countryNotListed){
+            return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.countryCode], 'currency');
+          }else{
+            var currencyCode = isoCountryCurrency.getParamByISO(this.countryCode, 'currency');
+          }
+        }
+        return currencyCode;
+      },
     },
     mounted() {
       document.getElementById('loading').style.display = 'none';
