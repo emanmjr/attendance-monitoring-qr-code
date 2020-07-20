@@ -113,16 +113,6 @@
                       <span v-if="errorResponse.destination_currency_code" style="color:red;">The destination country currency field is required</span>
                   </div>
                   <div class="form-group col-md-3">
-                      <label for="sender_currency_code">Currency Code of  Money  Being Sent<span style="color:red;">*</span></label>
-                      <!-- <input type="text" class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" id="sender_currency_code" v-model="form.sender_currency_code" :readonly="this.isReadOnly"> -->
-                      <select class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" v-model="form.sender_currency_code" :readonly="this.isReadOnly">
-                          <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
-                      </select>
-                      <span v-if="errorResponse.sender_currency_code" style="color:red;">The money being sent currency</span>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-3">
                       <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
                       <!-- <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code" :readonly="this.isReadOnly"> -->
                       <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
@@ -130,14 +120,24 @@
                       </select>
                       <span v-if="errorResponse.originating_country_code" style="color:red;">{{ errorResponse.originating_country_code[0] }}</span>
                   </div>
-                  <div class="form-group col-md-3">
+                  <!-- <div class="form-group col-md-3">
+                      <label for="sender_currency_code">Currency Code of  Money  Being Sent<span style="color:red;">*</span></label>
+                      <select class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" v-model="form.sender_currency_code" :readonly="this.isReadOnly">
+                          <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
+                      </select>
+                      <span v-if="errorResponse.sender_currency_code" style="color:red;">The money being sent currency</span>
+                  </div> -->
+                </div>
+                <div class="form-row">
+                  
+                  <!-- <div class="form-group col-md-3">
                       <label for="receiver_type">Receiver Type </label>
                       <input type="text" class="form-control" :class="errorResponse.receiver_type ? 'is-invalid' : ''" id="receiver_type" v-model="form.receiver_type" :readonly="this.isReadOnly">
-                  </div>
-                  <div class="form-group col-md-3">
+                  </div> -->
+                  <!-- <div class="form-group col-md-3">
                       <label for="id_on_file">ID On File (Y/N)</label>
                       <input type="text" class="form-control" :class="errorResponse.id_on_file ? 'is-invalid' : ''" id="id_on_file" v-model="form.id_on_file" :readonly="this.isReadOnly">
-                  </div>
+                  </div> -->
                   <!-- <div class="form-group col-md-3">
                       <label for="transfer_frequency">Transfer Frequency</label>
                       <input type="text" class="form-control" :class="errorResponse.transfer_frequency ? 'is-invalid' : ''" id="transfer_frequency" v-model="form.transfer_frequency" :readonly="this.isReadOnly">
@@ -172,18 +172,18 @@
                   </div> -->
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <!-- <div class="form-group col-md-3">
                       <label for="preferred_language">Preferred Language (Ex. "EN, "ES")</label>
                       <input type="text" class="form-control" :class="errorResponse.preferred_language ? 'is-invalid' : ''" id="preferred_language" v-model="form.preferred_language" :readonly="this.isReadOnly">
-                  </div>
-                  <div class="form-group col-md-3">
+                  </div> -->
+                  <!-- <div class="form-group col-md-3">
                       <label for="card_status">Card Status</label>
                       <input type="text" class="form-control" :class="errorResponse.card_status ? 'is-invalid' : ''" id="card_status" v-model="form.card_status" :readonly="this.isReadOnly">
                   </div>
                   <div class="form-group col-md-3">
                       <label for="enrollment_source">Enroll Source</label>
                       <input type="text" class="form-control" :class="errorResponse.enrollment_source ? 'is-invalid' : ''" id="enrollment_source" v-model="form.enrollment_source" :readonly="this.isReadOnly">
-                  </div>
+                  </div> -->
                 </div>
                 <hr>
 
@@ -212,7 +212,7 @@ export default {
           currency_code: '',
           destination_country_code: '',
           destination_currency_code: '',
-          sender_currency_code: '',
+          // sender_currency_code: '',
           phone_number: '',
           originating_country_code: '',
           receiver_type: '',
@@ -289,17 +289,17 @@ export default {
             this.form.sender_currency_code = '';
             this.form.phone_number = '';
             this.form.originating_country_code = '',
-            this.form.receiver_type = '',
-            this.form.transfer_frequency = '',
-            this.form.wu_transfer_frequency = '',
-            this.form.interests = '',
-            this.form.mode_to_receive = '',
-            this.form.transfer_reason_1 = '',
-            this.form.transfer_reason_2 = '',
-            this.form.id_on_file = '',
-            this.form.preferred_language = '',
-            this.form.card_status = '',
-            this.form.enrollment_source = ''
+            // this.form.receiver_type = '',
+            // this.form.transfer_frequency = '',
+            // this.form.wu_transfer_frequency = '',
+            // this.form.interests = '',
+            // this.form.mode_to_receive = '',
+            // this.form.transfer_reason_1 = '',
+            // this.form.transfer_reason_2 = '',
+            // this.form.id_on_file = '',
+            // this.form.preferred_language = '',
+            // this.form.card_status = '',
+            // this.form.enrollment_source = ''
 
             this.isEnrollNewCustomerBtn = false;
             this.isEnrollBtn = true;
@@ -367,22 +367,22 @@ export default {
                     // '<td>WU Transfer Frequency: ' + this.form.wu_transfer_frequency + '</td>' +
                     // '<td>Interests: ' + this.form.interests + '</td>' +
                     // '</tr>' +
-                    '<tr>' +
-                    '<td>Receiver Type: ' + this.form.receiver_type + '</td>' +
-                    '<td>ID On Field: ' + this.form.id_on_file + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Trasfer Reason 1: ' + this.form.transfer_reason_1 + '</td>' +
-                    '<td>Trasfer Reason 2: ' + this.form.transfer_reason_2 + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Preferred Language: ' + this.form.preferred_language + '</td>' +
-                    '<td>Card Status: ' + this.form.card_status + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Enrollment Source: ' + this.form.enrollment_source + '</td>' +
-                    '<td></td>' +
-                    '</tr>' +
+                    // '<tr>' +
+                    // '<td>Receiver Type: ' + this.form.receiver_type + '</td>' +
+                    // '<td>ID On Field: ' + this.form.id_on_file + '</td>' +
+                    // '</tr>' +
+                    // '<tr>' +
+                    // '<td>Trasfer Reason 1: ' + this.form.transfer_reason_1 + '</td>' +
+                    // '<td>Trasfer Reason 2: ' + this.form.transfer_reason_2 + '</td>' +
+                    // '</tr>' +
+                    // '<tr>' +
+                    // '<td>Preferred Language: ' + this.form.preferred_language + '</td>' +
+                    // '<td>Card Status: ' + this.form.card_status + '</td>' +
+                    // '</tr>' +
+                    // '<tr>' +
+                    // '<td>Enrollment Source: ' + this.form.enrollment_source + '</td>' +
+                    // '<td></td>' +
+                    // '</tr>' +
                     '</tbody>' +
                     '</table> ',
               // text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
