@@ -12,7 +12,7 @@
                       <input type="text" class="form-control" id="mtcn" v-model="search.mtcn" placeholder="">
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="search_sender_country_cod">Originating Country Code
+                      <label for="search_sender_country_cod">Recording Country Code
                       </label>
                       <!-- <input type="text" class="form-control" id="recording_country_code" v-model="search.recording_country_code" placeholder=""> -->
                       <select class="form-control" v-model="countryCode">
@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                      <label for="search_sender_country_cod">Originating Currency Country Code
+                      <label for="search_sender_country_cod">Recording Currency Country Code
                       </label>
                       <!-- <input type="text" class="form-control" id="recording_currency_country_code" v-model="search.recording_currency_country_code" placeholder=""> -->
                       <select class="form-control" v-model="currencyCode">
