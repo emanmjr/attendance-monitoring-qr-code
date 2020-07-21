@@ -114,6 +114,7 @@ return [
     'MYR' => 'Malaysian ringgit',
     'MVR' => 'Maldivian rufiyaa',
     'MUR' => 'Mauritian rupee',
+    'MRO' => 'Mauritianian Ouguiya',
     'MXN' => 'Mexican peso',
     'MNT' => 'Mongolian tugrik',
     'MAD' => 'Moroccan dirham',
@@ -166,5 +167,7 @@ return [
     'VUV' => 'Vanuatu vatu',
     'VES' => 'Venezuelan bolívar',
     'VND' => 'Vietnamese dong',
-    'ZMW' => 'Zambian kwacha'
+    'YER' => 'Yemeni Rial',
+    'ZMW' => 'Zambian kwacha',
+    'ZWD' => 'Zimababwean Dollar',
 ];

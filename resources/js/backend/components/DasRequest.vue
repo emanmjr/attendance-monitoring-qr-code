@@ -478,7 +478,30 @@
             return this.search.das_request_type;
           },
           checkCurrencyCode1(){
+
             if(this.countryCode1 != ""){
+
+            if(this.countryCode1 == 'BY'){
+              return 'BYN';
+            }
+            if(this.countryCode1 == 'YE'){
+              return 'YER';
+            }
+            if(this.countryCode1 == 'MR'){
+              return 'MRO';
+            }
+            if(this.countryCode1 == 'PA'){
+              return 'USD';
+            }
+            if(this.countryCode1 == 'ST'){
+              return 'STN';
+            }
+            if(this.countryCode1 == 'ZM'){
+              return 'ZMW';
+            }
+            if(this.countryCode1 == 'ZW'){
+              return 'ZWD';
+            }
               if(this.countryCode1 in this.countryNotListed){
                 return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.countryCode1], 'currency');
               }else{
@@ -489,6 +512,27 @@
           },
           checkCurrencyCode2(){
             if(this.countryCode2 != ""){
+              if(this.countryCode2 == 'BY'){
+              return 'BYN';
+            }
+            if(this.countryCode2 == 'YE'){
+              return 'YER';
+            }
+            if(this.countryCode2 == 'MR'){
+              return 'MRO';
+            }
+            if(this.countryCode2 == 'PA'){
+              return 'USD';
+            }
+            if(this.countryCode2 == 'ST'){
+              return 'STN';
+            }
+            if(this.countryCode2 == 'ZM'){
+              return 'ZMW';
+            }
+            if(this.countryCode2 == 'ZW'){
+              return 'ZWD';
+            }
               if(this.countryCode2 in this.countryNotListed){
                 return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.countryCode2], 'currency');
               }else{
