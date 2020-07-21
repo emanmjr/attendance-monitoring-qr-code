@@ -275,6 +275,7 @@ export default {
     },
     watch: {
       checkCurrencyCode(data){
+        
         this.search.recording_currency_country_code = data;
         this.currencyCode = data;
       },
@@ -283,13 +284,36 @@ export default {
       checkCurrencyCode(){
         if(this.countryCode != ""){
           this.search.recording_country_code = this.countryCode;
+          
+          if(this.countryCode == 'BY'){
+            return 'BYN';
+          }
+          if(this.countryCode == 'YE'){
+            return 'YER';
+          }
+          if(this.countryCode == 'MR'){
+            return 'MRO';
+          }
+          if(this.countryCode == 'PA'){
+            return 'USD';
+          }
+          if(this.countryCode == 'ST'){
+            return 'STN';
+          }
+          if(this.countryCode == 'ZM'){
+            return 'ZMW';
+          }
+          if(this.countryCode == 'ZW'){
+            return 'ZWD';
+          }
+          
           if(this.countryCode in this.countryNotListed){
             return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.countryCode], 'currency');
           }else{
-            var currencyCode = isoCountryCurrency.getParamByISO(this.countryCode, 'currency');
+            return isoCountryCurrency.getParamByISO(this.countryCode, 'currency');
           }
+         
         }
-        return currencyCode;
       },
     },
     mounted() {
