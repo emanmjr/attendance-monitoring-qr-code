@@ -70,81 +70,161 @@
                 <hr>
 
                 <h4 class="mt-3 mb-3">Customer Information</h4>
-                <div class="form-row">
+                <div v-if="this.form.my_wu_no != ''">
+                <!-- <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="reference_no">Reference No.
                         </label>
                         <input type="text" class="form-control" id="reference_no" v-model="form.reference_no" placeholder="" readonly>
                     </div>
-                </div>
-                <div class="form-row">
+                </div> -->
+                
+                  <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="my_wu_no">My WU No.
                         </label>
                         <input type="text" class="form-control" id="my_wu_no" v-model="form.my_wu_no" placeholder="" readonly>
                     </div>
+                  </div>
+                  <div class="form-row" v-if="form.total_earned_points">
+                      <div class="form-group col-md-3">
+                          <label for="my_wu_no">Total Earned Points
+                          </label>
+                          <input type="text" class="form-control" id="total_earned_points" v-model="form.total_earned_points" placeholder="" readonly>
+                      </div>
+                      <!-- <div class="form-group col-md-3">
+                          <label for="my_wu_no">Is KYCED?
+                          </label>
+                          <input type="text" class="form-control" id="is_kyced" v-model="form.is_kyced" placeholder="" readonly>
+                      </div> -->
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-3">
+                          <label for="first_name">First Name</label>
+                          <input type="text" class="form-control" id="first_name" v-model="form.first_name" readonly>
+                      </div>
+                      <!-- <div class="form-group col-md-4">
+                          <label for="middle_name">Middle Name</label>
+                          <input type="text" class="form-control" id="middle_name" v-model="form.middle_name">
+                      </div> -->
+                      <div class="form-group col-md-3">
+                          <label for="last_name">Last Name</label>
+                          <input type="text" class="form-control" id="last_name" v-model="form.last_name" readonly>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-3">
+                          <label for="address_type">Address Type</label>
+                          <input type="text" class="form-control" id="address_type" v-model="form.address_type" readonly>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="address">Address</label>
+                          <input type="text" class="form-control" id="address" v-model="form.address" readonly>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="city">City</label>
+                          <input type="text" class="form-control" id="city" v-model="form.city" readonly>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="postal_code">Postal Code</label>
+                          <input type="text" class="form-control" id="postal_code" v-model="form.postal_code" readonly>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-3">
+                          <label for="contact_country_code">Contact No. </label>
+                          <input type="text" class="form-control" id="contact_country_code" v-model="form.contact_country_code" readonly>
+                      </div>
+                      <!-- <div class="form-group col-md-3">
+                          <label for="phone_number">Phone Number</label>
+                          <input type="text" class="form-control" id="phone_number" v-model="form.phone_number" readonly>
+                      </div> -->
+                      <div class="form-group col-md-3">
+                          <label for="country_code">Country Code</label>
+                          <input type="text" class="form-control" id="country_code" v-model="form.country_code" readonly>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="country_name">Country Name Code</label>
+                          <input type="text" class="form-control" id="country_name" v-model="form.country_name" readonly>
+                      </div>
+                  </div>
                 </div>
-                <div class="form-row" v-if="form.total_earned_points">
+
+
+                <!-- Multi Customers -->
+                <div v-if="this.multiCustomers.length > 0">
+                  <div v-for="(customer, index) in this.multiCustomers" :key="index">
+                    <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="my_wu_no">Total Earned Points
+                        <label for="my_wu_no">My WU No.
                         </label>
-                        <input type="text" class="form-control" id="total_earned_points" v-model="form.total_earned_points" placeholder="" readonly>
+                        <input type="text" class="form-control" id="my_wu_no" v-model="customer.mywu_details.mywu_number" placeholder="" readonly>
                     </div>
-                    <!-- <div class="form-group col-md-3">
-                        <label for="my_wu_no">Is KYCED?
-                        </label>
-                        <input type="text" class="form-control" id="is_kyced" v-model="form.is_kyced" placeholder="" readonly>
+                    </div>
+                    <!-- <div class="form-row" v-if="form.total_earned_points">
+                        <div class="form-group col-md-3">
+                            <label for="my_wu_no">Total Earned Points
+                            </label>
+                            <input type="text" class="form-control" id="total_earned_points" v-model="form.total_earned_points" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="my_wu_no">Is KYCED?
+                            </label>
+                            <input type="text" class="form-control" id="is_kyced" v-model="form.is_kyced" placeholder="" readonly>
+                        </div>
                     </div> -->
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" id="first_name" v-model="form.first_name" readonly>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control" id="first_name" v-model="customer.name.first_name" readonly>
+                        </div>
+                        <!-- <div class="form-group col-md-4">
+                            <label for="middle_name">Middle Name</label>
+                            <input type="text" class="form-control" id="middle_name" v-model="form.middle_name">
+                        </div> -->
+                        <div class="form-group col-md-3">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" v-model="customer.name.first_name" readonly>
+                        </div>
                     </div>
-                    <!-- <div class="form-group col-md-4">
-                        <label for="middle_name">Middle Name</label>
-                        <input type="text" class="form-control" id="middle_name" v-model="form.middle_name">
-                    </div> -->
-                    <div class="form-group col-md-3">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" v-model="form.last_name" readonly>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="address_type">Address Type</label>
+                            <input type="text" class="form-control" id="address_type" v-model="customer.address.addr_type" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" v-model="customer.address.addr_line1" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" v-model="customer.address.city" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="postal_code">Postal Code</label>
+                            <input type="text" class="form-control" id="postal_code" v-model="customer.address.postal_code" readonly>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="address_type">Address Type</label>
-                        <input type="text" class="form-control" id="address_type" v-model="form.address_type" readonly>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="contact_country_code">Contact No. </label>
+                            <input type="text" class="form-control" id="contact_country_code" v-model="customer.contact_phone" readonly>
+                        </div>
+                        <!-- <div class="form-group col-md-3">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="text" class="form-control" id="phone_number" v-model="form.phone_number" readonly>
+                        </div> -->
+                        <div class="form-group col-md-3">
+                            <label for="country_code">Country Code</label>
+                            <input type="text" class="form-control" id="country_code" v-model="customer.address.country_details.ctry_code" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="country_name">Country Name</label>
+                            <input type="text" class="form-control" id="country_name" v-model="customer.address.country_details.ctry_name" readonly>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" v-model="form.address" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" id="city" v-model="form.city" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="postal_code">Postal Code</label>
-                        <input type="text" class="form-control" id="postal_code" v-model="form.postal_code" readonly>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="contact_country_code">Contact No. Country Code</label>
-                        <input type="text" class="form-control" id="contact_country_code" v-model="form.contact_country_code" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="phone_number">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_number" v-model="form.phone_number" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="country_code">Country Code</label>
-                        <input type="text" class="form-control" id="country_code" v-model="form.country_code" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="country_name">Country Name Code</label>
-                        <input type="text" class="form-control" id="country_name" v-model="form.country_name" readonly>
-                    </div>
+                    <hr>
+                  </div>
                 </div>
                 <hr>
                 <div v-if="this.receiversCount()">
@@ -176,6 +256,7 @@
 export default {
     data() {
       return {
+        multiCustomers: {},
         is_employed_wbusiness: false,
         is_permanent: false,
         receivers: {},
@@ -270,10 +351,24 @@ export default {
     },
     methods: {
       searchKYC() {
+        this.form.reference_no = '';
+            this.form.my_wu_no = '';
+            this.form.first_name = '';
+            this.form.last_name = '';
+            this.form.address = '';
+            this.form.city = '';
+            this.form.postal_code = '';
+            this.form.country_code = '' ;
+            this.form.country_name = '';
+            this.form.phone_number = '';
+            this.form.address_type = '';
+            this.form.contact_country_code = ''
         document.getElementById('loading').style.display = 'block';
         axios.post('/admin/api/kyc-lookup', this.search)
         .then((response) => {
           // handle success
+
+          
           
           if(response.data.faultstring){
             console.log(response.data)
@@ -298,6 +393,11 @@ export default {
             this.form.address_type = '';
             this.form.contact_country_code = ''
           }else {
+            if(response.data.customers.customer.length != undefined){
+              this.multiCustomers = response.data.customers.customer;
+            } else {
+              this.multiCustomers = {};
+            }
             document.getElementById('loading').style.display = 'none';
             console.log(response.data);
           //   Swal.fire({
@@ -333,11 +433,11 @@ export default {
             this.form.country_name = response.data.customers.customer.address.country_details.ctry_name ? response.data.customers.customer.address.country_details.ctry_name : '';
             this.form.phone_number = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.National_number : '';
             this.form.address_type = response.data.customers.customer.address.addr_type ? response.data.customers.customer.address.addr_type : '';
-            this.form.contact_country_code = response.data.customers.customer.mobile_number ? response.data.customers.customer.mobile_number.ctry_code : ''
+            this.form.contact_country_code = response.data.customers.customer.contact_phone ? response.data.customers.customer.contact_phone : ''
             this.form.total_earned_points = response.data.customers.customer.mywu_details ? response.data.customers.customer.mywu_details.current_yr_pts : ''
           }
             // this.form.iskyced = response.data.customer.kyc_details ? response.data.customer.kyc_details.is_kyced : ''
-
+            
             this.receivers = response.data.receivers ? response.data.receivers.receiver : {};
           }
         })
