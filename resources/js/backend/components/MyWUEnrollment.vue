@@ -95,21 +95,15 @@
                       </select>
                       <span v-if="errorResponse.currency_code" style="color:red;">{{ errorResponse.currency_code[0] }}</span>
                     </div>
-                    <div class="form-group col-md-3" v-if="form.country_code == 'US' || form.country_code == 'MX'">
-                        <label for="currency_code">State Code<span style="color:red;">*</span></label>
-                        <!-- <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code" :readonly="this.isReadOnly"> -->
-                        <select class="form-control" :class="errorResponse.state_code ? 'is-invalid' : ''" v-model="form.state_code" :readonly="this.isReadOnly">
-                          <option v-for="(stateCode, index) in getStateCodes" :value="form.country_code == 'US' ? index : stateCode" >{{ stateCode }}</option>
+                    <div class="form-group col-md-3">
+                      <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
+                      <!-- <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code" :readonly="this.isReadOnly"> -->
+                      <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
+                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
-                      <span v-if="errorResponse.state_code" style="color:red;">{{ errorResponse.state_code[0] }}</span>
-                    </div>
-                    <div class="form-group col-md-3" v-if="form.country_code == 'MX'">
-                        <label for="currency_code">Expected City<span style="color:red;">*</span></label>
-                        <select class="form-control" :class="errorResponse.expected_city ? 'is-invalid' : ''" v-model="form.expected_city" :readonly="this.isReadOnly">
-                          <option v-for="mexicoCity in getMexicoCities" :value="mexicoCity">{{ mexicoCity }}</option>
-                      </select>
-                      <span v-if="errorResponse.expected_city" style="color:red;">{{ errorResponse.expected_city[0] }}</span>
-                    </div>
+                      <span v-if="errorResponse.originating_country_code" style="color:red;">{{ errorResponse.originating_country_code[0] }}</span>
+                  </div>
+                    
                     
                 </div>
                 <div class="form-row">
@@ -129,14 +123,22 @@
                       </select>
                       <span v-if="errorResponse.destination_currency_code" style="color:red;">The destination country currency field is required</span>
                   </div>
-                  <div class="form-group col-md-3">
-                      <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
-                      <!-- <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code" :readonly="this.isReadOnly"> -->
-                      <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
-                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                  <div class="form-group col-md-3" v-if="form.destination_country_code == 'US' || form.destination_country_code == 'MX'">
+                        <label for="currency_code">State Code<span style="color:red;">*</span></label>
+                        <!-- <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code" :readonly="this.isReadOnly"> -->
+                        <select class="form-control" :class="errorResponse.state_code ? 'is-invalid' : ''" v-model="form.state_code" :readonly="this.isReadOnly">
+                          <option v-for="(stateCode, index) in getStateCodes" :value="form.destination_country_code == 'US' ? index : stateCode" >{{ stateCode }}</option>
                       </select>
-                      <span v-if="errorResponse.originating_country_code" style="color:red;">{{ errorResponse.originating_country_code[0] }}</span>
-                  </div>
+                      <span v-if="errorResponse.state_code" style="color:red;">{{ errorResponse.state_code[0] }}</span>
+                    </div>
+                    <div class="form-group col-md-3" v-if="form.destination_country_code == 'MX'">
+                        <label for="currency_code">Expected City<span style="color:red;">*</span></label>
+                        <select class="form-control" :class="errorResponse.expected_city ? 'is-invalid' : ''" v-model="form.expected_city" :readonly="this.isReadOnly">
+                          <option v-for="mexicoCity in getMexicoCities" :value="mexicoCity">{{ mexicoCity }}</option>
+                      </select>
+                      <span v-if="errorResponse.expected_city" style="color:red;">{{ errorResponse.expected_city[0] }}</span>
+                    </div>
+                  
                   <!-- <div class="form-group col-md-3">
                       <label for="sender_currency_code">Currency Code of  Money  Being Sent<span style="color:red;">*</span></label>
                       <select class="form-control" :class="errorResponse.sender_currency_code ? 'is-invalid' : ''" v-model="form.sender_currency_code" :readonly="this.isReadOnly">
@@ -944,7 +946,7 @@ export default {
     },
     watch: {
       checkMexicoStateCode(data){
-        if (this.form.country_code == 'MX'){
+        if (this.form.destination_country_code == 'MX'){
           let indexOfMexicoState = this.mexicoStateCodeCities.indexOf(data);
           this.form.expected_city = this.mexicoCities[indexOfMexicoState];
         }else{
@@ -953,6 +955,9 @@ export default {
       },
       checkCurrencyCode(data){
         this.form.currency_code = data;
+      },
+      checkDestinationCurrencyCode(data){
+        this.form.destination_currency_code = data;
       },
       checkEmployedBusiness (data) {
 
@@ -963,7 +968,6 @@ export default {
         }
       },
       checkPermanentAdd (data) {
-        console.log(data)
         if(data == 1){
           this.is_permanent = true;
         } else {
@@ -1005,6 +1009,39 @@ export default {
         }
         return currencyCode;
       },
+      checkDestinationCurrencyCode(){
+
+        if(this.form.destination_country_code != ""){
+
+        if(this.form.destination_country_code == 'BY'){
+          return 'BYN';
+        }
+        if(this.form.destination_country_code == 'YE'){
+          return 'YER';
+        }
+        if(this.form.destination_country_code == 'MR'){
+          return 'MRO';
+        }
+        if(this.form.destination_country_code == 'PA'){
+          return 'USD';
+        }
+        if(this.form.destination_country_code == 'ST'){
+          return 'STN';
+        }
+        if(this.form.destination_country_code == 'ZM'){
+          return 'ZMW';
+        }
+        if(this.form.destination_country_code == 'ZW'){
+          return 'ZWD';
+        }
+          if(this.form.destination_country_code in this.countryNotListed){
+            return isoCountryCurrency.getParamByISO(this.currencyOfNotListed[this.form.destination_country_code], 'currency');
+          }else{
+            var currencyCode = isoCountryCurrency.getParamByISO(this.form.destination_country_code, 'currency');
+          }
+        }
+        return currencyCode;
+      },
       checkEmployedBusiness() {
         return this.form.employed_wbusiness;
       },
@@ -1018,7 +1055,7 @@ export default {
         return this.mexicoCities;
       },
       getStateCodes(){
-        if(this.form.country_code == 'MX'){
+        if(this.form.destination_country_code == 'MX'){
           return this.mexicoStateCodeCities;
         }
 
@@ -1089,9 +1126,6 @@ export default {
       this.isReadOnly = false;
     },
     methods: {
-      stateCodeChange(data){
-        console.log(data)
-      },
       onlyNumber ($event) {
         //console.log($event.keyCode); //keyCodes value
         let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
