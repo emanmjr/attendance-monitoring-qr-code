@@ -276,6 +276,7 @@ export default {
           // handle success
           
           if(response.data.faultstring){
+            console.log(response.data)
             document.getElementById('loading').style.display = 'none';
             Swal.fire({
               icon: 'error',

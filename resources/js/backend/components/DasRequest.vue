@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-2" v-if="this.isViewIsoCode1">
                         <div class="form-group">
-                          <label for="search_first_name"><span v-if="this.isViewIsoCode2">Originating&nbsp;</span>Country </label>
+                          <label for="search_first_name"><span v-if="this.isViewIsoCode2">Originating&nbsp;</span><span v-if="this.search.das_request_type == 'GetDeliveryOptionTemplate'">Destination </span>Country </label>
                             <select class="form-control" v-model="countryCode1">
                                 <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                             </select>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-2" v-if="this.countryCurrencies1">
                         <div class="form-group">
-                          <label for="search_first_name">Currency</label>
+                          <label for="search_first_name"><span v-if="this.search.das_request_type == 'GetDeliveryOptionTemplate'">Destination </span>Currency</label>
                             <select class="form-control" v-model="currencyCode1">
                                 <option v-for="(currency, index) in this.CurrencyCodes" :value="index">{{ currency }}</option>
                             </select>
@@ -656,8 +656,8 @@
               var data = {
                 'das_request_type': this.search.das_request_type,
                 'queryFilter1': this.search.queryFilter1,
-                'queryFilter2': this.search.template_id,
-                'queryFilter3': "", // lastData.T_INDEX
+                'template_id': this.search.template_id,
+                'queryFilter3': lastData.T_INDEX
               };
             }
 

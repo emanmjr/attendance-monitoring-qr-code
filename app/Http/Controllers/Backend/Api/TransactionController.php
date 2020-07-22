@@ -66,7 +66,7 @@ class TransactionController extends Controller
             ]);
         }
 
-        if(request()->search_type_field == 'MYWU_Number') {
+        if(request()->search_type_field == 'MYWU_NUMBER') {
             request()->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
