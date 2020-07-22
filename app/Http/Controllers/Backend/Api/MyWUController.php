@@ -35,6 +35,19 @@ class MyWUController extends Controller
             'originating_country_code' => 'required'
         ]);
 
+        if(request()->country_code == "MX"){
+            request()->validate([
+                'state_code' => 'required',
+                'expected_city' => 'required',
+            ]);
+        }
+
+        if(request()->country_code == "US"){
+            request()->validate([
+                'state_code' => 'required',
+            ]);
+        }
+
         
         $headers = [
             'Content-Type' => 'application/json',
@@ -66,6 +79,8 @@ class MyWUController extends Controller
                     "destinationCurrencyCode" => request()->destination_currency_code,
                     "senderCurrencyCode" => "PHP",
                     "originatingCountryCode" => request()->originating_country_code,
+                    "stateCode" => request()->state_code,
+                    "expectedCity" => request()->country_code == 'MX' ? request()->expected_city : '',
                     // "receiverType" => request()->receiver_type,
                     // "transferFrequency" => request()->transfer_frequency,
                     // "wuTransferFrequency" => request()->wu_transfer_frequency,
@@ -145,7 +160,7 @@ class MyWUController extends Controller
 
         // Build Data for requesting api
         $json = $this->buildData(request(), $queryFilters);
-        
+
         // Check type if type of request is already in DB
         $response = $this->checkIfAlreadyStored($json);
         
