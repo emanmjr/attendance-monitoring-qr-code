@@ -184,7 +184,7 @@
                         </div> -->
                         <div class="form-group col-md-3">
                             <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" id="last_name" v-model="customer.name.first_name" readonly>
+                            <input type="text" class="form-control" id="last_name" v-model="customer.name.last_name" readonly>
                         </div>
                     </div>
                     <div class="form-row">
