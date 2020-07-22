@@ -221,7 +221,7 @@ export default {
         if(data == 'COMPLIANCE_ID') {
           this.showSearchFirstName = true;
           this.showSearchLastName = true;
-          this.showSearchMyWUNo = false;
+          this.showSearchMyWUNo = true;
           this.showSearchIdType = true;
           this.showSearchIdNum = true;
           this.showSearchPhoneNum = false;
@@ -230,7 +230,7 @@ export default {
         if(data == 'PHONE_NUMBER') {
           this.showSearchFirstName = true;
           this.showSearchLastName = true;
-          this.showSearchMyWUNo = false;
+          this.showSearchMyWUNo = true;
           this.showSearchIdType = false;
           this.showSearchIdNum = false;
           this.showSearchPhoneNum = true;
