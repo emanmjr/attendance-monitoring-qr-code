@@ -1209,41 +1209,20 @@ export default {
                     '<td>City: ' + this.form.city + '</td>' +
                     '</tr>' +
                     '<tr>' +
+                    '<td>Province: ' + this.form.province + '</td>' +
                     '<td>Postal Code: ' + this.form.postal_code + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
                     '<td>Country Code: ' + this.form.country_code + '</td>' +
+                    '<td>Sender Currency Code: ' + this.form.sender_currency_code + '</td>' +
                     '</tr>' +
                     '<tr>' +
                     '<td>Destination Country Code: ' + this.form.destination_country_code + '</td>' +
                     '<td>Destination Currency Code: ' + this.form.destination_currency_code + '</td>' +
                     '</tr>' +
                     '<tr>' +
-                    '<td>Sender Currency Code: ' + this.form.sender_currency_code + '</td>' +
                     '<td>Origination Currency Code: ' + this.form.originating_country_code + '</td>' +
                     '</tr>' +
-                    // '<tr>' +
-                    // '<td>Mode to Receive: ' + this.form.mode_to_receive + '</td>' +
-                    // '<td>Transfer Frequency: ' + this.form.transfer_frequency + '</td>' +
-                    // '</tr>' +
-                    // '<tr>' +
-                    // '<td>WU Transfer Frequency: ' + this.form.wu_transfer_frequency + '</td>' +
-                    // '<td>Interests: ' + this.form.interests + '</td>' +
-                    // '</tr>' +
-                    // '<tr>' +
-                    // '<td>Receiver Type: ' + this.form.receiver_type + '</td>' +
-                    // '<td>ID On Field: ' + this.form.id_on_file + '</td>' +
-                    // '</tr>' +
-                    // '<tr>' +
-                    // '<td>Trasfer Reason 1: ' + this.form.transfer_reason_1 + '</td>' +
-                    // '<td>Trasfer Reason 2: ' + this.form.transfer_reason_2 + '</td>' +
-                    // '</tr>' +
-                    // '<tr>' +
-                    // '<td>Preferred Language: ' + this.form.preferred_language + '</td>' +
-                    // '<td>Card Status: ' + this.form.card_status + '</td>' +
-                    // '</tr>' +
-                    // '<tr>' +
-                    // '<td>Enrollment Source: ' + this.form.enrollment_source + '</td>' +
-                    // '<td></td>' +
-                    // '</tr>' +
                     '</tbody>' +
                     '</table> ',
               // text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
