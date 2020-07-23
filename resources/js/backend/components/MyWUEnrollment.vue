@@ -67,21 +67,27 @@
                         <span v-if="errorResponse.city" style="color:red;">{{ errorResponse.city[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
+                        <label for="postal_code">Province<span style="color:red;">*</span></label>
+                        <select class="form-control" :class="errorResponse.province ? 'is-invalid' : ''" v-model="form.province" :readonly="this.isReadOnly">
+                          <option v-for="province in this.Provinces" :value="province">{{ province }}</option>
+                        </select>
+                        <span v-if="errorResponse.province" style="color:red;">{{ errorResponse.province[0] }}</span>
+                    </div>
+                    <div class="form-group col-md-3">
                         <label for="postal_code">Postal Code<span style="color:red;">*</span></label>
                         <input type="text" @keypress="onlyNumber" class="form-control" :class="errorResponse.postal_code ? 'is-invalid' : ''" id="postal_code" v-model="form.postal_code" :readonly="this.isReadOnly">
                         <span v-if="errorResponse.postal_code" style="color:red;">{{ errorResponse.postal_code[0] }}</span>
                     </div>
+                    
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="phone_number">Mobile Number(9XXXXXXXXX)<span style="color:red;">*</span></label>
                         <input type="text" class="form-control" @keypress="onlyNumber" :class="errorResponse.phone_number ? 'is-invalid' : ''" id="phone_number" v-model="form.phone_number" :readonly="this.isReadOnly">
                         <span v-if="errorResponse.phone_number" style="color:red;">The mobile number field is required</span>
                     </div>
-                </div>
-                <div class="form-row">
-                  
                     <div class="form-group col-md-3">
                         <label for="country_code">Country Code<span style="color:red;">*</span></label>
-                        <!-- <input type="text" class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" id="country_code" v-model="form.country_code" :readonly="this.isReadOnly"> -->
                         <select class="form-control" :class="errorResponse.country_code ? 'is-invalid' : ''" v-model="form.country_code" :readonly="this.isReadOnly">
                           <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
@@ -89,7 +95,6 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="currency_code">Currency Code<span style="color:red;">*</span></label>
-                        <!-- <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code" :readonly="this.isReadOnly"> -->
                         <select class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" v-model="form.currency_code" :readonly="this.isReadOnly">
                           <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
                       </select>
@@ -97,7 +102,6 @@
                     </div>
                     <div class="form-group col-md-3">
                       <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
-                      <!-- <input type="text" class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" id="originating_country_code" v-model="form.originating_country_code" :readonly="this.isReadOnly"> -->
                       <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
                           <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
@@ -109,7 +113,6 @@
                 <div class="form-row">
                   <div class="form-group col-md-3">
                       <label for="destination_country_code">Destination Country Code<span style="color:red;">*</span></label>
-                      <!-- <input type="text" class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" id="destination_country_code" v-model="form.destination_country_code" :readonly="this.isReadOnly"> -->
                       <select class="form-control" :class="errorResponse.destination_country_code ? 'is-invalid' : ''" v-model="form.destination_country_code" :readonly="this.isReadOnly">
                           <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
                       </select>
@@ -117,7 +120,6 @@
                   </div>
                   <div class="form-group col-md-3">
                       <label for="destination_currency_code">Currency Code of Destination Country <span style="color:red;">*</span></label>
-                      <!-- <input type="text" class="form-control" :class="errorResponse.destination_currency_code ? 'is-invalid' : ''" id="destination_currency_code" v-model="form.destination_currency_code" :readonly="this.isReadOnly"> -->
                       <select class="form-control" :class="errorResponse.destination_currency_code ? 'is-invalid' : ''" v-model="form.destination_currency_code" :readonly="this.isReadOnly">
                           <option v-for="(currencyCode, index) in this.CurrencyCodes" :value="index">{{ currencyCode }}</option>
                       </select>
@@ -125,7 +127,6 @@
                   </div>
                   <div class="form-group col-md-3" v-if="form.destination_country_code == 'US' || form.destination_country_code == 'MX'">
                         <label for="currency_code">State Code<span style="color:red;">*</span></label>
-                        <!-- <input type="text" class="form-control" :class="errorResponse.currency_code ? 'is-invalid' : ''" id="currency_code" v-model="form.currency_code" :readonly="this.isReadOnly"> -->
                         <select class="form-control" :class="errorResponse.state_code ? 'is-invalid' : ''" v-model="form.state_code" :readonly="this.isReadOnly">
                           <option v-for="(stateCode, index) in getStateCodes" :value="form.destination_country_code == 'US' ? index : stateCode" >{{ stateCode }}</option>
                       </select>
@@ -215,7 +216,7 @@
 <script>
 var isoCountryCurrency = require('iso-country-currency');
 export default {
-    props: ['CountryCodes', 'CurrencyCodes'],
+    props: ['CountryCodes', 'CurrencyCodes', 'Provinces'],
     data() {
       return {
         is_employed_wbusiness: false,
@@ -248,6 +249,7 @@ export default {
           enrollment_source: '',
           state_code: '',
           expected_city: '',
+          province: '',
         },
         errorResponse: '',
         enrolledMyWuNumber: '',
