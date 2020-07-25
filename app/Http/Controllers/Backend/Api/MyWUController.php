@@ -33,7 +33,9 @@ class MyWUController extends Controller
             'destination_currency_code' => 'required',
             // 'sender_currency_code' => 'required',
             'originating_country_code' => 'required',
-            'province' => 'required'
+            'province' => 'required_if:country_code,PH|required_if:country_code,US|required_if:country_code,MX',
+            'state_code' => 'required_if:destination_country_code,US|required_if:destination_country_code,MX',
+            'expected_city' => 'required_if:destination_country_code,MX',
         ]);
 
         if(request()->country_code == "MX"){
