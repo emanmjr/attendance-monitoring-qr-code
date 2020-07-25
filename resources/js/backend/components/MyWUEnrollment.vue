@@ -28,7 +28,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="first_name">First Name<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" :class="errorResponse.first_name ? 'is-invalid' : ''" id="first_name" v-model="form.first_name" :readonly="this.isReadOnly" >
+                        <input type="text" class="form-control" :class="errorResponse.first_name ? 'is-invalid' : ''" id="first_name" v-model="form.first_name" :readonly="this.isReadOnly" required>
                         <span v-if="errorResponse.first_name" style="color:red;">{{ errorResponse.first_name[0] }}</span>
                     </div>
                     <!-- <div class="form-group col-md-4">
@@ -67,16 +67,16 @@
                         <span v-if="errorResponse.city" style="color:red;">{{ errorResponse.city[0] }}</span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="postal_code">Province<span style="color:red;">*</span></label>
-                        <select class="form-control" :class="errorResponse.province ? 'is-invalid' : ''" v-model="form.province" :readonly="this.isReadOnly">
-                          <option v-for="province in this.Provinces" :value="province">{{ province }}</option>
-                        </select>
-                        <span v-if="errorResponse.province" style="color:red;">{{ errorResponse.province[0] }}</span>
-                    </div>
-                    <div class="form-group col-md-3">
                         <label for="postal_code">Postal Code<span style="color:red;">*</span></label>
                         <input type="text" @keypress="onlyNumber" class="form-control" :class="errorResponse.postal_code ? 'is-invalid' : ''" id="postal_code" v-model="form.postal_code" :readonly="this.isReadOnly">
                         <span v-if="errorResponse.postal_code" style="color:red;">{{ errorResponse.postal_code[0] }}</span>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
+                      <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
+                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                      </select>
+                      <span v-if="errorResponse.originating_country_code" style="color:red;">{{ errorResponse.originating_country_code[0] }}</span>
                     </div>
                     
                 </div>
@@ -100,13 +100,20 @@
                       </select>
                       <span v-if="errorResponse.currency_code" style="color:red;">{{ errorResponse.currency_code[0] }}</span>
                     </div>
-                    <div class="form-group col-md-3">
-                      <label for="originating_country_code">Originating Country Code<span style="color:red;">*</span></label>
-                      <select class="form-control" :class="errorResponse.originating_country_code ? 'is-invalid' : ''" v-model="form.originating_country_code" :readonly="this.isReadOnly">
-                          <option v-for="(countryCode, index) in this.CountryCodes" :value="index">{{ countryCode }}</option>
+                    <div class="form-group col-md-3" v-if="form.country_code == 'PH'">
+                        <label for="postal_code">Province<span style="color:red;">*</span></label>
+                        <select class="form-control" :class="errorResponse.province ? 'is-invalid' : ''" v-model="form.province" :readonly="this.isReadOnly">
+                          <option v-for="province in this.Provinces" :value="province">{{ province }}</option>
+                        </select>
+                        <span v-if="errorResponse.province" style="color:red;">The province field is required</span>
+                    </div>
+                    <div class="form-group col-md-3" v-if="form.country_code == 'US' || form.country_code == 'MX'">
+                        <label for="currency_code">State<span style="color:red;">*</span></label>
+                        <select class="form-control" :class="errorResponse.province ? 'is-invalid' : ''" v-model="form.province" :readonly="this.isReadOnly">
+                          <option v-for="(stateCode, index) in getStateCodes1" :value="form.country_code == 'US' ? index : stateCode" >{{ stateCode }}</option>
                       </select>
-                      <span v-if="errorResponse.originating_country_code" style="color:red;">{{ errorResponse.originating_country_code[0] }}</span>
-                  </div>
+                      <span v-if="errorResponse.province" style="color:red;">The state field is required</span>
+                    </div>
                     
                     
                 </div>
@@ -1057,7 +1064,72 @@ export default {
         return this.mexicoCities;
       },
       getStateCodes(){
+
         if(this.form.destination_country_code == 'MX'){
+          return this.mexicoStateCodeCities;
+        }
+
+        return {
+          'AL': 'Alabama',
+          'AK': 'Alaska',
+          'AZ': 'Arizona',
+          'AR': 'Arkansas',
+          'CA': 'California',
+          'CO': 'Colorado',
+          'CT': 'Connecticut',
+          'DE': 'Delaware',
+          'DC': 'District of Columbia',
+          'FL': 'Florida',
+          'GA': 'Georgia',
+          'HI': 'Hawaii',
+          'ID': 'Idaho',
+          'IL': 'Illinois',
+          'IN': 'Indiana',
+          'IA': 'Iowa',
+          'KS': 'Kansas',
+          'KY': 'Kentucky',
+          'LA': 'Louisiana',
+          'ME': 'Maine',
+          'MD': 'Maryland',
+          'MA': 'Massachusetts',
+          'MI': 'Michigan',
+          'MN': 'Minnesota',
+          'MS': 'Mississippi',
+          'MO': 'Missouri',
+          'MT': 'Montana',
+          'NE': 'Nebraska',
+          'NV': 'Nevada',
+          'NH': 'New Hampshire',
+          'NJ': 'New Jersey',
+          'NM': 'New Mexico',
+          'NY': 'New York',
+          'NC': 'North Carolina',
+          'ND': 'North Dakota',
+          'OH': 'Ohio',
+          'OK': 'Oklahoma',
+          'OR': 'Oregon',
+          'PA': 'Pennsylvania',
+          'PR': 'Puerto Rico',
+          'RI': 'Rhode Island',
+          'SC': 'South Carolina',
+          'SD': 'South Dakota',
+          'TN': 'Tennessee',
+          'TX': 'Texas',
+          'AA': 'US Military Atlantic',
+          'AE': 'US Military Europe',
+          'AP': 'US Military Pacific',
+          'UT': 'Utah',
+          'VT': 'Vermont',
+          'VI': 'Virgin Islands',
+          'VA': 'Virginia',
+          'WA': 'Washington',
+          'WV': 'West Virginia',
+          'WI': 'Wisconsin',
+          'WY': 'Wyoming',
+        };
+      },getStateCodes1(){
+
+        if(this.form.country_code == 'MX'){
           return this.mexicoStateCodeCities;
         }
 
