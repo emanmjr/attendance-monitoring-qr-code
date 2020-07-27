@@ -38,19 +38,6 @@ class MyWUController extends Controller
             'expected_city' => 'required_if:destination_country_code,MX',
         ]);
 
-        if(request()->country_code == "MX"){
-            request()->validate([
-                'state_code' => 'required',
-                'expected_city' => 'required',
-            ]);
-        }
-
-        if(request()->country_code == "US"){
-            request()->validate([
-                'state_code' => 'required',
-            ]);
-        }
-
         
         $headers = [
             'Content-Type' => 'application/json',
@@ -82,7 +69,7 @@ class MyWUController extends Controller
                     "destinationCurrencyCode" => request()->destination_currency_code,
                     "senderCurrencyCode" => "PHP",
                     "originatingCountryCode" => request()->originating_country_code,
-                    "stateCode" => request()->state_code,
+                    "stateCode" => (request()->destination_country_code == 'MX' || request()->destination_country_code == 'US') ? request()->state_code : '',
                     "expectedCity" => request()->country_code == 'MX' ? request()->expected_city : '',
                     "province" => request()->province,
                     // "receiverType" => request()->receiver_type,
