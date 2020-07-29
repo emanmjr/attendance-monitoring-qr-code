@@ -41,13 +41,13 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    {{--  <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/transaction/kyc-lookup'))
                     }}" href="{{ route('admin.transaction.kyc-lookup') }}">
                             KYC Lookup
                         </a>
-                    </li>
+                    </li>  --}}
                     <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/transaction/pay-status'))
@@ -82,13 +82,13 @@
                             Enrollment
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{--  <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/mywu-lookup'))
                     }}" href="{{ route('admin.mywu.mywu-lookup') }}">
                             MYWU Lookup
                         </a>
-                    </li>
+                    </li>  --}}
                     {{--  <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/das-request'))
