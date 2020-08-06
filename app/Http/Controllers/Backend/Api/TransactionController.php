@@ -28,12 +28,14 @@ class TransactionController extends Controller
         ]);
    
         try {
-            // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/db-syncing/get-logs', [
-            $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/db-syncing/get-logs', [
+            // $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/db-syncing/get-logs', [
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/db-syncing/get-logs', [
                 'form_params' => [
-                    'date' => request()->dateTransaction
+                    'date' => request()->dateTransaction,
+                    'agentEmail' => auth()->user()->roles[0]->name == 'agent' ? auth()->user()->email : "",
                 ]
             ]);
+            
             $response = json_decode($res->getBody()->getContents(), true);
 
         } catch (ClientErrorResponseException $exception) {
@@ -164,11 +166,13 @@ class TransactionController extends Controller
                 "recordingCountryCode" =>  request()->recording_country_code,
                 "recordingCountryCurrencyCode" =>  request()->recording_currency_country_code,
                 "mtcn" => request()->mtcn,
-                "payWoIdIndicator" => request()->pay_wo_indicator
+                "payWoIdIndicator" => request()->pay_wo_indicator,
+                "agentEmail" => auth()->user()->email ?? ""
             ];
-            
-            // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/kyc', [
-            $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/status', [
+
+            // $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/status', [
+
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/status', [
                 'json' => $json
             ]);
 

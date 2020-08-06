@@ -33,7 +33,6 @@ trait MiddlewareApiTrait {
                     "scope" => "*"
                 ]
             ]);
-
         return json_decode($res->getBody()->getContents(), true)['access_token'];
 
         } catch (\Exception $ex) {

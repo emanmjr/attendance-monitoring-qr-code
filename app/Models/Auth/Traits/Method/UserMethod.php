@@ -79,6 +79,13 @@ trait UserMethod
         return $role;
     }
 
+    public function isAgent()
+    {
+        $role = ($this->hasRole(config('access.users.agent_role'))
+                    ? true : false);
+        return $role;
+    }
+
     /**
      * @return bool
      */
