@@ -27,6 +27,7 @@ return [
         'admin_role' => 'administrator',
         'cs_role' => 'cs_maker',
         'manager_role' => 'manager',
+        'agent_role' => 'agent',
 
         /*
          * Whether or not new users need to be approved by an administrator before logging in

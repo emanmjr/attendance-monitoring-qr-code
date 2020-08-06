@@ -50,7 +50,8 @@ class MyWUController extends Controller
         
         try {
             // $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/mywu', [
-            $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/mywu', [
+            // $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/remittance/mywu', [
+            $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/remittance/mywu', [
                 'json' => [
                     "Category" =>"Enroll",
                     "channelType" => "H2H",
@@ -72,6 +73,7 @@ class MyWUController extends Controller
                     "stateCode" => (request()->destination_country_code == 'MX' || request()->destination_country_code == 'US') ? request()->state_code : '',
                     "expectedCity" => request()->country_code == 'MX' ? request()->expected_city : '',
                     "province" => request()->province,
+                    "agentEmail" => auth()->user()->email ?? "",
                     // "receiverType" => request()->receiver_type,
                     // "transferFrequency" => request()->transfer_frequency,
                     // "wuTransferFrequency" => request()->wu_transfer_frequency,

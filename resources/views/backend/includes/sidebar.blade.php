@@ -48,6 +48,7 @@
                             KYC Lookup
                         </a>
                     </li>  --}}
+                    @if ($logged_in_user->isAgent())
                     <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/transaction/pay-status'))
@@ -55,9 +56,10 @@
                             Pay Status
                         </a>
                     </li>
+                    @endif
                 </ul>
             </li>
-
+            @if ($logged_in_user->isAgent())
             <li class="nav-item nav-dropdown {{
                 active_class(Route::is('admin/mywu*'), 'open')
             }}">
@@ -66,7 +68,7 @@
                     }}" href="#">
                     <i class="nav-icon fas fa-hand-holding-usd"></i> My WU&#8480;
                 </a>
-
+                
                 <ul class="nav-dropdown-items">
                     {{-- <li class="nav-item">
                         <a class="nav-link {{
@@ -75,6 +77,7 @@
                             Customer
                         </a>
                     </li> --}}
+                   
                     <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/enrollment'))
@@ -82,6 +85,7 @@
                             Enrollment
                         </a>
                     </li>
+                    
                     {{--  <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/mywu/mywu-lookup'))
@@ -98,6 +102,7 @@
                     </li>  --}}
                 </ul>
             </li>
+            @endif
 
             @if ($logged_in_user->isAdmin())
                 <li class="nav-title">
@@ -141,7 +146,7 @@
                 </li>
 
                 <li class="divider"></li>
-
+                
                 <li class="nav-item nav-dropdown {{
                     active_class(Route::is('admin/log-viewer*'), 'open')
                 }}">
