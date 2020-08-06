@@ -169,10 +169,12 @@ class LoginController extends Controller
     public function setSessionApiAccessToken()
     {
         if(env('APP_ENV') == 'local') {
+            
             session()->put(
                 'access_token', 
                 'Bearer ' . env('DEVELOPMENT_TOKEN')
             );
+
         } else {
             if(!session()->get('access_token')){
                 $token = \App\Models\Auth\Token::where('name', 'middleware_api')->first();
@@ -196,5 +198,6 @@ class LoginController extends Controller
                 );
             }
         }
+
     }
 }
