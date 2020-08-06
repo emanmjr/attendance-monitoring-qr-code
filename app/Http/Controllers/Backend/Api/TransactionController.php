@@ -26,7 +26,7 @@ class TransactionController extends Controller
         $client = new GuzzleClient([
             'headers' => $headers
         ]);
-   
+
         try {
             // $res = $client->request('POST', 'http://3.1.170.158/mw_v1008/public/db-syncing/get-logs', [
             $res = $client->request('POST', env('MIDDLEWARE_URL_ENVIRONMENT') . '/public/db-syncing/get-logs', [
@@ -35,7 +35,6 @@ class TransactionController extends Controller
                     'agentEmail' => auth()->user()->roles[0]->name == 'agent' ? auth()->user()->email : "",
                 ]
             ]);
-            
             $response = json_decode($res->getBody()->getContents(), true);
 
         } catch (ClientErrorResponseException $exception) {

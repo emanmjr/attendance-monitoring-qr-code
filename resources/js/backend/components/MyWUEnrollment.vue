@@ -1253,7 +1253,7 @@ export default {
           }
 
 
-          this.enrolledMyWuNumber = response.data.sender.preferred_customer.account_nbr;
+          this.enrolledMyWuNumber = response.data.sender.preferred_customer.mywu_number;
           // handle success
           if(response.data.foreign_remote_system.reference_no) {
             document.getElementById('loading').style.display = 'none';
@@ -1265,7 +1265,7 @@ export default {
               html: '<table class="table table-striped">' +
                     '<tbody style="text-align:left; font-size:12px;">' +
                     '<tr>' +
-                    '<td>MYWU Number: ' + response.data.sender.preferred_customer.account_nbr + '</td>' +
+                    '<td>MYWU Number: ' + response.data.sender.preferred_customer.mywu_number + '</td>' +
                     '<td>Email: ' + this.form.email + '</td>' +
                     '</tr>' +
                     '<tr>' +
@@ -1297,8 +1297,8 @@ export default {
                     '</tr>' +
                     '</tbody>' +
                     '</table> ',
-              // text: 'MyWU Number: ' + response.data.sender.preferred_customer.account_nbr,
-              // html: '<span style="font-size: 12px;>MyWU Number: ' + response.data.sender.preferred_customer.account_nbr  + '</span><br><span style="font-size: 12px;>Mobile Number: ' + this.form.phone_number + '</span>', 
+              // text: 'MyWU Number: ' + response.data.sender.preferred_customer.mywu_number,
+              // html: '<span style="font-size: 12px;>MyWU Number: ' + response.data.sender.preferred_customer.mywu_number  + '</span><br><span style="font-size: 12px;>Mobile Number: ' + this.form.phone_number + '</span>', 
               showConfirmButton: true,
             })
             
