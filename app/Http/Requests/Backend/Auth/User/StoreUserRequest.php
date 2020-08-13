@@ -28,12 +28,24 @@ class StoreUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules =  [
             'first_name' => ['required'],
             'last_name' => ['required'],
+            'user_name' => ['required', Rule::unique('users', 'user_name')],
             'email' => ['required', 'email', Rule::unique('users')],
+            'user_name' => ['required'],
             // 'password' => PasswordRules::register($this->email),
             'roles' => ['required', 'array'],
         ];
+
+        if(in_array('agent',request()->roles))
+        {
+          $additionalRules = [
+            'agent_branch' =>  ['required'],
+          ];
+          $rules = $rules+$additionalRules;
+        }
+        
+        return $rules;
     }
 }

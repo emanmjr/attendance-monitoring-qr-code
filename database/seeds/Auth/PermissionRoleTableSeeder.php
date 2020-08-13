@@ -35,6 +35,10 @@ class PermissionRoleTableSeeder extends Seeder
         // Agent Role
         $agent = Role::create(['name' => config('access.users.agent_role')]);
 
+        // Sub Agent Role
+        $subAgent = Role::create(['name' => config('access.users.sub_agent_role')]);
+
+
         // Create Permissions
         Permission::create(['name' => 'view backend']);
 
@@ -45,6 +49,7 @@ class PermissionRoleTableSeeder extends Seeder
         $maker->givePermissionTo('view backend');
         $approver->givePermissionTo('view backend');
         $agent->givePermissionTo('view backend');
+        $subAgent->givePermissionTo('view backend');
 
         $this->enableForeignKeys();
     }

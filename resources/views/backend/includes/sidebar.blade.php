@@ -48,7 +48,8 @@
                             KYC Lookup
                         </a>
                     </li>  --}}
-                    @if ($logged_in_user->isAgent())
+
+                    @if ($logged_in_user->isAgent() || $logged_in_user->isSubAgent())
                     <li class="nav-item">
                         <a class="nav-link {{
                         active_class(Route::is('admin/transaction/pay-status'))
@@ -59,7 +60,7 @@
                     @endif
                 </ul>
             </li>
-            @if ($logged_in_user->isAgent())
+            @if ($logged_in_user->isAgent() || $logged_in_user->isSubAgent())
             <li class="nav-item nav-dropdown {{
                 active_class(Route::is('admin/mywu*'), 'open')
             }}">
