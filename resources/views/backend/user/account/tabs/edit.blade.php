@@ -5,7 +5,6 @@
         <div class="col">
             <div class="form-group">
                 {{--  {{ html()->label(__('validation.attributes.frontend.avatar'))->for('avatar') }}  --}}
-
                 <div>
                     <div class="invisible">
                         <input type="radio" name="avatar_type" value="gravatar" {{ $logged_in_user->avatar_type == 'gravatar' ? 'checked' : '' }} /> Gravatar

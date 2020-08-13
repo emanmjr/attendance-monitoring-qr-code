@@ -5,17 +5,22 @@
                 <th>@lang('labels.backend.access.users.tabs.content.overview.avatar')</th>
                 <td><img src="{{ $user->picture }}" class="user-profile-image" /></td>
             </tr> --}}
-
             <tr>
                 <th>@lang('labels.backend.access.users.tabs.content.overview.name')</th>
-                <td>{{ $user->name }}</td>
+                <td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name}}</td>
             </tr>
-
             <tr>
                 <th>@lang('labels.backend.access.users.tabs.content.overview.email')</th>
                 <td>{{ $user->email }}</td>
             </tr>
-
+            <tr>
+                <th>Username</th>
+                <td>{{ $user->user_name }}</td>
+            </tr>
+            <tr>
+                <th>Sub Agent Branch</th>
+                <td>{{ $user->agent_branch }}</td>
+            </tr>
             <tr>
                 <th>@lang('labels.backend.access.users.tabs.content.overview.status')</th>
                 <td>@include('backend.auth.user.includes.status', ['user' => $user])</td>

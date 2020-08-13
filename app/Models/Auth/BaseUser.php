@@ -36,6 +36,8 @@ abstract class BaseUser extends Authenticatable implements Recordable
         'first_name',
         'middle_name',
         'last_name',
+        'user_name',
+        'agent_branch',
         'email',
         'avatar_type',
         'avatar_location',

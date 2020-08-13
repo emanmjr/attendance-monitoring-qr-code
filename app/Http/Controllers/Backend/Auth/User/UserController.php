@@ -69,6 +69,8 @@ class UserController extends Controller
             'first_name',
             'middle_name',
             'last_name',
+            'user_name',
+            'agent_branch',
             'email',
             'password',
             'active',
@@ -125,6 +127,7 @@ class UserController extends Controller
             'first_name',
             'middle_name',
             'last_name',
+            'agent_branch',
             'email',
             'roles',
             'permissions'

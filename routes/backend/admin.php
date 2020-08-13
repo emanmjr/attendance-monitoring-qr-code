@@ -15,14 +15,14 @@ Route::group([ 'middleware' => 'checkTempPass' ], function (){
         Route::get('/receive', 'TransactionController@receive')->name('receive');
         // Route::get('/kyc-lookup', 'TransactionController@kycLookUp')->name('kyc-lookup');
         
-        Route::group(['middleware' => ['role:agent']], function(){
+        Route::group(['middleware' => ['role:agent|sub_agent']], function(){
             Route::get('/pay-status', 'TransactionController@payStatus')->name('pay-status');
         });
     
     });
 
     // MyWU
-    Route::group(['prefix' => 'mywu', 'as' =>'mywu.', 'middleware' => ['role:agent']], function(){
+    Route::group(['prefix' => 'mywu', 'as' =>'mywu.', 'middleware' => ['role:agent|sub_agent']], function(){
 
         Route::get('/enrollment', 'MyWUController@enrollment')->name('enrollment');
         Route::get('/customer', 'MyWUController@customer')->name('customer');

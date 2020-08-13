@@ -35,6 +35,7 @@ class TransactionController extends Controller
                     'agentEmail' => auth()->user()->roles[0]->name == 'agent' ? auth()->user()->email : "",
                 ]
             ]);
+            
             $response = json_decode($res->getBody()->getContents(), true);
 
         } catch (ClientErrorResponseException $exception) {
