@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('user_name')->nullable();
             $table->string('agent_branch')->nullable();
+            $table->string('accessible_by')->nullable();
             $table->string('email')->unique();
             $table->string('avatar_type')->default('gravatar');
             $table->string('avatar_location')->nullable();

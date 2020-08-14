@@ -26,11 +26,22 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'email' => ['required', 'email'],
             'first_name' => ['required'],
             'last_name' => ['required'],
             'roles' => ['required', 'array'],
         ];
+
+        if(in_array('sub_agent',request()->roles))
+        {
+          $additionalRules = [
+            'agent_branch' =>  ['required'],
+            'accessible_by' =>  ['required'],
+          ];
+          $rules = $rules+$additionalRules;
+        }
+
+        return $rules;
     }
 }

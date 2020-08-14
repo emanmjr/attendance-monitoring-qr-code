@@ -182,8 +182,22 @@
                                                                     @else
                                                                         @lang('labels.general.none')
                                                                     @endif
+                                                                    
                                                                 @else
                                                                     @lang('labels.backend.access.users.all_permissions')
+                                                                @endif
+
+                                                                @if($role->name == 'sub_agent')
+                                                                    <hr>
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">Accessible By: </label>
+                                                                        <select class="form-control" name="accessible_by" id="accessible_by">
+                                                                            <option value="">Select</option>
+                                                                            <option value="FE">FRONTEND</option>
+                                                                            <option value="MW">MIDDLEWARE</option>
+                                                                            <option value="ALL">BOTH FRONTEND & MIDDLEWARE</option>
+                                                                        </select>
+                                                                    </div>
                                                                 @endif
                                                             </div>
                                                         </div><!--card-->

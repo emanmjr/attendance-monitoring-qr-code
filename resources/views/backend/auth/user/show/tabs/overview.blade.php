@@ -17,10 +17,28 @@
                 <th>Username</th>
                 <td>{{ $user->user_name }}</td>
             </tr>
+            @if($user->agent_branch)
             <tr>
                 <th>Sub Agent Branch</th>
                 <td>{{ $user->agent_branch }}</td>
             </tr>
+            <tr>
+                <th>Accessible By</th>
+                <td>
+                    @if($user->accessible_by == 'FE')
+                        FRONTEND
+                    @endif
+
+                    @if($user->accessible_by == 'MW')
+                        MIDDLEWARE
+                    @endif
+
+                    @if($user->accessible_by == 'ALL')
+                        BOTH FRONTEND & MIDDLEWARE
+                    @endif
+                </td>
+            </tr>
+            @endif
             <tr>
                 <th>@lang('labels.backend.access.users.tabs.content.overview.status')</th>
                 <td>@include('backend.auth.user.includes.status', ['user' => $user])</td>
