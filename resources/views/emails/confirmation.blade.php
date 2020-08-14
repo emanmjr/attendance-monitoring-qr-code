@@ -14,8 +14,10 @@
             After verifying your account, you need to change your temporary password.
             <br>
             <br>
+            @if($email)
             Email address: {{ $email }} <br>
             Your temporary password is: {{ $tempPassword }}
+            @endif
         </p>
         <br>
         <p>Thank You.</p>

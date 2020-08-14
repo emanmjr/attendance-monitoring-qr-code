@@ -151,7 +151,7 @@
                                         <thead>
                                         <tr>
                                             <th>@lang('labels.backend.access.users.table.roles')</th>
-                                            <th>@lang('labels.backend.access.users.table.permissions')</th>
+                                            {{--  <th>@lang('labels.backend.access.users.table.permissions')</th>  --}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -192,7 +192,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($permissions->count())
+                                                {{--  @if($permissions->count())
                                                     @foreach($permissions as $permission)
                                                         <div class="checkbox d-flex align-items-center">
                                                             {{ html()->label(
@@ -205,7 +205,7 @@
                                                             {{ html()->label(ucwords($permission->name))->for('permission-'.$permission->id) }}
                                                         </div>
                                                     @endforeach
-                                                @endif
+                                                @endif  --}}
                                             </td>
                                         </tr>
                                         </tbody>

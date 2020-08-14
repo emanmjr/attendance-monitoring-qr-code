@@ -142,6 +142,7 @@ class UserRepository extends BaseRepository
                 //Send confirmation email if requested and account approval is off
                 if ($user->confirmed === false && isset($data['confirmation_email']) && ! config('access.users.requires_approval')) {
                     $user->notify(new UserNeedsConfirmation(
+                        
                         url('/account/confirm/') . '/' . $user->confirmation_code,
                         $user->first_name, 
                         $data['password'],
