@@ -143,7 +143,7 @@
                                                             <div class="form-group">
                                                                 <label for="exampleFormControlInput1">Accessible By: </label>
                                                                 <select class="form-control" name="accessible_by" id="accessible_by">
-                                                                    <option>Select</option>
+                                                                    <option value="" disabled="disabled" style="display:none;">Select</option>
                                                                     <option value="FE" {{ $user->accessible_by == 'FE' ? 'selected' : ''}}>FRONTEND</option>
                                                                     <option value="MW" {{ $user->accessible_by == 'MW' ? 'selected' : ''}}>MIDDLEWARE</option>
                                                                     <option value="ALL" {{ $user->accessible_by == 'ALL' ? 'selected' : ''}}>BOTH FRONTEND & MIDDLEWARE</option>
