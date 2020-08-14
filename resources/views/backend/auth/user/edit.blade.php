@@ -86,6 +86,17 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('active') }}
+
+                        <div class="col-md-10">
+                            <label class="switch switch-label switch-pill switch-primary">
+                                {{ html()->checkbox('active')->class('switch-input') }}
+                                <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
+                            </label>
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
                         {{ html()->label('Abilities')->class('col-md-2 form-control-label') }}
 
                         <div class="table-responsive col-md-10">
@@ -93,7 +104,7 @@
                                 <thead>
                                     <tr>
                                         <th>@lang('labels.backend.access.users.table.roles')</th>
-                                        <th>@lang('labels.backend.access.users.table.permissions')</th>
+                                        {{--  <th>@lang('labels.backend.access.users.table.permissions')</th>  --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,12 +137,25 @@
                                                             @else
                                                                 @lang('labels.backend.access.users.all_permissions')
                                                             @endif
+
+                                                            @if($role->name == 'sub_agent')
+                                                            <hr>
+                                                            <div class="form-group">
+                                                                <label for="exampleFormControlInput1">Accessible By: </label>
+                                                                <select class="form-control" name="accessible_by" id="accessible_by">
+                                                                    <option>Select</option>
+                                                                    <option value="FE" {{ $user->accessible_by == 'FE' ? 'selected' : ''}}>FRONTEND</option>
+                                                                    <option value="MW" {{ $user->accessible_by == 'MW' ? 'selected' : ''}}>MIDDLEWARE</option>
+                                                                    <option value="ALL" {{ $user->accessible_by == 'ALL' ? 'selected' : ''}}>BOTH FRONTEND & MIDDLEWARE</option>
+                                                                </select>
+                                                            </div>
+                                                        @endif
                                                         </div>
                                                     </div><!--card-->
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td>
+                                        {{--  <td>
                                             @if($permissions->count())
                                                 @foreach($permissions as $permission)
                                                     <div class="checkbox d-flex align-items-center">
@@ -146,7 +170,7 @@
                                                     </div>
                                                 @endforeach
                                             @endif
-                                        </td>
+                                        </td>  --}}
                                     </tr>
                                 </tbody>
                             </table>

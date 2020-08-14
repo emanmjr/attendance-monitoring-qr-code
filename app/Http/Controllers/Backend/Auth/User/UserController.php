@@ -71,6 +71,7 @@ class UserController extends Controller
             'last_name',
             'user_name',
             'agent_branch',
+            'accessible_by',
             'email',
             'password',
             'active',
@@ -128,9 +129,11 @@ class UserController extends Controller
             'middle_name',
             'last_name',
             'agent_branch',
+            'active',
             'email',
             'roles',
-            'permissions'
+            'permissions',
+            'accessible_by'
         ));
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.updated'));
