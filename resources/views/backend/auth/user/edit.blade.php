@@ -66,26 +66,6 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="user_name">Username</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" name="user_name" id="user_name" value="{{ $user->user_name ?? null }}" placeholder="Username" maxlength="191" disabled>
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="agent_branch">Sub Agent Branch</label>
-                        <div class="col-md-10">
-                            {{--  <input class="form-control" type="text" name="agent_branch" id="agent_branch" placeholder="Sub Agent Branch" maxlength="191">  --}}
-                            <select class="form-control" name="agent_branch" id="">
-                                <option value="">Select Branch</option>
-                                @foreach(config('sub-agent-branches') as $value)
-                                    <option value="{{$value}}" {{ $user->agent_branch == $value ? 'selected' : ''}}>{{ $value }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('active') }}
 
                         <div class="col-md-10">

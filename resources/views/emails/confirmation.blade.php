@@ -21,11 +21,10 @@
         </p>
         <br>
         <p>Thank You.</p>
-        <p><strong>Your I-Pay Commerce Venture Team</strong></p>
     </div>
     
     <footer class="custom-footer">
-        <center>Copyright © 2020 I-Pay Commerce Ventures Inc. All Rights Reserved.</center>
+        <center>Copyright © 2020 All Rights Reserved.</center>
     </footer>
     
     

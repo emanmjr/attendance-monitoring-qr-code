@@ -31,7 +31,6 @@
                             <th>Middle Name</th>
                             <th>@lang('labels.backend.access.users.table.last_name')</th>
                             <th>@lang('labels.backend.access.users.table.email')</th>
-                            <th>Username</th>
                             {{--  <th>Agent Branch</th>  --}}
                             <th>@lang('labels.backend.access.users.table.confirmed')</th>
                             <th>@lang('labels.backend.access.users.table.roles')</th>
@@ -46,7 +45,6 @@
                                 <td>{{ $user->middle_name }}</td>
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->user_name }}</td>
                                 {{--  <td>{{ $user->agent_branch }}</td>  --}}
                                 <td>@include('backend.auth.user.includes.confirm', ['user' => $user])</td>
                                 <td>{{ checkRoleName($user->roles_label)  }}</td>

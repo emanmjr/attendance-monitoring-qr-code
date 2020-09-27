@@ -26,19 +26,6 @@ class PermissionRoleTableSeeder extends Seeder
         // Admin Role
         $admin = Role::create(['name' => config('access.users.admin_role')]);
 
-        // Maker Role
-        $maker = Role::create(['name' => config('access.users.cs_role')]);
-
-        // Approver Role
-        $approver = Role::create(['name' => config('access.users.manager_role')]);
-
-        // Agent Role
-        $agent = Role::create(['name' => config('access.users.agent_role')]);
-
-        // Sub Agent Role
-        $subAgent = Role::create(['name' => config('access.users.sub_agent_role')]);
-
-
         // Create Permissions
         Permission::create(['name' => 'view backend']);
 
@@ -46,11 +33,6 @@ class PermissionRoleTableSeeder extends Seeder
         // Note: Admin (User 1) Has all permissions via a gate in the AuthServiceProvider
         $superAdmin->givePermissionTo('view backend');
         $admin->givePermissionTo('view backend');
-        $maker->givePermissionTo('view backend');
-        $approver->givePermissionTo('view backend');
-        $agent->givePermissionTo('view backend');
-        $subAgent->givePermissionTo('view backend');
-
         $this->enableForeignKeys();
     }
 }

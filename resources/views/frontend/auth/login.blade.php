@@ -6,7 +6,6 @@
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
             <div class="col-md-12 img-login mt-5">
-                <img class="mt-5"src="{{ asset('img/frontend/home/ipayhorizontal.png')}}" alt="">
             </div>
             <div class="card mt-5 card-holder">
                 {{-- <div class="card-header">

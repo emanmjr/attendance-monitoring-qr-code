@@ -33,15 +33,6 @@ class UpdateUserRequest extends FormRequest
             'roles' => ['required', 'array'],
         ];
 
-        if(in_array('sub_agent',request()->roles))
-        {
-          $additionalRules = [
-            'agent_branch' =>  ['required'],
-            'accessible_by' =>  ['required'],
-          ];
-          $rules = $rules+$additionalRules;
-        }
-
         return $rules;
     }
 }

@@ -114,9 +114,6 @@ class UserRepository extends BaseRepository
                 'first_name' => $data['first_name'],
                 'middle_name' => $data['middle_name'],
                 'last_name' => $data['last_name'],
-                'agent_branch' => $data['agent_branch'],
-                'accessible_by' => $data['accessible_by'],
-                'user_name' => $data['user_name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'active' => isset($data['active']) && $data['active'] === '1',
@@ -184,8 +181,6 @@ class UserRepository extends BaseRepository
                 'middle_name' => $data['middle_name'],
                 'last_name' => $data['last_name'],
                 'active' => isset($data['active']) ? $data['active'] : 0,
-                'agent_branch' => $data['agent_branch'],
-                'accessible_by' => $data['accessible_by'],
                 'email' => $data['email'],
             ])) {
                 // Add selected roles/permissions
