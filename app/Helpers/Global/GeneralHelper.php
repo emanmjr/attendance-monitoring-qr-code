@@ -27,6 +27,7 @@ if (! function_exists('checkRoleName')) {
         if ($role == 'administrator')  return 'Administrator';
         if ($role == 'agent')  return 'Agent';
         if ($role == 'sub_agent')  return 'Sub Agent';
+        if ($role == 'employee')  return 'Employee';
     }
 }
 

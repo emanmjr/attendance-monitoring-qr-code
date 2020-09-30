@@ -65,6 +65,18 @@
                             </div><!--col-->
                         </div><!--form-group-->
 
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="agent_branch">Department</label>
+                            <div class="col-md-10">
+                                {{--  <input class="form-control" type="text" name="agent_branch" id="agent_branch" placeholder="Sub Agent Branch" maxlength="191">  --}}
+                                <select class="form-control" name="department_id" id="">
+                                    <option value="">Select Branch</option>
+                                    <option value="1">Department 1</option>
+                                    <option value="2">Department 2</option>
+                                </select>
+                            </div>
+                        </div><!--form-group-->
+
                         {{--  <div class="form-group row">
                             {{ html()->label(__('validation.attributes.backend.access.users.password'))->class('col-md-2 form-control-label')->for('password') }}
 
@@ -167,18 +179,6 @@
                                                                     @lang('labels.backend.access.users.all_permissions')
                                                                 @endif
 
-                                                                @if($role->name == 'sub_agent')
-                                                                    <hr>
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlInput1">Accessible By: </label>
-                                                                        <select class="form-control" name="accessible_by" id="accessible_by">
-                                                                            <option value="" disabled="disabled" selected="true" style="display:none;">Select</option>
-                                                                            <option value="FE">FRONTEND</option>
-                                                                            <option value="MW">MIDDLEWARE</option>
-                                                                            <option value="ALL">BOTH FRONTEND & MIDDLEWARE</option>
-                                                                        </select>
-                                                                    </div>
-                                                                @endif
                                                             </div>
                                                         </div><!--card-->
                                                     @endif

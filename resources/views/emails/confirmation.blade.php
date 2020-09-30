@@ -6,11 +6,11 @@
     
     <div class="email-body">
         <p>Hi {{ $first_name }},</p>
-        <p>Your account is now ready to be used. All you need to do is click the link below:</p>
-        <p>
+        <p>Please see attached file of your QR Code for you able to login in our system.</p>
+        {{-- <p>
             <a href="{{ $confirmation_code }}" >Verify my account</a>
-        </p>
-        <p>
+        </p> --}}
+        {{-- <p>
             After verifying your account, you need to change your temporary password.
             <br>
             <br>
@@ -18,7 +18,7 @@
             Email address: {{ $email }} <br>
             Your temporary password is: {{ $tempPassword }}
             @endif
-        </p>
+        </p> --}}
         <br>
         <p>Thank You.</p>
     </div>

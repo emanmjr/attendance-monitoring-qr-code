@@ -64,6 +64,17 @@
                                 ->required()->readOnly()  }}
                         </div><!--col-->
                     </div><!--form-group-->
+                    <div class="form-group row">
+                        <label class="col-md-2 form-control-label" for="agent_branch">Department</label>
+                        <div class="col-md-10">
+                            {{--  <input class="form-control" type="text" name="agent_branch" id="agent_branch" placeholder="Sub Agent Branch" maxlength="191">  --}}
+                            <select class="form-control" name="department_id" id="">
+                                <option value="">Select Branch</option>
+                                <option value="1" {{ $user->department_id == 1 ? 'selected' : ''}}>Department 1</option>
+                                <option value="2" {{ $user->department_id == 2 ? 'selected' : ''}}>Department 2</option>
+                            </select>
+                        </div>
+                    </div><!--form-group-->
 
                     <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-2 form-control-label')->for('active') }}

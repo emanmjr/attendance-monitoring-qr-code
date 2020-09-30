@@ -32,6 +32,7 @@ class StoreUserRequest extends FormRequest
             'first_name' => ['required'],
             'last_name' => ['required'],
             'email' => ['required', 'email', Rule::unique('users')],
+            'department_id' => ['required'],
             // 'password' => PasswordRules::register($this->email),
             'roles' => ['required', 'array'],
         ];

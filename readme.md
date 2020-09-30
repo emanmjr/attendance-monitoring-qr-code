@@ -1,4 +1,5 @@
-## Base Laravel 6
+## Attendance Monitoring w/ QR CODE
+## LARAVEL VUE
 
-Credits to: https://github.com/rappasoft/laravel-boilerplate
+Boilerplate used & Credits to: https://github.com/rappasoft/laravel-boilerplate
 

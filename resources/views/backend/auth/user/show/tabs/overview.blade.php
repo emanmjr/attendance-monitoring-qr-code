@@ -23,10 +23,10 @@
                 <td>@include('backend.auth.user.includes.confirm', ['user' => $user])</td>
             </tr>
 
-            <tr>
+            {{-- <tr>
                 <th>@lang('labels.backend.access.users.tabs.content.overview.timezone')</th>
                 <td>{{ $user->timezone }}</td>
-            </tr>
+            </tr> --}}
 
             <tr>
                 <th>@lang('labels.backend.access.users.tabs.content.overview.last_login_at')</th>

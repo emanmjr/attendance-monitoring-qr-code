@@ -25,6 +25,7 @@ return [
 
         // The roles all new registered users get added to
         'admin_role' => 'administrator',
+        'employee' => 'employee',
 
         /*
          * Whether or not new users need to be approved by an administrator before logging in

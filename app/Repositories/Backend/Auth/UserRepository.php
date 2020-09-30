@@ -19,6 +19,8 @@ use App\Repositories\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 /**
  * Class UserRepository.
  */
@@ -107,8 +109,14 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data): User
     {
+
+        $code = Carbon::now()->timestamp;
+        $fileName = $code . '_qr-code.png';
+        $file = public_path('qr/'  .$fileName);
+        \QRCode::text($code)->setOutFile($file)->png();
+
         $data['password'] = substr(md5(mt_rand()), 0, 7);
-        return DB::transaction(function () use ($data) {
+        return DB::transaction(function () use ($data, $code, $fileName) {
 
             $user = $this->model::create([
                 'first_name' => $data['first_name'],
@@ -116,9 +124,12 @@ class UserRepository extends BaseRepository
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
+                // 'active' => isset($data['active']) && $data['active'] === '1',
                 'active' => isset($data['active']) && $data['active'] === '1',
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
-                'confirmed' => isset($data['confirmed']) && $data['confirmed'] === '1',
+                'confirmed' => 1,
+                'qr_code' => $code,
+                'department_id' => $data['department_id']
             ]);
 
             // See if adding any additional permissions
@@ -138,15 +149,26 @@ class UserRepository extends BaseRepository
 
 
                 //Send confirmation email if requested and account approval is off
-                if ($user->confirmed === false && isset($data['confirmation_email']) && ! config('access.users.requires_approval')) {
-                    $user->notify(new UserNeedsConfirmation(
+                // if ($user->confirmed === false && isset($data['confirmation_email']) && ! config('access.users.requires_approval')) {
+                //     $user->notify(new UserNeedsConfirmation(
                         
-                        url('/account/confirm/') . '/' . $user->confirmation_code,
-                        $user->first_name, 
-                        $data['password'],
-                        $user->email
-                    ));
-                }
+                //         url('/account/confirm/') . '/' . $user->confirmation_code,
+                //         $user->first_name, 
+                //         $data['password'],
+                //         $user->email
+                //     ));
+                // }
+
+                
+
+                $user->notify(new UserNeedsConfirmation(
+                        
+                    url('/account/confirm/') . '/' . $user->confirmation_code,
+                    $user->first_name, 
+                    $data['password'],
+                    $user->email,
+                    $fileName
+                ));
 
                 event(new UserCreated($user));
 
@@ -182,6 +204,7 @@ class UserRepository extends BaseRepository
                 'last_name' => $data['last_name'],
                 'active' => isset($data['active']) ? $data['active'] : 0,
                 'email' => $data['email'],
+                'department_id' => $data['department_id']
             ])) {
                 // Add selected roles/permissions
                 $user->syncRoles($data['roles']);

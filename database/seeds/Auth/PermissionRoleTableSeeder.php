@@ -26,6 +26,9 @@ class PermissionRoleTableSeeder extends Seeder
         // Admin Role
         $admin = Role::create(['name' => config('access.users.admin_role')]);
 
+        // Admin Role
+        $employee = Role::create(['name' => config('access.users.employee')]);
+
         // Create Permissions
         Permission::create(['name' => 'view backend']);
 
@@ -33,6 +36,7 @@ class PermissionRoleTableSeeder extends Seeder
         // Note: Admin (User 1) Has all permissions via a gate in the AuthServiceProvider
         $superAdmin->givePermissionTo('view backend');
         $admin->givePermissionTo('view backend');
+        // $employee->givePermissionTo('view backend');
         $this->enableForeignKeys();
     }
 }

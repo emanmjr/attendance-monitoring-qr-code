@@ -35,6 +35,8 @@ class CreateUsersTable extends Migration
             $table->string('is_logged_in')->nullable();
             $table->string('is_password_changed')->nullable();
             $table->boolean('to_be_logged_out')->default(false);
+            $table->integer('department_id')->nullable();
+            $table->string('qr_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

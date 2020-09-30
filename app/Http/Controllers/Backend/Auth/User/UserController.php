@@ -75,7 +75,8 @@ class UserController extends Controller
             'confirmed',
             'confirmation_email',
             'roles',
-            'permissions'
+            'permissions',
+            'department_id'
         ));
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.created'));
@@ -89,7 +90,8 @@ class UserController extends Controller
      */
     public function show(ManageUserRequest $request, User $user)
     {
-        return view('backend.auth.user.show')
+        $userAttendance = \App\Models\EmployeeAttendance::where('user_id', $user->id)->get();
+        return view('backend.auth.user.show', compact('userAttendance'))
             ->withUser($user);
     }
 

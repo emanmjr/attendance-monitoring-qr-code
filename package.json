@@ -35,9 +35,9 @@
         "sass": "^1.21.0",
         "sass-loader": "^8.0.0",
         "sweetalert2": "^9.3.5",
-        "vue": "^2.6.10",
+        "vue": "^2.0.8",
         "vue-jest": "^3.0.4",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.12"
     },
     "browserslist": {
         "development": "last 1 version",
@@ -64,8 +64,11 @@
         "node": ">=6.0.0"
     },
     "dependencies": {
+        "@chenfengyuan/vue-qrcode": "^1.0.2",
         "iso-country-currency": "^0.5.1",
         "jw-vue-pagination": "^1.0.3",
+        "vue-qrcode-reader": "^2.3.13",
+        "vue-server-renderer": "^2.6.12",
         "vuex": "^3.4.0"
     }
 }

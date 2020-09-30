@@ -201,6 +201,8 @@ return [
         App\Providers\HelperServiceProvider::class,
         App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        LaravelQRCode\Providers\QRCodeServiceProvider::class, 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -250,5 +252,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'QRCode' => LaravelQRCode\Facades\QRCode::class,     
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 ];

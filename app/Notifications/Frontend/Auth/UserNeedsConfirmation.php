@@ -24,18 +24,21 @@ class UserNeedsConfirmation extends Notification
 
     protected $email;
 
+    protected $fileName;
+
     /**
      * UserNeedsConfirmation constructor.
      *
      * @param $confirmation_code
      * @param $user_name
      */
-    public function __construct($confirmation_code, $first_name, $tempPassword, $email)
+    public function __construct($confirmation_code, $first_name, $tempPassword, $email, $fileName)
     {
         $this->confirmation_code = $confirmation_code;
         $this->first_name = $first_name;
         $this->tempPassword = $tempPassword;
         $this->email = $email;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -74,6 +77,6 @@ class UserNeedsConfirmation extends Notification
                     'tempPassword'      => $this->tempPassword,
                     'email'      => $this->email
                 ]
-        );
+            )->attach(public_path('qr') . '/' . $this->fileName);
     }
 }
